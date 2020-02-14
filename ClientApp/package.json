@@ -21,6 +21,7 @@
     "typescript": "3.2.2"
   },
   "devDependencies": {
+    "@testing-library/react": "^9.4.0",
     "@types/history": "4.7.2",
     "@types/jest": "23.3.11",
     "@types/node": "10.12.18",
@@ -42,7 +43,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "cross-env CI=true react-scripts test --env=jsdom",
+    "test": "cross-env CI=true react-scripts test --env=jsdom --coverage --colors",
     "WARNING:IRREVERSIBLE:eject": "react-scripts eject",
     "lint": "eslint ./src/**/*.ts ./src/**/*.tsx"
   },
@@ -54,5 +55,20 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!<rootDir>/node_modules/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    },
+    "coverageReporters": ["text", "json", "cobertura"]
+  }
 }
