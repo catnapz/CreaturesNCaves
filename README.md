@@ -7,6 +7,10 @@
 # Creatures & Caves
 A tool for DMs
 
-Server is written in C# with dotnet core
+## Server
+Written in C# with dotnet core
+To run tests use ```dotnet run test```
+To run tests and generate coverage reports use ```dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=json```
 
+## Client
 Client is written in Typescript (```.ts```) and React Typescript (```.tsx```). Uses Redux for state management
