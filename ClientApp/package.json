@@ -24,8 +24,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "cross-env CI=true react-scripts test --env=jsdom --coverage --colors",
+    "test:watch": "react-scripts test",
+    "lint": "eslint ./src/**/*.ts ./src/**/*.tsx",
+    "WARNING:IRREVERSIBLE:eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,6 +48,24 @@
     "@types/react-redux": "^7.1.7",
     "@types/react-router": "^5.1.4",
     "@types/react-router-dom": "^5.1.3",
-    "@types/redux-thunk": "^2.1.0"
+    "@types/redux-mock-store": "^1.0.2",
+    "@types/redux-thunk": "^2.1.0",
+    "cross-env": "^7.0.0",
+    "redux-mock-store": "^1.5.4"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!<rootDir>/node_modules/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    },
+    "coverageReporters": ["text", "json", "cobertura"]
   }
 }

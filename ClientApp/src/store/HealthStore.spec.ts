@@ -2,13 +2,13 @@
  * Unit tests for HealthStore
  */
 
-import configureStore from 'redux-mock-store';
 import * as HealthStore from '../store/HealthStore';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
 const middleware = [thunk];
 const mockStore = configureStore(middleware);
 
-import thunk from 'redux-thunk';
 
 describe('HealthDisplay Redux Tests', () => {
 
