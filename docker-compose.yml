@@ -1,10 +1,10 @@
-version: '2.1'
+version: '3'
 
 services:
   creaturesncaves:
-    image: creaturesncaves
     build: .
     environment:
+      ASPNETCORE_ENVIRONMENT: Production
       NODE_ENV: production
     ports:
-      - 3000:3000
+      - 5001:5001
