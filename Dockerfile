@@ -1,5 +1,5 @@
 # == Base ==
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1 AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
 WORKDIR /app
 
 
@@ -84,7 +84,7 @@ RUN dotnet publish "CreaturesNCaves.csproj" -c Release -o ./Publish
 
 # == Creatures & Caves ==
 FROM base AS final
-EXPOSE 5001
+EXPOSE 80
 WORKDIR /app/ClientApp
 COPY --from=node-build-env /ClientApp/build ./
 WORKDIR /app/Server
