@@ -7,4 +7,4 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       NODE_ENV: development
     ports:
-      - 5001:5001
+      - "8080:80"

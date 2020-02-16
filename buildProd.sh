@@ -1,14 +1,10 @@
 #!/bin/bash
 
-# Clean dist folder
+# Clean up
 rm -rf ./dist
+rm -rf ./node_modules
 
-# Build Server
-dotnet build Server/CreaturesNCaves.csproj -c Release -o ./dist/Server
-
-# Build ClientApp
+# Build Server and ClientApp
+dotnet publish Server/CreaturesNCaves.csproj -c Release -o ./dist/Server
 mkdir -p ./dist/ClientApp
-cd ./ClientApp
-npm run build
-mkdir -p ./dist/ClientApp
-mv build ../dist/ClientApp
+mv ./ClientApp/build/* ./dist/ClientApp
