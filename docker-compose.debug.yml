@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  creaturesncaves:
+    build: .
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      NODE_ENV: development
+    ports:
+      - "8080:80"
