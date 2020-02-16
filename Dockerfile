@@ -18,8 +18,27 @@ RUN npm test
 
 # == Server.Tests ==
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS dotnet-test-env
-WORKDIR /Server
+
+# Install nodejs
+ENV NVM_DIR /usr/local/nvm
+ENV NODE_VERSION 12.16.0
+
+WORKDIR $NVM_DIR
+
+RUN curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+
+ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
+ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+WORKDIR /ClientApp
+COPY --from=node-test-env /ClientApp ./
+
 # Install Server dependencies
+WORKDIR /Server
 COPY Server/CreaturesNCaves.csproj ./
 # Copy over source files
 COPY ./Server ./
@@ -30,7 +49,7 @@ RUN dotnet restore
 # Copy over source files
 COPY ./Server.Tests ./
 # Run unit test
-RUN ["dotnet", "test", "/p:CollectCoverage=true", "/p:CoverletOutput=TestResults/", "/p:CoverletOutputFormat=\"json,cobertura,lcov\"", "/p:Threshold=80"
+RUN dotnet test Server.Tests.csproj "/p:CollectCoverage=true" "/p:CoverletOutput=TestResults/" "/p:CoverletOutputFormat=\"json,cobertura,lcov\"" "/p:Threshold=0"
 # TODO: Figure out how to extract coverage reports in CI pipeline
 
 
@@ -47,18 +66,25 @@ WORKDIR /Server
 # Install dependencies
 RUN dotnet restore
 # Build Release
-RUN dotnet build "Server.Tests.csproj" -c Release -o ./Build
+RUN dotnet build "CreaturesNCaves.csproj" -c Release -o ./Build
 
 
 # == Server Production Publish ==
 FROM dotnet-build-env as dotnet-publish-env
+
+WORKDIR /ClientApp
+ENV NODE_ENV production
+RUN npm install --production
+RUN npm rebuild node-sass
+
 WORKDIR /Server
 # Publish Release
-RUN dotnet publish "Server.Tests.csproj" -c Release -o ./Publish
+RUN dotnet publish "CreaturesNCaves.csproj" -c Release -o ./Publish
 
 
 # == Creatures & Caves ==
 FROM base AS final
+EXPOSE 5001
 WORKDIR /app/ClientApp
 COPY --from=node-build-env /ClientApp/build ./
 WORKDIR /app/Server
