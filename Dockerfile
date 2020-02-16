@@ -21,6 +21,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS dotnet-test-env
 
 # Install nodejs
 ENV NVM_DIR /usr/local/nvm
+# TODO: figure out how to get lts version
 ENV NODE_VERSION 12.16.0
 
 WORKDIR $NVM_DIR
@@ -37,27 +38,17 @@ ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 WORKDIR /ClientApp
 COPY --from=node-test-env /ClientApp ./
 
-# Install Server dependencies
-WORKDIR /Server
-COPY Server/CreaturesNCaves.csproj ./
 # Copy over source files
+WORKDIR /Server
 COPY ./Server ./
-# Install Server.Tests dependencies
 WORKDIR /Server.Tests
-COPY Server.Tests/Server.Tests.csproj ./
+COPY ./Server.Tests ./
+# Install dependencies
 RUN dotnet restore
 # Copy over source files
-COPY ./Server.Tests ./
 # Run unit test
 RUN dotnet test Server.Tests.csproj "/p:CollectCoverage=true" "/p:CoverletOutput=TestResults/" "/p:CoverletOutputFormat=\"json,cobertura,lcov\"" "/p:Threshold=0"
 # TODO: Figure out how to extract coverage reports in CI pipeline
-
-
-# == ClientApp Production Build ==
-FROM node-test-env as node-build-env
-WORKDIR /ClientApp
-# Build production
-RUN npm run build
 
 
 # == Server Release Build ==
@@ -86,7 +77,7 @@ RUN dotnet publish "CreaturesNCaves.csproj" -c Release -o ./Publish
 FROM base AS final
 EXPOSE 80
 WORKDIR /app/ClientApp
-COPY --from=node-build-env /ClientApp/build ./
+COPY --from=dotnet-publish-env /ClientApp/build ./
 WORKDIR /app/Server
 COPY --from=dotnet-publish-env /Server/Publish ./
 ENTRYPOINT [ "dotnet", "CreaturesNCaves.dll" ]
