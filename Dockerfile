@@ -45,7 +45,6 @@ WORKDIR /Server.Tests
 COPY ./Server.Tests ./
 # Install dependencies
 RUN dotnet restore
-# Copy over source files
 # Run unit test
 RUN dotnet test Server.Tests.csproj "/p:CollectCoverage=true" "/p:CoverletOutput=TestResults/" "/p:CoverletOutputFormat=\"json,cobertura,lcov\"" "/p:Threshold=0"
 # TODO: Figure out how to extract coverage reports in CI pipeline
