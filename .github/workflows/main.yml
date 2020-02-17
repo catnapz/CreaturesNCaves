@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  pull_request:
+    branches: master
+
+jobs:
+  
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Run ClientApp unit tests
+      run: docker build --target test .
+        
+  
