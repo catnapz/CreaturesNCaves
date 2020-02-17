@@ -23,8 +23,8 @@ jobs:
     - name: Extract ClientApp Coverage Reports
       run: |
         CID=$(docker create cnc/clientapptests:latest)
-        mkdir -p /TestResults/ClientApp
-        docker cp $CID:/ClientApp/coverage - > /TestResults/ClientApp
+        mkdir -p TestResults/ClientApp
+        docker cp $CID:/ClientApp/coverage - > TestResults/ClientApp
         docker rm -v $CID
         
     - name: Run Server unit tests
@@ -33,8 +33,8 @@ jobs:
     - name: Extract Server Coverage Reports
       run: |
         CID=$(docker create cnc/servertests:latest)
-        mkdir -p /TestResults/Server
-        docker cp $CID:/Server.Tests/TestResults - > /TestResults/Server
+        mkdir -p TestResults/Server
+        docker cp $CID:/Server.Tests/TestResults - > TestResults/Server
         docker rm -v $CID
         
     - name: Upload Test Results
@@ -43,7 +43,7 @@ jobs:
         # Artifact name
         name: TestResults
         # Directory containing files to upload
-        path: /TestResults
+        path: TestResults
           
         
   
