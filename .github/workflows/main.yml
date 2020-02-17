@@ -23,7 +23,7 @@ jobs:
     - name: Extract ClientApp Coverage Reports
       run: |
         CID=$(docker create cnc/clientapptests:latest)
-        mkdir -p TestResults/ClientApp
+        mkdir -p TestResults
         docker cp $CID:/ClientApp/coverage - > TestResults/ClientApp
         docker rm -v $CID
         
@@ -33,7 +33,7 @@ jobs:
     - name: Extract Server Coverage Reports
       run: |
         CID=$(docker create cnc/servertests:latest)
-        mkdir -p TestResults/Server
+        mkdir -p TestResults
         docker cp $CID:/Server.Tests/TestResults - > TestResults/Server
         docker rm -v $CID
         
