@@ -1,4 +1,4 @@
-name: CI
+name: Creatures & Caves Master Pipeline
 
 on:
   push:
@@ -11,13 +11,39 @@ on:
 jobs:
   
   test:
-
+    name: Unit Tests
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
       
     - name: Run ClientApp unit tests
-      run: docker build --target node-test-env .
+      run: docker build -t cnc/clientapptests:latest --target node-test-env .  
+    
+    - name: Extract ClientApp Coverage Reports
+      run: |
+        CID=$(docker create cnc/clientapptests:latest)
+        mkdir -p /TestResults/ClientApp
+        docker cp $CID:/ClientApp/coverage - > /TestResults/ClientApp
+        docker rm -v $CID
+        
+    - name: Run Server unit tests
+      run: docker build -t cnc/servertests:latest --target dotnet-test-env .  
+    
+    - name: Extract Server Coverage Reports
+      run: |
+        CID=$(docker create cnc/servertests:latest)
+        mkdir -p /TestResults/Server
+        docker cp $CID:/Server.Tests/TestResults - > /TestResults/Server
+        docker rm -v $CID
+        
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        # Artifact name
+        name: TestResults
+        # Directory containing files to upload
+        path: /TestResults
+          
         
   
