@@ -24,7 +24,7 @@ jobs:
       run: |
         CID=$(docker create cnc/clientapptests:latest)
         mkdir -p TestResults
-        docker cp $CID:/ClientApp/coverage/* - > TestResults/ClientApp
+        docker cp $CID:/ClientApp/coverage/ - > TestResults/ClientApp
         docker rm -v $CID
         
     - name: Run Server unit tests
@@ -34,7 +34,7 @@ jobs:
       run: |
         CID=$(docker create cnc/servertests:latest)
         mkdir -p TestResults
-        docker cp $CID:/Server.Tests/TestResults/* - > TestResults/Server
+        docker cp $CID:/Server.Tests/TestResults/ - > TestResults/Server
         docker rm -v $CID
         
     - name: Upload Test Results
