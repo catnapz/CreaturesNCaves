@@ -1,3 +1,6 @@
+![Creatures & Caves Master Pipeline](https://github.com/ansh-projects/CreaturesNCaves/workflows/Creatures%20&%20Caves%20Master%20Pipeline/badge.svg?branch=master)
+
+[![codecov](https://codecov.io/gh/ansh-projects/CreaturesNCaves/branch/master/graph/badge.svg)](https://codecov.io/gh/ansh-projects/CreaturesNCaves)
 
 # DEVELOPMENT NOTES
 ## PRE-REQS
