@@ -68,8 +68,7 @@
     },
     "coverageReporters": [
       "text",
-      "json",
-      "cobertura"
+      "json"
     ]
   }
 }
