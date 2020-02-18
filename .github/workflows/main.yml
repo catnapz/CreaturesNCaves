@@ -26,7 +26,7 @@ jobs:
         mkdir -p TestResults
         docker cp $CID:/ClientApp/coverage/. - > TestResults/clientappreports.tar
         docker rm -v $CID
-        tar -xvf clientappreports.tar
+        tar -xvf TestResults/clientappreport.tar
         
     - name: Run Server unit tests
       run: docker build -t cnc/servertests:latest --target dotnet-test-env .  
@@ -37,7 +37,7 @@ jobs:
         mkdir -p TestResults
         docker cp $CID:/Server.Tests/TestResults/. - > TestResults/serverreports.tar
         docker rm -v $CID
-        tar -xvf serverreports.tar
+        tar -xvf TestResults/serverreports.tar
         
     - name: Upload Test Results Artifacts
       uses: actions/upload-artifact@v1.0.0
