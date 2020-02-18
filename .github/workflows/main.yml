@@ -26,10 +26,7 @@ jobs:
         mkdir -p TestResults
         docker cp $CID:/ClientApp/coverage/. - > TestResults/clientappreports.tar
         docker rm -v $CID
-        cd TestResults
-        pwd
-        ls -al
-        tar -xvf clientappreport.tar
+        tar -xvf clientappreports.tar
         
     - name: Run Server unit tests
       run: docker build -t cnc/servertests:latest --target dotnet-test-env .  
@@ -59,7 +56,7 @@ jobs:
         # Repository upload token - get it from codecov.io
         token: c148f571-5080-4421-b1ec-72a4d397a7db
         # Path to coverage file to upload
-        file: Artifacts/TestResults/coverage/coverage-final.json
+        file: Artifacts/TestResults/coverage-final.json
         # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
         flags: unittests
         # Specify whether or not CI build should fail if Codecov runs into an error during upload
@@ -73,7 +70,7 @@ jobs:
         # Repository upload token - get it from codecov.io
         token: c148f571-5080-4421-b1ec-72a4d397a7db
         # Path to coverage file to upload
-        file: Artifacts/TestResults/TestResults/coverage.json
+        file: Artifacts/TestResults/coverage.json
         # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
         flags: unittests
         # Specify whether or not CI build should fail if Codecov runs into an error during upload
