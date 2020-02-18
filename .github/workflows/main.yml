@@ -37,13 +37,21 @@ jobs:
         docker cp $CID:/Server.Tests/TestResults/ - > TestResults/Server
         docker rm -v $CID
         
-    - name: Upload Test Results
+    - name: Upload Test Results Artifacts
       uses: actions/upload-artifact@v1.0.0
       with:
         # Artifact name
         name: TestResults
         # Directory containing files to upload
         path: TestResults
+        
+    - name: Download TestResults Artifacts
+      uses: actions/download-artifact@v1.0.0
+      with:
+        # Artifact name
+        name: TestResults
+        # Destination path
+        path: Artifacts/TestResults
         
     - name: Upload ClientApp TestResults to Codecov
       uses: codecov/codecov-action@v1.0.5
@@ -53,7 +61,7 @@ jobs:
         # Repository upload token - get it from codecov.io
         token: c148f571-5080-4421-b1ec-72a4d397a7db
         # Path to coverage file to upload
-        file: TestResults/ClientApp/coverage/coverage-final.json
+        file: Artifacts/TestResults/ClientApp/coverage/coverage-final.json
         # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
         flags: unittests
         # Specify whether or not CI build should fail if Codecov runs into an error during upload
@@ -67,7 +75,7 @@ jobs:
         # Repository upload token - get it from codecov.io
         token: c148f571-5080-4421-b1ec-72a4d397a7db
         # Path to coverage file to upload
-        file: TestResults/Server/coverage.json
+        file: Artifacts/TestResults/Server/coverage.json
         # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
         flags: unittests
         # Specify whether or not CI build should fail if Codecov runs into an error during upload
