@@ -27,6 +27,8 @@ jobs:
         docker cp $CID:/ClientApp/coverage/. - > TestResults/clientappreports.tar
         docker rm -v $CID
         cd TestResults
+        pwd
+        ls -al
         tar -xvf clientappreport.tar
         
     - name: Run Server unit tests
