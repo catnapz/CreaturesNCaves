@@ -9,7 +9,7 @@
 
 ## BUILD INSTRUCTIONS
 * Run ```npm install``` in the ClientApp dir to install node dependancies
-* Run ```dotnet watch run``` to run app in watch mode. This starts up the server and client app, both will refresh on code changes.
+* Run ```dotnet watch run``` in the Server dir to run app in watch mode. This starts up the server and client app, both will refresh on code changes.
 * To build a production build of the app, you can use the convenience bash script ```buildProd.sh``` or run the following steps
     * Delete the node_modules folder in ClientApp
     * Run ```dotnet publish Server/CreaturesNCaves.csproj -c Release -o ./dist/Server``` from the App's root folder
