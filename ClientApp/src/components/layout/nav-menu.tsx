@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
-import './NavMenu.css';
+import {  NavLink } from 'react-router-dom';
+import './nav-menu.scss';
 
 export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }> {
     public state = {
@@ -12,18 +12,18 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
             <header>
                 <nav>
                     <div>
-                        <Link to="/">CreaturesNCaves</Link>
+                        <NavLink exact to="/">CreaturesNCaves</NavLink>
                         <div onClick={this.toggle} id="nav-burger"/>
                         <div id="nav-collapsable" className={"nav-collapse-" + this.state.isOpen}>
                             <ul className="nav-nav flex-grow">
                                 <li>
-                                    <Link to="/">Home</Link>
+                                    <NavLink exact to="/">Home</NavLink>
                                 </li>
                                 <li>
-                                    <Link to="/counter">Counter</Link>
+                                    <NavLink to="/counter">Counter</NavLink>
                                 </li>
                                 <li>
-                                    <Link to="/fetch-data">Fetch data</Link>
+                                    <NavLink to="/fetch-data">Fetch data</NavLink>
                                 </li>
                             </ul>
                         </div>

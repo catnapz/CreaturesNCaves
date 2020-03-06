@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import HealthDisplay from './HealthDisplay';
+import { HealthDisplay } from './health/health-display';
 
-const Home = () => (
+export const Home = () => (
   <div>
     <div>
       <HealthDisplay />
@@ -10,5 +9,3 @@ const Home = () => (
     <h1>Welcome to Creatures &amp; Caves</h1>
   </div>
 );
-
-export default connect()(Home);
