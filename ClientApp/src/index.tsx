@@ -8,9 +8,9 @@ import * as serviceWorker from './serviceWorker';
 import './index.scss';
 
 // root load animation
-const loader: HTMLElement | null = document.getElementById("loader");
-const loading = () => {loader!.style.display = "block"};
-const loaded = () => {loader!.style.display = "none"};
+const loader: HTMLElement | null = document.getElementById('loader');;
+const loading = () => loader!.style.display = "block";
+const loaded = () => loader!.style.display = "none";
 
 // Init the API client
 // const apolloClient = new ApolloClient({

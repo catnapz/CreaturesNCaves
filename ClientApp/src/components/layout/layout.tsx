@@ -1,5 +1,5 @@
 import * as React from 'react';
-import NavMenu from './nav-menu';
+import { NavMenu } from './nav-menu';
 
 export const Layout = (props: { children?: React.ReactNode }) => (
   <>

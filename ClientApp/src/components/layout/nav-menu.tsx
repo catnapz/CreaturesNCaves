@@ -1,41 +1,19 @@
-import * as React from 'react';
-import {  NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import './nav-menu.scss';
 
-export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }> {
-    public state = {
-        isOpen: false
-    };
+export const NavMenu = () => {
+  const [isResp, setResp] = useState(false);
 
-    public render() {
-        return (
-            <header>
-                <nav>
-                    <div>
-                        <NavLink exact to="/">CreaturesNCaves</NavLink>
-                        <div onClick={this.toggle} id="nav-burger"/>
-                        <div id="nav-collapsable" className={"nav-collapse-" + this.state.isOpen}>
-                            <ul className="nav-nav flex-grow">
-                                <li>
-                                    <NavLink exact to="/">Home</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/counter">Counter</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/fetch-data">Fetch data</NavLink>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-            </header>
-        );
-    }
+  return (
+    <>
+      <nav id="top-nav" className={"responsive-"+isResp}>
+        <Link to="/">Creatures &amp; Caves</Link>
+        <NavLink exact to="/">Home</NavLink>
+        <NavLink to="/counter">Counter</NavLink>
+  <div onClick={() => setResp(!isResp)} id="nav-burger">{isResp ? "Close" : "Open" }</div>
+      </nav>
+    </>
+  );
 
-    private toggle = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
 }

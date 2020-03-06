@@ -5,6 +5,7 @@ import { Home } from './components/home';
 import { Counter } from './components/counter/counter';
 
 import './app.scss'
+import { useSelector } from 'react-redux';
 
 export interface AppProps {
   loading: () => void;
@@ -12,8 +13,9 @@ export interface AppProps {
 }
 
 export const App = (props: AppProps) => {
+  
+  // const loading = useSelector(selectLoading);
   const loading = false;
-  // const loading = useSelector(appLoaded);
 
   if (loading) {
     props.loading();
