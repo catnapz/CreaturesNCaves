@@ -1,3 +1,8 @@
+import React from 'react';
+
+it("Dummy", () => {
+  expect(2).toBe(2);
+})
 // import { cleanup, getByText, render, wait } from '@testing-library/react';
 // import { configureStore } from '@reduxjs/toolkit';
 // import React from 'react';
