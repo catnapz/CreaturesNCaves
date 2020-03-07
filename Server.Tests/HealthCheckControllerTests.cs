@@ -1,4 +1,4 @@
-using CreaturesNCaves.Controllers;
+using Server.Controllers;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

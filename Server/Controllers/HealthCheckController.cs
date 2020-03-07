@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace CreaturesNCaves.Controllers
+namespace Server.Controllers
 {
     [ApiController]
     [Route("health")]
