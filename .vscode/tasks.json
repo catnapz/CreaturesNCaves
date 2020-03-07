@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/CreaturesNCaves.csproj",
+                "${workspaceFolder}/Server/CreaturesNCaves.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/CreaturesNCaves.csproj",
+                "${workspaceFolder}/Server/CreaturesNCaves.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,78 +32,11 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/CreaturesNCaves.csproj",
+                "${workspaceFolder}/Server/CreaturesNCaves.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
-        },
-        {
-            "type": "docker-build",
-            "label": "docker-build: debug",
-            "dependsOn": [
-                "build"
-            ],
-            "dockerBuild": {
-                "tag": "creaturesncaves:dev",
-                "target": "base",
-                "dockerfile": "${workspaceFolder}/Server/Dockerfile",
-                "context": "${workspaceFolder}",
-                "pull": true
-            },
-            "netCore": {
-                "appProject": "${workspaceFolder}/Server/CreaturesNCaves.csproj"
-            }
-        },
-        {
-            "type": "docker-build",
-            "label": "docker-build: release",
-            "dependsOn": [
-                "build"
-            ],
-            "dockerBuild": {
-                "tag": "creaturesncaves:latest",
-                "dockerfile": "${workspaceFolder}/Server/Dockerfile",
-                "context": "${workspaceFolder}",
-                "pull": true
-            },
-            "netCore": {
-                "appProject": "${workspaceFolder}/Server/CreaturesNCaves.csproj"
-            }
-        },
-        {
-            "type": "docker-run",
-            "label": "docker-run: debug",
-            "dependsOn": [
-                "docker-build"
-            ],
-            "dockerRun": {
-                "env": {
-                    "DEBUG": "*",
-                    "NODE_ENV": "development"
-                }
-            },
-            "node": {
-                "enableDebugging": true
-            }
-        },
-        {
-            "type": "docker-run",
-            "label": "docker-run: release",
-            "dependsOn": [
-                "docker-build"
-            ],
-            "platform": "node"
-        },
-        {
-            "type": "docker-build",
-            "label": "docker-build",
-            "platform": "node",
-            "dockerBuild": {
-                "dockerfile": "${workspaceFolder}/Dockerfile",
-                "context": "${workspaceFolder}",
-                "pull": true
-            }
         }
     ]
 }

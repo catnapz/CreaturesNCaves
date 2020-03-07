@@ -1,0 +1,11 @@
+-- Role: cnc_admin
+-- DROP ROLE cnc_admin;
+
+CREATE ROLE cnc_admin WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION
+  PASSWORD 'xxxxx';
