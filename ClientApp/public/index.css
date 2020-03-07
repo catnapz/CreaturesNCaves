@@ -1,0 +1,32 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+#loader {
+  height: 100vh;
+  background: #66666675;
+  backdrop-filter: blur(3px);
+  overflow: hidden;
+}
+
+#spinner {
+  position: relative;
+  top: calc(50% - 4em);
+  left: calc(50% - 4em);
+  width: 6em;
+  height: 6em;
+  border: 1.1em solid rgba(0, 0, 0, 0.2);
+  border-left: 1.1em solid #000000;
+  border-radius: 50%;
+  animation: spinAnimation 1.1s infinite cubic-bezier(0.43, 0.5, 0.76, 0.31);
+}
+
+@keyframes spinAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

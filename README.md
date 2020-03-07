@@ -7,6 +7,12 @@
 * Install dotnet aspnet runtime, dotnet runtime, and dotnet sdk (currently version 3.1) [Download](https://dotnet.microsoft.com/download)
 * Node lts (currently 12.16.0) [Download](https://nodejs.org/en/download/)
 
+## DOCKER
+* To build the docker image, run ```docker build -t cnc:latest .``` in the same directory as the `Dockerfile` file.
+* To run the image in a container, run ```docker run -it -p 8080:80 cnc:latest```. The app can now be accessed from [localhost:8080](http://localhost:8080)
+* To get into the running container, you can run ```docker exec -it <container id> bash```
+* You can retrieve the `container id` by running ```docker ps```
+
 ## BUILD INSTRUCTIONS
 * Run ```npm install``` in the ClientApp dir to install node dependancies
 * Run ```dotnet watch run``` to run app in watch mode. This starts up the server and client app, both will refresh on code changes.

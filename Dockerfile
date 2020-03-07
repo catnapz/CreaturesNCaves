@@ -79,4 +79,5 @@ WORKDIR /app/ClientApp
 COPY --from=dotnet-publish-env /ClientApp/build ./
 WORKDIR /app/Server
 COPY --from=dotnet-publish-env /Server/Publish ./
+HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost/health || exit 1
 ENTRYPOINT [ "dotnet", "CreaturesNCaves.dll" ]

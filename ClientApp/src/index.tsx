@@ -2,24 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import { createBrowserHistory } from 'history';
-import configureStore from './store/configureStore';
-import App from './App';
+import { ReduxStore, history } from './store/ReduxStore';
+import { App } from './app';
 import * as serviceWorker from './serviceWorker';
 import './index.scss';
 
-// Create browser history to use in the Redux store
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href') as string;
-const history = createBrowserHistory({ basename: baseUrl });
+// root load animation
+const loader: HTMLElement | null = document.getElementById('loader');;
+const loading = () => loader!.style.display = "block";
+const loaded = () => loader!.style.display = "none";
 
-// TODO: export creation of store in separate file
-// Get the application-wide store instance, prepopulating with state from the server where available.
-const store = configureStore(history);
+// Init the API client
+// const apolloClient = new ApolloClient({
+//   uri: 'https://'+ apiEndpointHostname +'/api/graphql'
+// });
 
 ReactDOM.render(
-    <Provider store={store}>
+    <Provider store={ReduxStore}>
         <ConnectedRouter history={history}>
-            <App />
+            <App loading={loading} loaded={loaded}/>
         </ConnectedRouter>
     </Provider>,
     document.getElementById('root')
