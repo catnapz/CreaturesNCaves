@@ -232,3 +232,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# Generated files
+Model/Database/DummyData/*.csv
