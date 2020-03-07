@@ -56,7 +56,7 @@ WORKDIR /Server
 # Install dependencies
 RUN dotnet restore
 # Build Release
-RUN dotnet build "CreaturesNCaves.csproj" -c Release -o ./Build
+RUN dotnet build "Server.csproj" -c Release -o ./Build
 
 
 # == Server Production Publish ==
@@ -69,7 +69,7 @@ RUN npm rebuild node-sass
 
 WORKDIR /Server
 # Publish Release
-RUN dotnet publish "CreaturesNCaves.csproj" -c Release -o ./Publish
+RUN dotnet publish "Server.csproj" -c Release -o ./Publish
 
 
 # == Creatures & Caves ==

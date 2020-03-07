@@ -18,11 +18,11 @@
 * Run ```dotnet watch run``` to run app in watch mode. This starts up the server and client app, both will refresh on code changes.
 * To build a production build of the app, you can use the convenience bash script ```buildProd.sh``` or run the following steps
     * Delete the node_modules folder in ClientApp
-    * Run ```dotnet publish Server/CreaturesNCaves.csproj -c Release -o ./dist/Server``` from the App's root folder
+    * Run ```dotnet publish Server/Server.csproj -c Release -o ./dist/Server``` from the App's root folder
     * Create a folder named ClientApp in the created dist folder and copy over the contents in the ClientApp/build folder into there
 
 ## RUN INSTRUCTIONS
-* To run the app, use ```dotnet run --project Server/CreaturesNCaves.csproj``` from the root directory or ```dotnet run``` from the Server directory
+* To run the app, use ```dotnet run --project Server/Server.csproj``` from the root directory or ```dotnet run``` from the Server directory
 * To run the app in watch mode, use ```dotnet watch run``` from the Server directory.
 
 ## TEST INSTRUCTIONS
