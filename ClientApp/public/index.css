@@ -1,9 +1,13 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 #loader {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #00000075;
+  height: 100vh;
+  background: #66666675;
   backdrop-filter: blur(3px);
+  overflow: hidden;
 }
 
 #spinner {
@@ -15,7 +19,7 @@
   border: 1.1em solid rgba(0, 0, 0, 0.2);
   border-left: 1.1em solid #000000;
   border-radius: 50%;
-  animation: spinAnimation 1.1s infinite linear;
+  animation: spinAnimation 1.1s infinite cubic-bezier(0.43, 0.5, 0.76, 0.31);
 }
 
 @keyframes spinAnimation {
