@@ -15,12 +15,12 @@ namespace CreaturesNCaves.EntityFramework.Models
         {
         }
 
-        public virtual DbSet<Campaigns> Campaigns { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Campaign> Campaigns { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Campaigns>(entity =>
+            modelBuilder.Entity<Campaign>(entity =>
             {
                 entity.HasKey(e => e.CampaignId)
                     .HasName("campaign_id");
@@ -48,10 +48,10 @@ namespace CreaturesNCaves.EntityFramework.Models
                     .WithMany(p => p.Campaigns)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("users_user_id_fkey");
+                    .HasConstraintName("campaigns_user_id_fkey");
             });
 
-            modelBuilder.Entity<Users>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.UserId)
                     .HasName("users_pkey");

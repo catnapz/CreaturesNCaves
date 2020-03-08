@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace CreaturesNCaves.EntityFramework.Models
 {
-    public partial class Users
+    public partial class User
     {
-        public Users()
+        public User()
         {
-            Campaigns = new HashSet<Campaigns>();
+            Campaigns = new HashSet<Campaign>();
         }
 
         public string UserId { get; set; }
@@ -16,6 +16,6 @@ namespace CreaturesNCaves.EntityFramework.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<Campaigns> Campaigns { get; set; }
+        public virtual ICollection<Campaign> Campaigns { get; set; }
     }
 }

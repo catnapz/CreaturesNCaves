@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CreaturesNCaves.EntityFramework.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server.Controllers
 {
@@ -25,13 +26,13 @@ namespace Server.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            string name = "";
-            foreach (var user in _db.Users)
+            var campaigns = _db.Campaigns.Include(campaign => campaign.User);
+            foreach (var campaign in _db.Campaigns)
             {
-                name = user.Name;
-                _logger.LogError(name);
+                var user = campaign.UserId;
+                _logger.LogDebug(user);
             }
-            JsonResult result = new JsonResult(name);
+            JsonResult result = new JsonResult(_db.Campaigns);
             return result;
         }
     }
