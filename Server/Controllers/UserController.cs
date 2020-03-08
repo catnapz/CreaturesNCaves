@@ -24,16 +24,56 @@ namespace Server.Controllers
         }
 
         [HttpGet]
-        public JsonResult Get()
+        public IActionResult Get()
         {
-            var campaigns = _db.Campaigns.Include(campaign => campaign.User);
-            foreach (var campaign in _db.Campaigns)
+            // var campaigns = _db.Campaigns.Include(campaign => campaign.User).ToList();
+            var users = _db.Users
+                .Include(user => user.Campaigns)
+                .ToList();
+            
+            var dtos = new List<UserDto>();
+            if(users.Any())
             {
-                var user = campaign.UserId;
-                _logger.LogDebug(user);
+                foreach(var user in users)
+                {
+                    var dto = new UserDto();
+                    dto.UserId = user.UserId;
+                    dto.Description = user.Description;
+                    dto.Name = user.Description;
+                    dto.Username = user.Username;
+                    foreach(var campaign in user.Campaigns)
+                    {
+                        dto.CampaignIds.Add(campaign.CampaignId);
+                    }
+                    dtos.Add(dto);
+                }
+                return new JsonResult(dtos);
             }
-            JsonResult result = new JsonResult(_db.Campaigns);
-            return result;
+            return new NotFoundResult();            
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(string id)
+        {
+            var users = _db.Users
+                .Where(user => user.UserId == id)
+                .Include(user => user.Campaigns);;
+                
+            if(users.Any())
+            {
+                var user = users.First();
+                var dto = new UserDto();
+                dto.UserId = user.UserId;
+                dto.Description = user.Description;
+                dto.Name = user.Description;
+                dto.Username = user.Username;
+                foreach(var campaign in user.Campaigns)
+                {
+                    dto.CampaignIds.Add(campaign.CampaignId);
+                }
+                return new JsonResult(dto);
+            }
+            return new NotFoundResult();
         }
     }
 }
