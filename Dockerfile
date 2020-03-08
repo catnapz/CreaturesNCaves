@@ -39,6 +39,9 @@ WORKDIR /ClientApp
 COPY --from=node-test-env /ClientApp ./
 
 # Copy over source files
+WORKDIR /EntityFramework
+COPY ./EntityFramework ./
+RUN rm -rf Database
 WORKDIR /Server
 COPY ./Server ./
 WORKDIR /Server.Tests
@@ -73,6 +76,7 @@ RUN dotnet publish "Server.csproj" -c Release -o ./Publish
 
 
 # == Creatures & Caves ==
+# TODO: Bring over EntityFramework published?
 FROM base AS final
 EXPOSE 80
 WORKDIR /app/ClientApp
