@@ -234,4 +234,4 @@ _Pvt_Extensions
 .fake/
 
 # Generated files
-Model/Database/DummyData/*.csv
+EntityFramework/Database/DummyData/*.csv

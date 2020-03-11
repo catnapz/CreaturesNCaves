@@ -13,7 +13,7 @@ Do either of the following:
 * Follow [these tutorials](https://www.postgresqltutorial.com/install-postgresql/)
 
 ### Setup database
-* Once psql is setup, log into psql as the postgres user.
+* Once psql is setup, log into psql as the postgres user. ``` psql -h 127.0.0.1 -U postgres ```
 
 * Then run the SQL scripts under the Scripts directory in order (filename prefix 0_ is before 1_)
 
@@ -24,4 +24,9 @@ Do either of the following:
 * Import the generated csv files into the database
   * Using pgAdmin, right click on the table and select `Import/Export`
   * Using cli, make an SQL call using the template below in the cnc database as the cnc_admin user:
-  * ```COPY public.campaigns (campaign_id, user_id, name, description) FROM 'path/to/generated.csv' CSV QUOTE '\"' ESCAPE ''''; ```
+    * ```COPY public.campaigns (campaign_id, user_id, name, description) FROM 'path/to/generated.csv' CSV QUOTE '\"' ESCAPE ''''; ```
+    * OR the psql `\copy` cmd. ```  \copy campaigns  FROM ..path/tp/csv .csv DELIMITER ',' CSV ```
+  
+
+### NOTE: To log into psql as cnc_admin and connect to the cnc database:
+`psql -h 127.0.0.1 -U cnc_admin cnc`
