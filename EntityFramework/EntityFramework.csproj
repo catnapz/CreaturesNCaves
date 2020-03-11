@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>CreaturesNCaves.EntityFramework</AssemblyName>
     <RootNamespace>CreaturesNCaves.EntityFramework</RootNamespace>
   </PropertyGroup>
 

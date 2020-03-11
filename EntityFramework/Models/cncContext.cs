@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace CreaturesNCaves.EntityFramework.Models
+namespace EntityFramework.Models
 {
     public partial class cncContext : DbContext
     {

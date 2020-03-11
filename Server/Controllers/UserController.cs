@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using CreaturesNCaves.EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
+using EntityFramework.Models;
 
 namespace Server.Controllers
 {
