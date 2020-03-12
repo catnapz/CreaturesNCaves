@@ -14,10 +14,10 @@ namespace Server.Controllers
     public class UserController : ControllerBase
     {
 
-        private readonly cncContext _db;
+        private readonly DatabaseContext _db;
         private readonly ILogger<UserController> _logger;
 
-        public UserController(ILogger<UserController> logger, cncContext context)
+        public UserController(ILogger<UserController> logger, DatabaseContext context)
         {
             _db = context;
             _logger = logger;
