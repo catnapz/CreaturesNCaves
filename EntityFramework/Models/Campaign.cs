@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CreaturesNCaves.EntityFramework.Models
+namespace EntityFramework.Models
 {
     public partial class Campaign
     {

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using CreaturesNCaves.EntityFramework.Models;
+using EntityFramework.Models;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -25,7 +25,7 @@ namespace Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<cncContext>(options => 
+            services.AddDbContext<DatabaseContext>(options => 
             {
                 options.UseNpgsql("Host=localhost;Port=5433;Database=cnc;Username=cnc_admin;Password=2674");
             });

@@ -2,15 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace CreaturesNCaves.EntityFramework.Models
+namespace EntityFramework.Models
 {
-    public partial class cncContext : DbContext
+    public partial class DatabaseContext : DbContext
     {
-        public cncContext()
+        public DatabaseContext()
         {
         }
 
-        public cncContext(DbContextOptions<cncContext> options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
         }
@@ -30,10 +30,6 @@ namespace CreaturesNCaves.EntityFramework.Models
                 entity.Property(e => e.CampaignId)
                     .HasColumnName("campaign_id")
                     .HasMaxLength(256);
-
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(1024);
 
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
