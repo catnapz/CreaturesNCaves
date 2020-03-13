@@ -65,7 +65,7 @@ namespace Server.Controllers
                 var dto = new UserDto();
                 dto.UserId = user.UserId;
                 dto.Description = user.Description;
-                dto.Name = user.Description;
+                dto.Name = user.Name;
                 dto.Username = user.Username;
                 foreach(var campaign in user.Campaigns)
                 {
