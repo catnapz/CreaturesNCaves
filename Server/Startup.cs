@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using HotChocolate;
 using HotChocolate.AspNetCore;
 using EntityFramework.Models;
+using Server.GraphQL.Types;
 
 namespace Server
 {
@@ -33,7 +34,8 @@ namespace Server
 
       services.AddGraphQL(
         SchemaBuilder.New()
-        .AddQueryType<CampaignQueryType>()
+        .AddQueryType<QueryType>()
+        .AddType<UserType>()
         .Create());
 
       services.AddControllersWithViews();
