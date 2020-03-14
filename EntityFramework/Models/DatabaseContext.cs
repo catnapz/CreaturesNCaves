@@ -35,6 +35,10 @@ namespace EntityFramework.Models
                     .HasColumnName("name")
                     .HasMaxLength(256);
 
+                entity.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .HasMaxLength(1024);
+
                 entity.Property(e => e.UserId)
                     .IsRequired()
                     .HasColumnName("user_id")

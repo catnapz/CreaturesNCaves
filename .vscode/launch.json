@@ -9,7 +9,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/Server/bin/Debug/netcoreapp3.1/CreaturesNCaves.Server.dll",
+      "program": "${workspaceFolder}/Server/bin/Debug/netcoreapp3.1/Server.dll",
       "args": [],
       "cwd": "${workspaceFolder}/Server",
       "stopAtEntry": false,
