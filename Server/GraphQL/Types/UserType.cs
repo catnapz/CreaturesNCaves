@@ -8,6 +8,9 @@ namespace Server.GraphQL.Types
   {
     protected override void Configure(IObjectTypeDescriptor<User> descriptor)
     {
+      
+      Name = "User";
+      Description = "GraphQL user schema.";
 
       descriptor.Field(t => t.UserId).Type<NonNullType<IdType>>();
 
@@ -18,7 +21,9 @@ namespace Server.GraphQL.Types
       descriptor.Field(t => t.Description);
 
       descriptor.Field(t => t.Campaigns);
-
+      
+      descriptor.Field(t => t.HashedPassword).Ignore();
+      
       descriptor.Field<UserResolvers>(r => r.GetCampaigns(default))
           .Name("campaigns");
 
