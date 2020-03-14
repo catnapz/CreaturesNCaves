@@ -9,11 +9,13 @@ namespace Server
       base.Configure(descriptor);
 
       descriptor
-        .Field(f => f.GetAllCampaigns(default));
+        .Field(f => f.GetAllCampaigns(default))
+        .Name("allCampaigns");
 
       descriptor
         .Field(f => f.GetCampaignByUserId(default, default))
-        .Argument("userId", a => a.Type<StringType>());
+        .Name("campaigns")
+        .Argument("userId", a => a.Type<NonNullType<StringType>>());
     }
   }
 }

@@ -31,11 +31,10 @@ namespace Server
         options.UseNpgsql("Host=localhost;Port=5433;Database=cnc;Username=cnc_admin;Password=2674");
       });
 
-      services.AddGraphQL(SchemaBuilder
-          .New()
-          .AddQueryType<CampaignQueryType>()
-          .Create());
-
+      services.AddGraphQL(
+        SchemaBuilder.New()
+        .AddQueryType<CampaignQueryType>()
+        .Create());
 
       services.AddControllersWithViews();
 

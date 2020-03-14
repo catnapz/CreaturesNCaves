@@ -10,16 +10,20 @@ namespace Server
 {
   public class CampaignQueries
   {
-    // GetCampaigns: Return a list of all Campaigns
-    // Notice the [Service]. It's an auto hook up from HotChocolate
+    
+    /// <summary>
+    /// Return a list of all campaigns
+    /// </summary>
     public async Task<List<Campaign>> GetAllCampaigns([Service] DatabaseContext dbContext) =>
       await dbContext
         .Campaigns
-        .AsNoTracking()
+        .IgnoreQueryFilters()
         .OrderBy(campaignName => campaignName.Name)
         .ToListAsync();
 
-    // GetCampaign: Return a list of Campaigns by userId
+    /// <summary>
+    /// Return a list of all campaigns for a user
+    /// </summary>
     public async Task<List<Campaign>> GetCampaignByUserId([Service] DatabaseContext dbContext, string userId) =>
       await dbContext
         .Campaigns

@@ -9,41 +9,42 @@ using EntityFramework.Models;
 
 namespace Server.Controllers
 {
-    [ApiController]
-    [Route("campaign")]
-    public class CampaignController : ControllerBase
+  [ApiController]
+  [Route("campaign")]
+  public class CampaignController : ControllerBase
+  {
+
+    private readonly DatabaseContext _db;
+    private readonly ILogger<CampaignController> _logger;
+
+    public CampaignController(ILogger<CampaignController> logger, DatabaseContext context)
     {
-
-        private readonly DatabaseContext _db;
-        private readonly ILogger<CampaignController> _logger;
-
-        public CampaignController(ILogger<CampaignController> logger, DatabaseContext context)
-        {
-            _db = context;
-            _logger = logger;
-        }
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var Campaigns = _db.Campaigns
-                .ToList();
-            
-            var dtos = new List<CampaignDto>();
-            if(Campaigns.Any())
-            {
-                foreach(var campaign in Campaigns)
-                {
-                    var dto = new CampaignDto();
-                    dto.CampaignId = campaign.CampaignId;
-                    dto.Description = campaign.Description;
-                    dto.Name = campaign.Description;
-                    dto.UserId = campaign.UserId;
-                    dtos.Add(dto);
-                }
-                return new JsonResult(dtos);
-            }
-            return new NotFoundResult();            
-        }
+      _db = context;
+      _logger = logger;
     }
+
+    [HttpGet]
+    public IActionResult Get()
+    {
+      List<Campaign> list = _db.Campaigns
+          .ToList();
+      var Campaigns = list;
+
+      var dtos = new List<CampaignDto>();
+      if (Campaigns.Any())
+      {
+        foreach (var campaign in Campaigns)
+        {
+          var dto = new CampaignDto();
+          dto.CampaignId = campaign.CampaignId;
+          dto.Description = campaign.Description;
+          dto.Name = campaign.Description;
+          dto.UserId = campaign.UserId;
+          dtos.Add(dto);
+        }
+        return new JsonResult(dtos);
+      }
+      return new NotFoundResult();
+    }
+  }
 }

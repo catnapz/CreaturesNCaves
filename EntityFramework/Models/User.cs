@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HotChocolate;
 
 namespace EntityFramework.Models
 {
@@ -34,6 +35,8 @@ namespace EntityFramework.Models
 
         public string UserId { get; set; }
         public string Username { get; set; }
+        
+        // [GraphQLIgnore]
         public string HashedPassword { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
