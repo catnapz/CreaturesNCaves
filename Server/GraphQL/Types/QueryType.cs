@@ -6,6 +6,9 @@ namespace Server.GraphQL.Types
   {
     protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
     {
+      Name = "Query";
+      Description = "GraphQL main query schema.";
+
       base.Configure(descriptor);
 
       descriptor
