@@ -38,19 +38,15 @@ ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 WORKDIR /ClientApp
 COPY --from=node-test-env /ClientApp ./
 
-# Copy over source files
-WORKDIR /EntityFramework
-COPY ./EntityFramework ./
-RUN rm -rf Database
-WORKDIR /Server
-COPY ./Server ./
-WORKDIR /Server.Tests
-COPY ./Server.Tests ./
-# Install dependencies
-RUN dotnet restore
-# Run unit test
-RUN dotnet test Server.Tests.csproj "/p:CollectCoverage=true" "/p:CoverletOutput=TestResults/" "/p:CoverletOutputFormat=\"opencover\"" "/p:Threshold=0"
-# TODO: Figure out how to extract coverage reports in CI pipeline
+WORKDIR /
+RUN mkdir EntityFramework EntityFramework.Tests Server Server.Tests
+COPY ./EntityFramework ./EntityFramework
+COPY ./EntityFramework.Tests ./EntityFramework.Tests
+COPY ./Server ./Server
+COPY ./Server.Tests ./Server.Tests
+COPY ./CreaturesNCaves.sln .
+RUN rm -rf ./EntityFramework/Database
+RUN dotnet test "/p:CollectCoverage=true" "/p:CoverletOutput=TestResults/" "/p:CoverletOutputFormat=\"opencover\"" "/p:Threshold=0"
 
 
 # == Server Release Build ==
