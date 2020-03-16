@@ -1,4 +1,4 @@
-name: Creatures & Caves Master Pipeline
+name: Build Pipeline
 
 on:
   push:
@@ -17,29 +17,34 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       
-    - name: Run ClientApp unit tests
-      run: docker build -t cnc/clientapptests:latest --target node-test-env .  
+    - name: Run Frontend unit tests
+      run: docker build -t cnc/frontendtests:latest --target node-test-env .  
     
-    - name: Extract ClientApp Coverage Reports
+    - name: Extract Frontend Coverage Reports
       run: |
-        CID=$(docker create cnc/clientapptests:latest)
+        CID=$(docker create cnc/frontendtests:latest)
         mkdir -p TestResults
-        docker cp $CID:/ClientApp/coverage/. - > TestResults/clientappreports.tar
+        docker cp $CID:/ClientApp/coverage/. - > TestResults/frontend-test-report.tar
         docker rm -v $CID
         cd TestResults
-        tar -xvf clientappreports.tar
+        tar -xvf frontend-test-report.tar
+        mv coverage-final.json frontend.json
         
-    - name: Run Server unit tests
-      run: docker build -t cnc/servertests:latest --target dotnet-test-env .  
+    - name: Run Backend unit tests
+      run: docker build -t cnc/backendtests:latest --target dotnet-test-env .  
     
-    - name: Extract Server Coverage Reports
+    - name: Extract Backend Coverage Reports
       run: |
-        CID=$(docker create cnc/servertests:latest)
+        CID=$(docker create cnc/backendtests:latest)
         mkdir -p TestResults
-        docker cp $CID:/Server.Tests/TestResults/. - > TestResults/serverreports.tar
+        docker cp $CID:/Server.Tests/TestResults/. - > TestResults/server-test-report.tar
+        docker cp $CID:/EntityFramework.Tests/TestResults/. - > TestResults/entityframework-test-report.tar
         docker rm -v $CID
         cd TestResults
-        tar -xvf serverreports.tar
+        tar -xvf entityframework-test-report.tar
+        mv coverage.opencover.xml entityframework.opencover.xml
+        tar -xvf server-test-report.tar 
+        mv coverage.opencover.xml server.opencover.xml        
         
     - name: Upload Test Results Artifacts
       uses: actions/upload-artifact@v1.0.0
@@ -57,7 +62,7 @@ jobs:
         # Repository upload token - get it from codecov.io
         token: c148f571-5080-4421-b1ec-72a4d397a7db
         # Path to coverage file to upload
-        file: TestResults/coverage-final.json
+        file: TestResults/frontend.json
         # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
         flags: unittests
         # Specify whether or not CI build should fail if Codecov runs into an error during upload
@@ -71,10 +76,22 @@ jobs:
         # Repository upload token - get it from codecov.io
         token: c148f571-5080-4421-b1ec-72a4d397a7db
         # Path to coverage file to upload
-        file: TestResults/coverage.opencover.xml
+        file: TestResults/server.opencover.xml
         # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
         flags: unittests
         # Specify whether or not CI build should fail if Codecov runs into an error during upload
         fail_ci_if_error: true
-
-  
+        
+    - name: Upload EntityFramework TestResults to Codecov
+      uses: codecov/codecov-action@v1.0.5
+      with:
+        # User defined upload name. Visible in Codecov UI
+        name: EntityFramework
+        # Repository upload token - get it from codecov.io
+        token: c148f571-5080-4421-b1ec-72a4d397a7db
+        # Path to coverage file to upload
+        file: TestResults/entityframework.opencover.xml
+        # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
+        flags: unittests
+        # Specify whether or not CI build should fail if Codecov runs into an error during upload
+        fail_ci_if_error: true
