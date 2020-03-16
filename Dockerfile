@@ -51,11 +51,11 @@ RUN dotnet test "/p:CollectCoverage=true" "/p:CoverletOutput=TestResults/" "/p:C
 
 # == Server Release Build ==
 FROM dotnet-test-env AS dotnet-build-env
-WORKDIR /Server
+WORKDIR /
 # Install dependencies
 RUN dotnet restore
 # Build Release
-RUN dotnet build "Server.csproj" -c Release -o ./Build
+RUN dotnet build -c Release -o ./Build
 
 
 # == Server Production Publish ==
@@ -66,18 +66,17 @@ ENV NODE_ENV production
 RUN npm install --production
 RUN npm rebuild node-sass
 
-WORKDIR /Server
+WORKDIR /
 # Publish Release
-RUN dotnet publish "Server.csproj" -c Release -o ./Publish
+RUN dotnet publish -c Release -o ./Publish
 
 
 # == Creatures & Caves ==
-# TODO: Bring over EntityFramework published?
 FROM base AS final
 EXPOSE 80
 WORKDIR /app/ClientApp
 COPY --from=dotnet-publish-env /ClientApp/build ./
 WORKDIR /app/Server
-COPY --from=dotnet-publish-env /Server/Publish ./
+COPY --from=dotnet-publish-env /Publish ./
 HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost/health || exit 1
-ENTRYPOINT [ "dotnet", "CreaturesNCaves.dll" ]
+ENTRYPOINT [ "dotnet", "Server.dll" ]
