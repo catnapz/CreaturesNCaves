@@ -1,4 +1,4 @@
-![Creatures & Caves Master Pipeline](https://github.com/ansh-projects/CreaturesNCaves/workflows/Creatures%20&%20Caves%20Master%20Pipeline/badge.svg?branch=master)
+![Build Pipeline](https://github.com/ansh-projects/CreaturesNCaves/workflows/Build%20Pipeline/badge.svg)
 
 [![codecov](https://codecov.io/gh/ansh-projects/CreaturesNCaves/branch/master/graph/badge.svg)](https://codecov.io/gh/ansh-projects/CreaturesNCaves)
 
