@@ -8,7 +8,7 @@ CREATE TABLE public.user_tokens
     login_provider text COLLATE pg_catalog."default" NOT NULL,
     name text COLLATE pg_catalog."default" NOT NULL,
     value text COLLATE pg_catalog."default",
-    CONSTRAINT user_tokens_pkey" PRIMARY KEY (user_id, login_provider, name),
+    CONSTRAINT user_tokens_pkey PRIMARY KEY (user_id, login_provider, name),
     CONSTRAINT user_tokens_users_user_id_fkey FOREIGN KEY (user_id)
         REFERENCES public.users (id) MATCH SIMPLE
         ON UPDATE NO ACTION
