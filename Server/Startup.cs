@@ -1,6 +1,8 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -37,12 +39,6 @@ namespace Server
         options.UseSnakeCaseNamingConvention();
       });
 
-      services.AddGraphQL(
-        SchemaBuilder.New()
-        .AddQueryType<QueryType>()
-        .AddType<UserType>()
-        .Create());
-
       services.AddControllersWithViews();
 
       // In production, the React files will be served from this directory
@@ -50,6 +46,43 @@ namespace Server
       {
         configuration.RootPath = "../ClientApp";
       });
+
+      services.Configure<IdentityOptions>(options =>
+      {
+        // Password strength settings
+        options.Password.RequireDigit = true;
+        options.Password.RequireLowercase = true;
+        options.Password.RequireNonAlphanumeric = true;
+        options.Password.RequiredLength = 6;
+        options.Password.RequiredUniqueChars = 1;
+
+        // Lockout settings
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+        options.Lockout.MaxFailedAccessAttempts = 5;
+        options.Lockout.AllowedForNewUsers = true;
+
+        // User settings
+        options.User.AllowedUserNameCharacters = 
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+        options.User.RequireUniqueEmail = true;
+      });
+
+      services.ConfigureApplicationCookie(options => 
+      {
+        // Cookie settings
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+        options.LoginPath = "Identity/Account/Login";
+        options.AccessDeniedPath = "Identity/Account/AccessDenied";
+        options.SlidingExpiration = true;
+      });
+
+      services.AddGraphQL(
+        SchemaBuilder.New()
+        .AddQueryType<QueryType>()
+        .AddType<UserType>()
+        .Create());
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
