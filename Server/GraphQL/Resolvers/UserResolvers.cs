@@ -21,7 +21,7 @@ namespace Server.GraphQL.Resolvers
     public IEnumerable<Campaign> GetCampaign([Parent] User user, string campaignId) => user
         .Campaigns
         .Where(campaign => 
-          campaign.UserId == user.UserId && campaign.CampaignId == campaignId
+          campaign.UserId == user.Id && campaign.CampaignId == campaignId
         )
         .OrderBy(campaignName => campaignName.Name)
         .ToList();

@@ -31,23 +31,9 @@ namespace Server.Controllers
                 .Include(user => user.Campaigns)
                 .ToList();
             
-            var dtos = new List<UserDto>();
             if(users.Any())
             {
-                foreach(var user in users)
-                {
-                    var dto = new UserDto();
-                    dto.UserId = user.UserId;
-                    dto.Description = user.Description;
-                    dto.Name = user.Description;
-                    dto.Username = user.Username;
-                    foreach(var campaign in user.Campaigns)
-                    {
-                        dto.CampaignIds.Add(campaign.CampaignId);
-                    }
-                    dtos.Add(dto);
-                }
-                return new JsonResult(dtos);
+                return new JsonResult(users);
             }
             return new NotFoundResult();            
         }
@@ -56,22 +42,12 @@ namespace Server.Controllers
         public IActionResult Get(string id)
         {
             var users = _db.Users
-                .Where(user => user.UserId == id)
+                .Where(user => user.Id == id)
                 .Include(user => user.Campaigns);;
                 
             if(users.Any())
             {
-                var user = users.First();
-                var dto = new UserDto();
-                dto.UserId = user.UserId;
-                dto.Description = user.Description;
-                dto.Name = user.Name;
-                dto.Username = user.Username;
-                foreach(var campaign in user.Campaigns)
-                {
-                    dto.CampaignIds.Add(campaign.CampaignId);
-                }
-                return new JsonResult(dto);
+                return new JsonResult(users);
             }
             return new NotFoundResult();
         }

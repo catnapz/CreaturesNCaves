@@ -19,7 +19,7 @@ namespace Server.Tests
             using (var context = new DatabaseContext(ContextOptions))
             {
                 context.Campaigns.Add(new Campaign { CampaignId = "1", UserId = "1", Name = "campaign1", Description = "Descrition1" });
-                context.Users.Add(new User { UserId = "1", Username = "username1", Name = "User1", Description = "User2", HashedPassword = "1234" });
+                context.Users.Add(new User { Id = "1", UserName = "username1", Name = "User1", Description = "User2", PasswordHash = "1234" });
                 context.SaveChanges();
             }
         }

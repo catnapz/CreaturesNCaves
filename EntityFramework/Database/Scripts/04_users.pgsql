@@ -20,6 +20,7 @@ CREATE TABLE public.users
     lockout_enabled integer NOT NULL,
     access_failed_count integer NOT NULL,
     description text COLLATE pg_catalog."default",
+    name text COLLATE pg_catalog."default",
     CONSTRAINT users_pkey PRIMARY KEY (id)
 )
 
@@ -27,7 +28,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.users
     OWNER to cnc_admin;
--- Index: EmailIndex
+-- Index: email_index
 
 -- DROP INDEX public.email_index;
 
@@ -35,7 +36,7 @@ CREATE INDEX email_index
     ON public.users USING btree
     (normalized_email COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
--- Index: UserNameIndex
+-- Index: user_name_index
 
 -- DROP INDEX public.user_name_index;
 

@@ -1,46 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using HotChocolate;
+using Microsoft.AspNetCore.Identity;
 
 namespace EntityFramework.Models
 {
-
-    public class UserDto
-    {
-        private List<string> _campaignIds;
-
-        public string UserId { get; set; }
-        public string Username { get; set; }
-        public List<string> CampaignIds 
-        { 
-            get
-            {
-                return _campaignIds ?? (_campaignIds = new List<string>());
-            } 
-            set
-            {
-                _campaignIds = value;
-            } 
-        }
-        public string Name { get; set; }
-        public string Description { get; set; }
-    }
-
-    public partial class User
+    public partial class User : IdentityUser
     {
         public User()
         {
             Campaigns = new HashSet<Campaign>();
+            UserClaims = new HashSet<UserClaim>();
+            UserLogins = new HashSet<UserLogin>();
+            UserRoles = new HashSet<UserRole>();
+            UserTokens = new HashSet<UserToken>();
         }
 
-        public string UserId { get; set; }
-        public string Username { get; set; }
-        
-        // [GraphQLIgnore]
-        public string HashedPassword { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
         public virtual ICollection<Campaign> Campaigns { get; set; }
+        public virtual ICollection<UserClaim> UserClaims { get; set; }
+        public virtual ICollection<UserLogin> UserLogins { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<UserToken> UserTokens { get; set; }
     }
 }
