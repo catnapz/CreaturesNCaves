@@ -1,30 +1,21 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using IdentityServer4.EntityFramework.Options;
 
 namespace EntityFramework.Models
 {
-    public partial class DatabaseContext : DbContext
+    public partial class DatabaseContext : ApiAuthorizationDbContext<User>
     {
-        public DatabaseContext()
-        {
-        }
-
-        public DatabaseContext(DbContextOptions<DatabaseContext> options)
-            : base(options)
+        public DatabaseContext(
+            DbContextOptions options,
+            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
 
         public virtual DbSet<Campaign> Campaigns { get; set; }
-        public virtual DbSet<DeviceCodeEntity> DeviceCodes { get; set; }
-        public virtual DbSet<PersistedGrant> PersistedGrants { get; set; }
-        public virtual DbSet<RoleClaim> RoleClaims { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<UserClaim> UserClaims { get; set; }
-        public virtual DbSet<UserLogin> UserLogins { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<UserToken> UserTokens { get; set; }
-        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,7 +43,7 @@ namespace EntityFramework.Models
                     .HasConstraintName("campaigns_users_user_id_fkey");
             });
 
-            modelBuilder.Entity<DeviceCodeEntity>(entity =>
+            modelBuilder.Entity<DeviceFlowCode>(entity =>
             {
                 entity.HasKey(e => e.UserCode)
                     .HasName("device_codes_pkey");

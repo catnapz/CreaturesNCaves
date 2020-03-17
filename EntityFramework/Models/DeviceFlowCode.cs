@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EntityFramework.Models
 {
-    public partial class DeviceCodeEntity
+    public partial class DeviceFlowCode
     {
         public string UserCode { get; set; }
         public string DeviceCode { get; set; }
