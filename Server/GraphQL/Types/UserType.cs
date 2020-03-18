@@ -16,16 +16,12 @@ namespace Server.GraphQL.Types
 
       descriptor.Field(t => t.UserName).Type<NonNullType<StringType>>();
           
-      descriptor.Field(t => t.PasswordHash).Ignore();
-      descriptor.Field(t => t.UserClaims).Ignore();
-      descriptor.Field(t => t.UserLogins).Ignore();
-      descriptor.Field(t => t.UserRoles).Ignore();
-      descriptor.Field(t => t.UserTokens).Ignore();
-      descriptor.Field(t => t.ConcurrencyStamp).Ignore();
-      descriptor.Field(t => t.EmailConfirmed).Ignore();
-      descriptor.Field(t => t.TwoFactorEnabled).Ignore();
-      descriptor.Field(t => t.SecurityStamp).Ignore();
-      descriptor.Field(t => t.PhoneNumberConfirmed).Ignore();
+      // descriptor.Field(t => t.PasswordHash).Ignore();
+      // descriptor.Field(t => t.ConcurrencyStamp).Ignore();
+      // descriptor.Field(t => t.EmailConfirmed).Ignore();
+      // descriptor.Field(t => t.TwoFactorEnabled).Ignore();
+      // descriptor.Field(t => t.SecurityStamp).Ignore();
+      // descriptor.Field(t => t.PhoneNumberConfirmed).Ignore();
       
       descriptor.Field<UserResolvers>(r => r.GetCampaigns(default))
           .Name("campaigns");

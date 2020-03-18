@@ -36,7 +36,6 @@ namespace Server
         {
           b.MigrationsAssembly("Server");
         });
-        options.UseSnakeCaseNamingConvention();
       });
 
       services.AddControllersWithViews();
