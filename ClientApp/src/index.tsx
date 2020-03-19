@@ -14,33 +14,33 @@ const loader: HTMLElement | null = document.getElementById("loader");
 const loading = () => (loader!.style.display = "block");
 const loaded = () => (loader!.style.display = "none");
 
-const apiEndpointHostname = "localhost:5001";
-const apolloClient = new ApolloClient({
-  uri: "https://" + apiEndpointHostname + "/api"
-});
+// const apiEndpointHostname = "localhost:5001";
+// const apolloClient = new ApolloClient({
+//   uri: "https://" + apiEndpointHostname + "/api"
+// });
 
-apolloClient
-  .query({
-    query: gql`
-      {
-        user(userId: "1") {
-          name
-          campaign(campaignId: "11") {
-            name
-            campaignId
-          }
-        }
-      }
-    `
-  })
-  .then(result => console.log(result));
+// apolloClient
+//   .query({
+//     query: gql`
+//       {
+//         user(userId: "1") {
+//           name
+//           campaign(campaignId: "11") {
+//             name
+//             campaignId
+//           }
+//         }
+//       }
+//     `
+//   })
+//   .then(result => console.log(result));
 
 ReactDOM.render(
   <Provider store={ReduxStore}>
     <ConnectedRouter history={history}>
-      <ApolloProvider client={apolloClient}>
+      {/* <ApolloProvider client={apolloClient}> */}
         <App loading={loading} loaded={loaded} />
-      </ApolloProvider>
+      {/* </ApolloProvider> */}
     </ConnectedRouter>
   </Provider>,
   document.getElementById("root")

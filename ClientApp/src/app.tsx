@@ -3,9 +3,12 @@ import { Route } from 'react-router';
 import { Layout } from './components/layout/layout';
 import { Home } from './components/home';
 import { Counter } from './components/counter/counter';
-
 import './app.scss'
 import { useSelector } from 'react-redux';
+import { fromPromise } from 'apollo-boost';
+import ApiAuthorizationRoutes from './api-authorization/ApiAuthorizationRoutes';
+import AuthorizeRoute from './api-authorization/AuthorizeRoute';
+import { ApplicationPaths } from './api-authorization/ApiAuthorizationConstants';
 
 export interface AppProps {
   loading: () => void;
@@ -29,8 +32,9 @@ export const App = (props: AppProps) => {
       <>
         <Layout>
           <Route exact path='/' component={Home} />
-          <Route path='/counter' component={Counter} />
-          {/* <Route path='/fetch-data/:startDateIndex?' component={FetchData} /> */}
+          {/* <AuthRoute path='/counter' component={Counter} /> */}
+          <AuthorizeRoute path='/counter' component={Counter} />
+          <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
         </Layout>
       </>
     );
