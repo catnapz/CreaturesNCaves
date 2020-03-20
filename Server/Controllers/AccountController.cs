@@ -40,6 +40,26 @@ namespace Server.Controllers
     }
   }
 
+  public class LoginData
+  {
+    [JsonPropertyName("username")]
+    public string UserName { get; set; }
+
+    [JsonPropertyName("password")]
+    public string Password { get; set; }
+
+    [JsonPropertyName("rememberMe")]
+    public bool RememberMe { get; set; }
+
+    public bool isValid()
+    {
+      return (
+        !string.IsNullOrEmpty(this.UserName) &&
+        !string.IsNullOrEmpty(this.Password)
+      );
+    }
+  }
+
   [ApiController]
   [Route("account")]
   public class AccountController : ControllerBase
@@ -71,14 +91,14 @@ namespace Server.Controllers
       return new OkObjectResult(new { msg = "Account" });
     }
 
-    [HttpPost("register")]
+    [HttpPost("Register")]
     public async Task<IActionResult> Register([FromForm] RegisterData input)
     {
       _logger.LogInformation(JsonSerializer.Serialize(input));
       if (input.isValid())
       {
-        var user = new User { UserName = input.Email, Email = input.Email, PasswordHash = input.Password };
-        var createUserResult = await _userManager.CreateAsync(user);
+        var user = new User { UserName = input.UserName, Email = input.Email };
+        var createUserResult = await _userManager.CreateAsync(user, input.Password);
         if (createUserResult.Succeeded)
         {
           if (!_roleManager.RoleExistsAsync("NormalUser").Result)
@@ -102,19 +122,53 @@ namespace Server.Controllers
           //   values: new { area = "Identity", userId = user.Id, code = code },
           //   protocol: Request.Scheme);
 
-          // await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+          // await _emailSender.SendEmailAsync(input.Email, "Confirm your email",
           //     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
           // if (_userManager.Options.SignIn.RequireConfirmedAccount)
           // {
-          //   return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
+          //   return RedirectToPage("RegisterConfirmation", new { email = input.Email });
           // } else
           // await _signInManager.SignInAsync(user, isPersistent: false);
           return LocalRedirect(Url.Content("~/"));
         }
       }
-      
+
       return new StatusCodeResult(400);
+    }
+
+    [HttpPost("Login")]
+    public async Task<IActionResult> Login([FromForm] LoginData input)
+    {
+      var returnUrl = Url.Content("~/");
+      if (ModelState.IsValid)
+      {
+        // This doesn't count login failures towards account lockout
+        // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+        var result = await _signInManager.PasswordSignInAsync(input.UserName, input.Password, input.RememberMe, lockoutOnFailure: false);
+        if (result.Succeeded)
+        {
+          _logger.LogInformation($"{input.UserName} logged in.");
+          return LocalRedirect(returnUrl);
+        }
+        // if (result.RequiresTwoFactor)
+        // {
+        //   return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = input.RememberMe });
+        // }
+        // if (result.IsLockedOut)
+        // {
+        //   _logger.LogWarning("User account locked out.");
+        //   return RedirectToPage("./Lockout");
+        // }
+        else
+        {
+          _logger.LogError("Invalid login attempt.");
+          return new StatusCodeResult(400);
+        }
+      }
+
+      // If we got this far, something failed
+      return new StatusCodeResult(500);
     }
   }
 }

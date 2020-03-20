@@ -1,19 +1,26 @@
 import React from "react";
 
-function login(event: React.MouseEvent<HTMLInputElement, MouseEvent>) {
-  console.log(event)
-}
-
 export const LoginMenu = () => {
   return (
     <>
       <div>
-        <form action="/account/login" method="post">
-          <label htmlFor="username">Username:</label>
-          <input type="text" id="username" name="username" placeholder="username"/>
-          <label htmlFor="password">Password:</label>
-          <input type="password" id="password" name="password" placeholder="password"/>
-          <button type="submit">Log in</button>
+        <h1> Login </h1>
+        <form action="/Account/Login" method="post">
+          <label>Username:
+            <input type="text" name="username" placeholder="Username" required/>
+          </label>
+          <br/>
+          <label>Password:
+            <input type="password" name="password" placeholder="Password" required/>
+          </label>
+          <br/>
+          <label>Remember Me:
+            <input
+              name="rememberMe"
+              type="checkbox" />
+          </label>
+          <br/>
+          <button type="submit">Login</button>
         </form>
       </div>
     </>
