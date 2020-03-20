@@ -12,7 +12,9 @@ export const NavMenu = () => {
         <Link to="/">Creatures &amp; Caves</Link>
         <NavLink exact to="/">Home</NavLink>
         <NavLink to="/counter">Counter</NavLink>
-        <LoginMenu/>
+        <NavLink to="/login">Login</NavLink>
+        <NavLink to="/signup">Sign Up</NavLink>
+        {/* <LoginMenu/> */}
         <div onClick={() => setResp(!isResp)} id="nav-burger">{isResp ? "Close" : "Open"}</div>
       </nav>
     </>

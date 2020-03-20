@@ -30,7 +30,7 @@ namespace Server
                 options.UseNpgsql("Host=localhost;Port=5433;Database=cnc;Username=cnc_admin;Password=2674");
             });
 
-            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<DatabaseContext>();
 
             services.AddIdentityServer()
@@ -39,8 +39,7 @@ namespace Server
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddControllers();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -77,7 +76,6 @@ namespace Server
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
             });
 
             app.UseSpa(spa =>

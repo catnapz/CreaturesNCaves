@@ -9,6 +9,8 @@ import { fromPromise } from 'apollo-boost';
 import ApiAuthorizationRoutes from './api-authorization/ApiAuthorizationRoutes';
 import AuthorizeRoute from './api-authorization/AuthorizeRoute';
 import { ApplicationPaths } from './api-authorization/ApiAuthorizationConstants';
+import { LoginMenu } from './api-authorization/login-menu';
+import { SignUpMenu } from './api-authorization/sign-up-menu';
 
 export interface AppProps {
   loading: () => void;
@@ -33,8 +35,11 @@ export const App = (props: AppProps) => {
         <Layout>
           <Route exact path='/' component={Home} />
           {/* <AuthRoute path='/counter' component={Counter} /> */}
-          <AuthorizeRoute path='/counter' component={Counter} />
-          <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+          {/* <AuthorizeRoute path='/counter' component={Counter} /> */}
+          <Route path='/counter' component={Counter} />
+          <Route path='/login' component={LoginMenu} />
+          <Route path='/signup' component={SignUpMenu} />
+          {/* <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} /> */}
         </Layout>
       </>
     );
