@@ -11,6 +11,7 @@ import AuthorizeRoute from './api-authorization/AuthorizeRoute';
 import { ApplicationPaths } from './api-authorization/ApiAuthorizationConstants';
 import { LoginMenu } from './api-authorization/login-menu';
 import { SignUpMenu } from './api-authorization/sign-up-menu';
+import { selectAuthCheckLoading } from './api-authorization/auth-store.slice';
 
 export interface AppProps {
   loading: () => void;
@@ -19,8 +20,7 @@ export interface AppProps {
 
 export const App = (props: AppProps) => {
   
-  // const loading = useSelector(selectLoading);
-  const loading = false;
+  const loading = useSelector(selectAuthCheckLoading);
 
   if (loading) {
     props.loading();

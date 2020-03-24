@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import ApolloClient, { gql } from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -8,12 +8,14 @@ import { ReduxStore, history } from "./store/ReduxStore";
 import { App } from "./app";
 import * as serviceWorker from "./serviceWorker";
 import "./index.scss";
+import { initializeUserManager } from "./api-authorization/auth-store.slice";
+import { InitUserManager } from "./api-authorization/auth-service";
 
 // root load animation
 const loader: HTMLElement | null = document.getElementById("loader");
 const loading = () => (loader!.style.display = "block");
 const loaded = () => (loader!.style.display = "none");
-
+InitUserManager(ReduxStore);
 // const apiEndpointHostname = "localhost:5001";
 // const apolloClient = new ApolloClient({
 //   uri: "https://" + apiEndpointHostname + "/api"

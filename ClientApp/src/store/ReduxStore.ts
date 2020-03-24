@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import { getFromLocalState, saveToLocalState } from './persistStore';
 import { HEALTH_STORE_FEATURE_KEY, healthStoreReducer } from '../components/health/health-store.slice';
 import { COUNTER_STORE_FEATURE_KEY, counterStoreReducer, initialCounterStoreState, getCounterStorePersistableState } from '../components/counter/counter-store.slice';
+import { AUTH_STORE_FEATURE_KEY, authStoreReducer } from '../api-authorization/auth-store.slice';
 
 
 // Create browser history to use in the Redux store
@@ -20,7 +21,7 @@ const middleware = [
 
 // Initialize the Application state
 const initialStoreState: any = {
-  [COUNTER_STORE_FEATURE_KEY]: getFromLocalState(COUNTER_STORE_FEATURE_KEY) ?? initialCounterStoreState,
+  [COUNTER_STORE_FEATURE_KEY]: _.extend(initialCounterStoreState, getFromLocalState(COUNTER_STORE_FEATURE_KEY))
 };
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
@@ -31,21 +32,15 @@ let reducers = {
   // Merge in slice info
   [COUNTER_STORE_FEATURE_KEY]: counterStoreReducer,
   [HEALTH_STORE_FEATURE_KEY]: healthStoreReducer,
+  [AUTH_STORE_FEATURE_KEY]: authStoreReducer,
 };
-
-const enhancers = [];
-const windowIfDefined = typeof window === 'undefined' ? null : window as any;
-if (windowIfDefined && windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__) {
-    enhancers.push(windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__());
-}
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
 export const ReduxStore = configureStore({
   devTools: true,
   reducer: reducers as any,
   middleware: middleware,
-  preloadedState: initialStoreState,
-  enhancers: enhancers
+  preloadedState: initialStoreState
 });
 
 const throttleMs = 1000;
