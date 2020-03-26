@@ -14,6 +14,7 @@ import { selectAuthCheckLoading } from './api-authorization/auth-store.slice';
 import { ApiAuthorizationRoutes } from './api-authorization/api-auth-routes';
 
 import './app.scss'
+import { LogoutMenu } from './api-authorization/logout-menu';
 
 export interface AppProps {
   loading: () => void;
@@ -38,6 +39,7 @@ export const App = (props: AppProps) => {
           <Route exact path='/' component={Home}/>
           <AuthRoute path='/counter' component={Counter}/>
           <Route path='/login' component={LoginMenu}/>
+          <Route path='/logout' component={LogoutMenu}/>
           <Route path='/signup' component={SignUpMenu}/>
           <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes}/>
         </Layout>

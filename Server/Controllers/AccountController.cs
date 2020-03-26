@@ -170,5 +170,12 @@ namespace Server.Controllers
       // If we got this far, something failed
       return new StatusCodeResult(500);
     }
+  
+    [HttpPost("Logout")]
+    public async Task<IActionResult> Logout()
+    {
+      await _signInManager.SignOutAsync();
+      return LocalRedirect(Url.Content("~/"));
+    }
   }
 }

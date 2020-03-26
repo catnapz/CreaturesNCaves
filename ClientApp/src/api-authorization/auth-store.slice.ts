@@ -146,6 +146,14 @@ export const selectAuthenticated = createSelector(
 );
 
 /**
+ * Selector for user profile state
+ */
+export const selectUserProfile = createSelector(
+  getAuthStoreState,
+  s => s.user?.profile
+);
+
+/**
  * Selector for Loading state
  */
 export const selectAuthCheckLoading = createSelector(
