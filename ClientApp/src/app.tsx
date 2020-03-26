@@ -1,17 +1,19 @@
 import React from 'react';
 import { Route } from 'react-router';
+import { useSelector } from 'react-redux';
+import { fromPromise } from 'apollo-boost';
+
 import { Layout } from './components/layout/layout';
 import { Home } from './components/home';
 import { Counter } from './components/counter/counter';
-import './app.scss'
-import { useSelector } from 'react-redux';
-import { fromPromise } from 'apollo-boost';
-import ApiAuthorizationRoutes from './api-authorization/ApiAuthorizationRoutes';
-import AuthorizeRoute from './api-authorization/AuthorizeRoute';
-import { ApplicationPaths } from './api-authorization/ApiAuthorizationConstants';
+import { ApplicationPaths } from './api-authorization/api-auth-constants';
+import { AuthRoute } from './api-authorization/auth-route';
 import { LoginMenu } from './api-authorization/login-menu';
 import { SignUpMenu } from './api-authorization/sign-up-menu';
 import { selectAuthCheckLoading } from './api-authorization/auth-store.slice';
+import { ApiAuthorizationRoutes } from './api-authorization/api-auth-routes';
+
+import './app.scss'
 
 export interface AppProps {
   loading: () => void;
@@ -33,13 +35,11 @@ export const App = (props: AppProps) => {
     return (
       <>
         <Layout>
-          <Route exact path='/' component={Home} />
-          {/* <AuthRoute path='/counter' component={Counter} /> */}
-          {/* <AuthorizeRoute path='/counter' component={Counter} /> */}
-          <Route path='/counter' component={Counter} />
-          <Route path='/login' component={LoginMenu} />
-          <Route path='/signup' component={SignUpMenu} />
-          {/* <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} /> */}
+          <Route exact path='/' component={Home}/>
+          <AuthRoute path='/counter' component={Counter}/>
+          <Route path='/login' component={LoginMenu}/>
+          <Route path='/signup' component={SignUpMenu}/>
+          <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes}/>
         </Layout>
       </>
     );

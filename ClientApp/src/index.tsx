@@ -9,13 +9,13 @@ import { App } from "./app";
 import * as serviceWorker from "./serviceWorker";
 import "./index.scss";
 import { initializeUserManager } from "./api-authorization/auth-store.slice";
-import { InitUserManager } from "./api-authorization/auth-service";
+import { initUserManager } from "./api-authorization/auth-service";
 
 // root load animation
 const loader: HTMLElement | null = document.getElementById("loader");
 const loading = () => (loader!.style.display = "block");
 const loaded = () => (loader!.style.display = "none");
-InitUserManager(ReduxStore);
+initUserManager(ReduxStore);
 // const apiEndpointHostname = "localhost:5001";
 // const apolloClient = new ApolloClient({
 //   uri: "https://" + apiEndpointHostname + "/api"

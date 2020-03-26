@@ -4,8 +4,9 @@ import {
   PayloadAction,
   Action
 } from "@reduxjs/toolkit";
-import { ThunkAction } from "redux-thunk";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import {
+  Log,
   UserManager,
   User,
   UserManagerSettings,
@@ -31,9 +32,15 @@ export interface IAuthStoreState {
 export interface ApiAuthClientConfigResponseAction {
   userManager: UserManager;
 }
+
 // export interface AuthResponseAction { userManager: UserManager; user: User; authenticated:boolean }
 export interface AuthErrorAction {
   error: AuthStoreError;
+}
+
+export interface SignInOutResponseAction {
+  user: User | null;
+  authenticated: boolean;
 }
 
 export const initialauthStoreState: IAuthStoreState = {
@@ -58,6 +65,25 @@ export const authStoreSlice = createSlice({
       state.authenticated = false;
       state.user = null;
     },
+
+    signInRequest: state => {
+      state.loading = true;
+    },
+    signInResponse: (state, action: PayloadAction<SignInOutResponseAction>) => {
+      state.loading = false;
+      state.authenticated = action.payload.authenticated;
+      state.user = action.payload.user;
+    },
+
+    signOutRequest: state => {
+      state.loading = true;
+    },
+    signOutResponse: (state, action: PayloadAction<SignInOutResponseAction>) => {
+      state.loading = false;
+      state.authenticated = action.payload.authenticated;
+      state.user = action.payload.user;
+    },
+
     authError: (state, action: PayloadAction<AuthErrorAction>) => {
       state.error = action.payload.error;
       state.authenticated = false;
@@ -84,6 +110,10 @@ export const authStoreReducer = authStoreSlice.reducer;
 export const {
   apiAuthClientConfigRequest,
   apiAuthClientConfigResponse,
+  signInRequest,
+  signInResponse,
+  signOutRequest,
+  signOutResponse,
   authError
 } = authStoreSlice.actions;
 
@@ -110,7 +140,7 @@ export const getAuthStoreState = (rootState: any): IAuthStoreState =>
 /**
  * Selector for authenticated state
  */
-export const selectAuthy = createSelector(
+export const selectAuthenticated = createSelector(
   getAuthStoreState,
   s => s.authenticated
 );
@@ -132,7 +162,8 @@ export const selectAuthStoreError = createSelector(
 );
 
 /**
- * Returns a ThunkAction that asynchronously fetches locales from the server and dispatches actions accordingly
+ * Returns a ThunkAction that asynchronously fetches client auth configuration (required to init User Manager)
+ * from the server and dispatches actions accordingly
  * @param {AuthIdentifier} Auth = The Auth to get the locale for
  * @returns {ThunkAction} returned thunk action needs to be dispatched to run
  */
@@ -145,6 +176,7 @@ export const initializeUserManager = (): ThunkAction<
   const currState: IAuthStoreState = getAuthStoreState(getState());
 
   if (currState!.userManager === null) {
+    Log.logger = console; // remove later
     try {
       dispatch(apiAuthClientConfigRequest());
       console.log("API_AUTH_CLIENT_CONFIG_REQ");
@@ -159,14 +191,17 @@ export const initializeUserManager = (): ThunkAction<
             automaticSilentRene: true,
             includeIdTokenInSilentRenew: true,
             userStore: new WebStorageStateStore({
-              prefix: APP_NAME
+              prefix: APP_NAME,
+              store: window.sessionStorage
             })
           };
+          const userManager = new UserManager(settings);
+          _registerUserEvents(userManager, dispatch);
           let actionPayload: ApiAuthClientConfigResponseAction = {
-            userManager: new UserManager(settings)
+            userManager
           };
           dispatch(apiAuthClientConfigResponse(actionPayload));
-          console.log({ "API_AUTH_CLIENT_CONFIG_RESPONSE": settings });
+          console.log({ API_AUTH_CLIENT_CONFIG_RESPONSE: settings });
         } catch (error) {
           console.error(error);
           let actionPayload: AuthErrorAction = {
@@ -188,3 +223,155 @@ export const initializeUserManager = (): ThunkAction<
     }
   }
 };
+
+function _registerUserEvents(
+  userManager: UserManager,
+  dispatch: ThunkDispatch<any, null, Action<any>>
+) {
+  // userManager.events.addUserLoaded(user => {
+  //   if (window.location.href.indexOf("signin-oidc") !== -1) {
+  //     dispatch(navigateToScreen());
+  //   }
+  // });
+  userManager.events.addSilentRenewError(e => {
+    console.log("silent renew error", e.message);
+  });
+
+  userManager.events.addAccessTokenExpired(() => {
+    console.log("token expired, attempting renew");
+    dispatch(signinSilent());
+  });
+}
+
+export const signInCallback = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
+  dispatch(initializeUserManager());
+
+  const currState = getAuthStoreState(getState());
+  const userManager: UserManager | null = currState.userManager;
+  if (userManager) {
+    dispatch(signInRequest());
+    try {
+      await userManager.signinRedirect({ useReplaceToNavigate: true, data: {returnUrl: '/'} });
+    } catch (error) {
+      const actionPayload: AuthErrorAction = {error: {msg: "Failed to sign in"}};
+      dispatch(authError(actionPayload));
+    }
+  } else {
+    const actionPayload: AuthErrorAction = {error: {msg: "User Manager not initialized"}};
+    dispatch(authError(actionPayload));
+  }
+};
+
+export const signInRedirectCallback = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
+  dispatch(initializeUserManager());
+
+  const currState = getAuthStoreState(getState());
+  const userManager: UserManager | null = currState.userManager;
+  if (userManager) {
+    try {
+      const user = await userManager.signinRedirectCallback();
+      const actionPayload: SignInOutResponseAction = {authenticated: !!user.access_token, user};
+      dispatch(signInResponse(actionPayload));
+    } catch (error) {
+      const actionPayload: AuthErrorAction = {error: {msg: "Failed to sign in"}};
+      dispatch(authError(actionPayload));
+    }
+  } else {
+    const actionPayload: AuthErrorAction = {error: {msg: "User Manager not initialized"}};
+    dispatch(authError(actionPayload));
+  }
+};
+
+export const signinSilent = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
+  dispatch(initializeUserManager());
+
+  const currState = getAuthStoreState(getState());
+  const userManager: UserManager | null = currState.userManager;
+  if (userManager) {
+    dispatch(signInRequest());
+    try {
+      const user = await userManager.signinSilent();
+      console.log("Silent Sign In", user)
+    } catch (error) {
+      const actionPayload: AuthErrorAction = {error: {msg: "Failed to sign in"}};
+      dispatch(authError(actionPayload));
+    }
+  } else {
+    const actionPayload: AuthErrorAction = {error: {msg: "User Manager not initialized"}};
+    dispatch(authError(actionPayload));
+  }
+};
+
+export const signinSilentCallback = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
+  dispatch(initializeUserManager());
+
+  const currState = getAuthStoreState(getState());
+  const userManager: UserManager | null = currState.userManager;
+  if (userManager) {
+    try {
+      const user = await userManager.signinSilentCallback();
+      if(user) {
+        const actionPayload: SignInOutResponseAction = {authenticated: !!user.access_token, user};
+        dispatch(signInResponse(actionPayload));
+      } else {
+        const actionPayload: AuthErrorAction = {error: {msg: "Failed to sign in"}};
+        dispatch(authError(actionPayload));
+      }
+    } catch (error) {
+      const actionPayload: AuthErrorAction = {error: {msg: "Failed to sign in"}};
+      dispatch(authError(actionPayload));
+    }
+  } else {
+    const actionPayload: AuthErrorAction = {error: {msg: "User Manager not initialized"}};
+    dispatch(authError(actionPayload));
+  }
+};
+
+export const logout = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
+  dispatch(initializeUserManager());
+
+  const currState = getAuthStoreState(getState());
+  const userManager: UserManager | null = currState.userManager;
+  if (userManager) {
+    dispatch(signOutRequest());
+    try {
+      await userManager.signoutRedirect({
+        id_token_hint: localStorage.getItem("id_token")
+      });
+      await userManager.clearStaleState();
+
+    } catch (error) {
+      const actionPayload: AuthErrorAction = {error: {msg: "Failed to sign out"}};
+      dispatch(authError(actionPayload));
+    }
+  } else {
+    const actionPayload: AuthErrorAction = {error: {msg: "User Manager not initialized"}};
+    dispatch(authError(actionPayload));
+  }
+};
+
+export const signoutRedirectCallback  = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
+  dispatch(initializeUserManager());
+
+  const currState = getAuthStoreState(getState());
+  const userManager: UserManager | null = currState.userManager;
+  if (userManager) {
+    try {
+      await userManager.signoutRedirectCallback();
+      localStorage.clear();
+      window.location.replace("/");
+      await userManager.clearStaleState();
+      const actionPayload: SignInOutResponseAction = {authenticated: false, user: null};
+      dispatch(signOutResponse(actionPayload));
+
+    } catch (error) {
+      const actionPayload: AuthErrorAction = {error: {msg: "Failed to sign out"}};
+      dispatch(authError(actionPayload));
+    }
+  } else {
+    const actionPayload: AuthErrorAction = {error: {msg: "User Manager not initialized"}};
+    dispatch(authError(actionPayload));
+  }
+};
+
+

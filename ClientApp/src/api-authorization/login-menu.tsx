@@ -1,11 +1,26 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { signInCallback } from "./auth-store.slice";
+
 
 export const LoginMenu = () => {
+  const dispatch = useDispatch();
+  
+  async function doSomething() {
+    const form: HTMLFormElement = document.getElementById('thisform') as HTMLFormElement; 
+    await fetch('/Account/Login', {
+      method: 'post',
+      body: new FormData(form)
+    });
+  
+    dispatch(signInCallback());
+  }
+  
   return (
     <>
       <div>
         <h1> Login </h1>
-        <form action="/Account/Login" method="post">
+        <form id="thisform" action="/Account/Login" method="post">
           <label>Username:
             <input type="text" name="username" placeholder="Username" required/>
           </label>
@@ -20,7 +35,7 @@ export const LoginMenu = () => {
               type="checkbox" />
           </label>
           <br/>
-          <button type="submit">Login</button>
+          <button onClick={(e) => {e.preventDefault(); doSomething()}}>Login</button>
         </form>
       </div>
     </>

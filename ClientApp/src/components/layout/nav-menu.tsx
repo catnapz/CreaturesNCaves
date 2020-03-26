@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import './nav-menu.scss';
-import { LoginMenu } from '../../api-authorization/LoginMenu';
 
 export const NavMenu = () => {
   const [isResp, setResp] = useState(false);
@@ -14,7 +13,6 @@ export const NavMenu = () => {
         <NavLink to="/counter">Counter</NavLink>
         <NavLink to="/login">Login</NavLink>
         <NavLink to="/signup">Sign Up</NavLink>
-        {/* <LoginMenu/> */}
         <div onClick={() => setResp(!isResp)} id="nav-burger">{isResp ? "Close" : "Open"}</div>
       </nav>
     </>
