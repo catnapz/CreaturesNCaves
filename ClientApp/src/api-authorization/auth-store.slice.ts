@@ -177,6 +177,7 @@ export const initializeUserManager = (): ThunkAction<
 
   if (currState!.userManager === null) {
     Log.logger = console; // remove later
+    Log.level = Log.DEBUG;
     try {
       dispatch(apiAuthClientConfigRequest());
       console.log("API_AUTH_CLIENT_CONFIG_REQ");
@@ -197,11 +198,14 @@ export const initializeUserManager = (): ThunkAction<
           };
           const userManager = new UserManager(settings);
           _registerUserEvents(userManager, dispatch);
-          let actionPayload: ApiAuthClientConfigResponseAction = {
-            userManager
-          };
+          let actionPayload: ApiAuthClientConfigResponseAction = { userManager };
           dispatch(apiAuthClientConfigResponse(actionPayload));
           console.log({ API_AUTH_CLIENT_CONFIG_RESPONSE: settings });
+          const user = await userManager.getUser();
+          if(!!user?.access_token) {
+            let actionPayload: SignInOutResponseAction = { user, authenticated: true };
+            dispatch(signInResponse(actionPayload));
+          }
         } catch (error) {
           console.error(error);
           let actionPayload: AuthErrorAction = {
@@ -228,11 +232,6 @@ function _registerUserEvents(
   userManager: UserManager,
   dispatch: ThunkDispatch<any, null, Action<any>>
 ) {
-  // userManager.events.addUserLoaded(user => {
-  //   if (window.location.href.indexOf("signin-oidc") !== -1) {
-  //     dispatch(navigateToScreen());
-  //   }
-  // });
   userManager.events.addSilentRenewError(e => {
     console.log("silent renew error", e.message);
   });
@@ -243,7 +242,7 @@ function _registerUserEvents(
   });
 }
 
-export const signInCallback = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
+export const signIn = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
   dispatch(initializeUserManager());
 
   const currState = getAuthStoreState(getState());
@@ -270,8 +269,12 @@ export const signInRedirectCallback = (): ThunkAction<void, any, null, Action<an
   if (userManager) {
     try {
       const user = await userManager.signinRedirectCallback();
-      const actionPayload: SignInOutResponseAction = {authenticated: !!user.access_token, user};
-      dispatch(signInResponse(actionPayload));
+      if(!!user.access_token) {
+        window.location.replace("/");
+      } else {
+        const actionPayload: AuthErrorAction = {error: {msg: "Failed to sign in"}};
+        dispatch(authError(actionPayload));        
+      }
     } catch (error) {
       const actionPayload: AuthErrorAction = {error: {msg: "Failed to sign in"}};
       dispatch(authError(actionPayload));
@@ -290,7 +293,7 @@ export const signinSilent = (): ThunkAction<void, any, null, Action<any>> => asy
   if (userManager) {
     dispatch(signInRequest());
     try {
-      const user = await userManager.signinSilent();
+      const user = await userManager.signinSilent({ useReplaceToNavigate: true, data: {returnUrl: '/'} });
       console.log("Silent Sign In", user)
     } catch (error) {
       const actionPayload: AuthErrorAction = {error: {msg: "Failed to sign in"}};
@@ -327,7 +330,7 @@ export const signinSilentCallback = (): ThunkAction<void, any, null, Action<any>
   }
 };
 
-export const logout = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
+export const signOut = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
   dispatch(initializeUserManager());
 
   const currState = getAuthStoreState(getState());

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { logout } from './auth-store.slice';
+import { signOut } from './auth-store.slice';
 
 export const Logout = () => {
-  useDispatch()(logout());
+  useDispatch()(signOut());
   return <span>loading</span>;
 }
