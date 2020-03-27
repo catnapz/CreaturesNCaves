@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { signInRedirectCallback } from './auth-store.slice';
+import { signIn } from './auth-store.slice';
 
 export const Login = () => {
-  useDispatch()(signInRedirectCallback());
+  useDispatch()(signIn());
   return <span>loading</span>;
 }

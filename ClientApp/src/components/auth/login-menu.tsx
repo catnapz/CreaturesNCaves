@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { signIn } from "./auth-store.slice";
+import { ApplicationPaths } from "./api-auth-constants";
 
 
 export const LoginMenu = () => {
@@ -8,11 +9,11 @@ export const LoginMenu = () => {
   
   async function authorize() {
     const form: HTMLFormElement = document.getElementById('thisform') as HTMLFormElement; 
-    await fetch('/Account/Login', {
+    const resp = await fetch('/Account/Login', {
       method: 'post',
       body: new FormData(form)
     });
-    dispatch(signIn());
+    if(resp.ok) window.location.assign(ApplicationPaths.Login);
   }
   
   return (
