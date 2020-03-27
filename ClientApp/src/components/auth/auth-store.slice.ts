@@ -31,6 +31,7 @@ export interface IAuthStoreState {
 
 export interface ApiAuthClientConfigResponseAction {
   userManager: UserManager;
+  loading: boolean;
 }
 
 // export interface AuthResponseAction { userManager: UserManager; user: User; authenticated:boolean }
@@ -60,7 +61,7 @@ export const authStoreSlice = createSlice({
       state,
       action: PayloadAction<ApiAuthClientConfigResponseAction>
     ) => {
-      state.loading = false;
+      state.loading = action.payload.loading;
       state.userManager = action.payload.userManager;
       state.authenticated = false;
       state.user = null;
@@ -201,18 +202,22 @@ export const initializeUserManager = (): ThunkAction<
             includeIdTokenInSilentRenew: true,
             userStore: new WebStorageStateStore({
               prefix: APP_NAME,
-              store: window.sessionStorage
+              store: localStorage
             })
           };
           const userManager = new UserManager(settings);
           _registerUserEvents(userManager, dispatch);
-          let actionPayload: ApiAuthClientConfigResponseAction = { userManager };
-          dispatch(apiAuthClientConfigResponse(actionPayload));
           console.log({ API_AUTH_CLIENT_CONFIG_RESPONSE: settings });
           const user = await userManager.getUser();
+          let actionPayload: ApiAuthClientConfigResponseAction;
           if(!!user?.access_token) {
-            let actionPayload: SignInOutResponseAction = { user, authenticated: true };
-            dispatch(signInResponse(actionPayload));
+            actionPayload = { userManager, loading: true };
+            dispatch(apiAuthClientConfigResponse(actionPayload));
+            let signInActionPayload: SignInOutResponseAction = { user, authenticated: true };
+            dispatch(signInResponse(signInActionPayload));
+          } else {
+            actionPayload = { userManager, loading: false };
+            dispatch(apiAuthClientConfigResponse(actionPayload));
           }
         } catch (error) {
           console.error(error);
@@ -361,7 +366,7 @@ export const signOut = (): ThunkAction<void, any, null, Action<any>> => async (d
   }
 };
 
-export const signoutRedirectCallback  = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
+export const signoutRedirectCallback = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
   dispatch(initializeUserManager());
 
   const currState = getAuthStoreState(getState());
@@ -384,5 +389,4 @@ export const signoutRedirectCallback  = (): ThunkAction<void, any, null, Action<
     dispatch(authError(actionPayload));
   }
 };
-
 

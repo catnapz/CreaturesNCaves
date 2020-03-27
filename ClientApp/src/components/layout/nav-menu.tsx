@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import {
   selectAuthenticated,
   selectUserProfile
-} from "../../api-authorization/auth-store.slice";
+} from "../auth/auth-store.slice";
 
 export const NavMenu = () => {
   const authenticated = useSelector(selectAuthenticated);

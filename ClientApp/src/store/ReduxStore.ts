@@ -6,7 +6,8 @@ import thunk from 'redux-thunk';
 import { getFromLocalState, saveToLocalState } from './persistStore';
 import { HEALTH_STORE_FEATURE_KEY, healthStoreReducer } from '../components/health/health-store.slice';
 import { COUNTER_STORE_FEATURE_KEY, counterStoreReducer, initialCounterStoreState, getCounterStorePersistableState } from '../components/counter/counter-store.slice';
-import { AUTH_STORE_FEATURE_KEY, authStoreReducer } from '../api-authorization/auth-store.slice';
+import { AUTH_STORE_FEATURE_KEY, authStoreReducer } from '../components/auth/auth-store.slice';
+import { User } from 'oidc-client';
 
 
 // Create browser history to use in the Redux store

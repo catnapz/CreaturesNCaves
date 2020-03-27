@@ -8,8 +8,8 @@ import { ReduxStore, history } from "./store/ReduxStore";
 import { App } from "./app";
 import * as serviceWorker from "./serviceWorker";
 import "./index.scss";
-import { initializeUserManager } from "./api-authorization/auth-store.slice";
-import { initUserManager } from "./api-authorization/auth-service";
+import { initializeUserManager } from "./components/auth/auth-store.slice";
+import { initUserManager } from "./components/auth/auth-service";
 
 // root load animation
 const loader: HTMLElement | null = document.getElementById("loader");
