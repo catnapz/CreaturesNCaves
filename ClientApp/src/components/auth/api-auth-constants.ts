@@ -15,6 +15,7 @@ export enum LoginAction {
   Login = 'login',
   LoginCallback = 'login-callback',
   LoginFailed = 'login-failed',
+  SilentRenew = 'silentrenew',
   Profile = 'profile',
   Register = 'register'
 };
@@ -28,6 +29,7 @@ export const ApplicationPaths = {
   Login: `${prefix}/${LoginAction.Login}`,
   LoginFailed: `${prefix}/${LoginAction.LoginFailed}`,
   LoginCallback: `${prefix}/${LoginAction.LoginCallback}`,
+  SilentRenew: `${prefix}/${LoginAction.SilentRenew}`,
   Register: `${prefix}/${LoginAction.Register}`,
   Profile: `${prefix}/${LoginAction.Profile}`,
   LogOut: `${prefix}/${LogoutAction.Logout}`,

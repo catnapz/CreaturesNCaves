@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { signIn, signOut } from "./auth-store.slice";
+import { signOut } from "./auth-store.slice";
 
 
 export const LogoutMenu = () => {

@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { signinSilentCallback } from "./auth-store.slice";
+import { signInCallback } from "./auth-store.slice";
 
 export const SilentRenew = () => {
   
-  useDispatch()(signinSilentCallback());
+  useDispatch()(signInCallback());
   return <span>loading</span>;
 };

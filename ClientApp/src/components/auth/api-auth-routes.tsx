@@ -10,7 +10,7 @@ import { Login } from "./login";
 export const ApiAuthorizationRoutes = () => (
   <>
     <Route exact path={ApplicationPaths.Login} component={Login} />
-    <Route exact path={"/silentrenew"} component={SilentRenew} />
+    <Route exact path={ApplicationPaths.SilentRenew} component={SilentRenew} />
     {/* <Route exact path={ApplicationPaths.LoginFailed} component={Logout} /> */}
     <Route exact path={ApplicationPaths.LoginCallback} component={LoginCallback} />
     {/* <Route exact path={ApplicationPaths.Profile} component={} /> */}

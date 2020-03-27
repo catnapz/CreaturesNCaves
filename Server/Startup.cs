@@ -52,6 +52,12 @@ namespace Server
 
             services.AddControllers();
 
+            services.ConfigureApplicationCookie(configure => 
+            {
+               configure.SlidingExpiration = true;
+               configure.ExpireTimeSpan = TimeSpan.FromSeconds(10); 
+            });
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

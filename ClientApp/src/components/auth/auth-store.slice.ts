@@ -198,12 +198,13 @@ export const initializeUserManager = (): ThunkAction<
         try {
           const settings: UserManagerSettings = {
             ...(await response.json()),
-            automaticSilentRene: true,
+            automaticSilentRenew: true,
             includeIdTokenInSilentRenew: true,
+            accessTokenExpiringNotificationTime: 5,
             userStore: new WebStorageStateStore({
               prefix: APP_NAME,
               store: localStorage
-            })
+            }),
           };
           const userManager = new UserManager(settings);
           _registerUserEvents(userManager, dispatch);
@@ -274,14 +275,14 @@ export const signIn = (): ThunkAction<void, any, null, Action<any>> => async (di
   }
 };
 
-export const signInRedirectCallback = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
+export const signInCallback = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
   dispatch(initializeUserManager());
 
   const currState = getAuthStoreState(getState());
   const userManager: UserManager | null = currState.userManager;
   if (userManager) {
     try {
-      const user = await userManager.signinRedirectCallback();
+      const user = await userManager.signinCallback();
       if(!!user.access_token) {
         window.location.replace("/");
       } else {
@@ -318,31 +319,6 @@ export const signinSilent = (): ThunkAction<void, any, null, Action<any>> => asy
   }
 };
 
-export const signinSilentCallback = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
-  dispatch(initializeUserManager());
-
-  const currState = getAuthStoreState(getState());
-  const userManager: UserManager | null = currState.userManager;
-  if (userManager) {
-    try {
-      const user = await userManager.signinSilentCallback();
-      if(user) {
-        const actionPayload: SignInOutResponseAction = {authenticated: !!user.access_token, user};
-        dispatch(signInResponse(actionPayload));
-      } else {
-        const actionPayload: AuthErrorAction = {error: {msg: "Failed to sign in"}};
-        dispatch(authError(actionPayload));
-      }
-    } catch (error) {
-      const actionPayload: AuthErrorAction = {error: {msg: "Failed to sign in"}};
-      dispatch(authError(actionPayload));
-    }
-  } else {
-    const actionPayload: AuthErrorAction = {error: {msg: "User Manager not initialized"}};
-    dispatch(authError(actionPayload));
-  }
-};
-
 export const signOut = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
   dispatch(initializeUserManager());
 
@@ -366,14 +342,14 @@ export const signOut = (): ThunkAction<void, any, null, Action<any>> => async (d
   }
 };
 
-export const signoutRedirectCallback = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
+export const signoutCallback = (): ThunkAction<void, any, null, Action<any>> => async (dispatch, getState) => {
   dispatch(initializeUserManager());
 
   const currState = getAuthStoreState(getState());
   const userManager: UserManager | null = currState.userManager;
   if (userManager) {
     try {
-      await userManager.signoutRedirectCallback();
+      await userManager.signoutCallback();
       localStorage.clear();
       window.location.replace("/");
       await userManager.clearStaleState();

@@ -13,7 +13,8 @@ export const LoginMenu = () => {
       method: 'post',
       body: new FormData(form)
     });
-    if(resp.ok) window.location.assign(ApplicationPaths.Login);
+    if(resp.ok) dispatch(signIn());
+    // if(resp.ok) window.location.assign(ApplicationPaths.Login);
   }
   
   return (
