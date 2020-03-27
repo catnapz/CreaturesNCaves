@@ -2,13 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Route, Redirect, RouteProps } from "react-router-dom";
 import { selectAuthenticated } from "./auth-store.slice";
-import { ApplicationPaths } from "./api-auth-constants";
 
-interface AuthRouteProps extends RouteProps {
+interface ProtectedRouteProps extends RouteProps {
   component: any;
 }
 
-export const AuthRoute = (props: AuthRouteProps) => {
+export const ProtectedRoute = (props: ProtectedRouteProps) => {
   const { component: Component, ...rest } = props;
   const authenticated = useSelector(selectAuthenticated);
 

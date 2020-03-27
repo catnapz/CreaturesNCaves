@@ -137,6 +137,12 @@ namespace Server.Controllers
       return new StatusCodeResult(400);
     }
 
+    [HttpGet("Login")]
+    public LocalRedirectResult LoginRedirect()
+    {
+      return LocalRedirect(Url.Content("~/login"));
+    }
+
     [HttpPost("Login")]
     public async Task<IActionResult> Login([FromForm] LoginData input)
     {
@@ -148,7 +154,7 @@ namespace Server.Controllers
         var result = await _signInManager.PasswordSignInAsync(input.UserName, input.Password, input.RememberMe, lockoutOnFailure: false);
         if (result.Succeeded)
         {
-          _logger.LogInformation($"{input.UserName} logged in.");
+          _logger.LogInformation($"\n{input.UserName} logged in.\n");
           return LocalRedirect(returnUrl);
         }
         // if (result.RequiresTwoFactor)
@@ -171,6 +177,7 @@ namespace Server.Controllers
       return new StatusCodeResult(500);
     }
   
+    [Authorize]
     [HttpPost("Logout")]
     public async Task<IActionResult> Logout()
     {

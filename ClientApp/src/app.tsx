@@ -7,7 +7,7 @@ import { Layout } from "./components/layout/layout";
 import { Home } from "./components/home";
 import { Counter } from "./components/counter/counter";
 import { ApplicationPaths } from "./components/auth/api-auth-constants";
-import { AuthRoute } from "./components/auth/auth-route";
+import { ProtectedRoute } from "./components/auth/protected-route";
 import { LoginMenu } from "./components/auth/login-menu";
 import { SignUpMenu } from "./components/auth/sign-up-menu";
 import { selectAuthCheckLoading } from "./components/auth/auth-store.slice";
@@ -34,11 +34,11 @@ export const App = (props: AppProps) => {
       <>
         <Layout>
           <Route exact path="/" component={Home} />
-          <AuthRoute path="/counter" component={Counter} />
+          <ProtectedRoute path="/counter" component={Counter} />
           <Route path="/login" component={LoginMenu} />
           <Route path="/logout" component={LogoutMenu} />
           <Route path="/signup" component={SignUpMenu} />
-          <AuthRoute path="/profile" component={Profile} />
+          <ProtectedRoute path="/profile" component={Profile} />
           <Route
             path={ApplicationPaths.ApiAuthorizationPrefix}
             component={ApiAuthorizationRoutes}

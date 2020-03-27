@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using EntityFramework.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Server.Controllers
 {
+    
+    [Authorize]
     [ApiController]
     [Route("user")]
     public class UserController : ControllerBase
@@ -28,7 +31,6 @@ namespace Server.Controllers
         {
             // var campaigns = _db.Campaigns.Include(campaign => campaign.User).ToList();
             var users = _db.Users
-                .Include(user => user.Campaigns)
                 .ToList();
             
             if(users.Any())
@@ -41,10 +43,11 @@ namespace Server.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
+            // var users = _db.Users
+            //     .Where(user => user.Id == id)
+            //     .Include(user => user.Campaigns);
             var users = _db.Users
-                .Where(user => user.Id == id)
-                .Include(user => user.Campaigns);;
-                
+                .Where(user => user.Id == id);
             if(users.Any())
             {
                 return new JsonResult(users);

@@ -12,7 +12,6 @@ export const LoginMenu = () => {
       method: 'post',
       body: new FormData(form)
     });
-    // above should redirect to login component to dispatch below
     dispatch(signIn());
   }
   
