@@ -32,7 +32,7 @@ namespace Server
 
                 AllowedGrantTypes = GrantTypes.Code,
                 AllowOfflineAccess = true,
-                // RequirePkce = true,
+                RequirePkce = true,
                 RequireClientSecret = false,
                 RequireConsent = false,
 

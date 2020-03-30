@@ -12,15 +12,15 @@ namespace Server.GraphQL.Types
       Name = "User";
       Description = "GraphQL user schema.";
 
-      descriptor.Field(t => t.Id).Type<NonNullType<IdType>>();
+      descriptor.Field(t => t.Id).Type<NonNullType<IdType>>().Authorize();
 
       descriptor.Field(t => t.UserName).Type<NonNullType<StringType>>();
           
-      // descriptor.Field(t => t.PasswordHash).Ignore();
+      descriptor.Field(t => t.PasswordHash).Ignore();
       // descriptor.Field(t => t.ConcurrencyStamp).Ignore();
       // descriptor.Field(t => t.EmailConfirmed).Ignore();
       // descriptor.Field(t => t.TwoFactorEnabled).Ignore();
-      // descriptor.Field(t => t.SecurityStamp).Ignore();
+      descriptor.Field(t => t.SecurityStamp).Ignore();
       // descriptor.Field(t => t.PhoneNumberConfirmed).Ignore();
       
       descriptor.Field<UserResolvers>(r => r.GetCampaigns(default))

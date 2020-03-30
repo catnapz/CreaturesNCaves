@@ -34,6 +34,7 @@ const UnauthenticatedView = () => (
     <NavLink to="/counter">Counter</NavLink>
     <NavLink to="/login">Login</NavLink>
     <NavLink to="/signup">Sign Up</NavLink>
+    <NavLink to="/checkusers">Users</NavLink>
   </>
 );
 
@@ -44,6 +45,7 @@ const AuthenticatedView = (props: any) => (
       Home
     </NavLink>
     <NavLink to="/counter">Counter</NavLink>
+    <NavLink to="/checkusers">Users</NavLink>
     <NavLink to="/logout">Logout</NavLink>
     <NavLink to="/profile">{props.username}</NavLink>
   </>

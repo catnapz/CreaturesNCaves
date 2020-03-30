@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import ApolloClient, { gql } from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -17,6 +17,10 @@ const loader: HTMLElement | null = document.getElementById("loader");
 const loading = () => (loader!.style.display = "block");
 const loaded = () => (loader!.style.display = "none");
 
+const apolloClient = new ApolloClient({
+  uri: 'https://localhost:5001/api',
+});
+
 initUserManager()
   .then((userManager: UserManager | null) => {
     if(userManager !== null) {
@@ -25,9 +29,9 @@ initUserManager()
         <Provider store={ReduxStore}>
           <ConnectedRouter history={history}>
             <AuthProvider userManager={userManager}>
-              {/* <ApolloProvider client={apolloClient}> */}
+              <ApolloProvider client={apolloClient}>
                 <App userManager={userManager} loading={loading} loaded={loaded} />
-              {/* </ApolloProvider> */}
+              </ApolloProvider>
             </AuthProvider>
           </ConnectedRouter>
         </Provider>,
@@ -40,26 +44,6 @@ initUserManager()
     console.log(error);
     // render error page?
   });
-// const apiEndpointHostname = "localhost:5001";
-// const apolloClient = new ApolloClient({
-//   uri: "https://" + apiEndpointHostname + "/api"
-// });
-
-// apolloClient
-//   .query({
-//     query: gql`
-//       {
-//         user(userId: "1") {
-//           name
-//           campaign(campaignId: "11") {
-//             name
-//             campaignId
-//           }
-//         }
-//       }
-//     `
-//   })
-//   .then(result => console.log(result));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

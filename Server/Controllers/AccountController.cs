@@ -1,3 +1,4 @@
+using System.Data;
 using System;
 using System.Text;
 using System.Text.Json;
@@ -113,6 +114,11 @@ namespace Server.Controllers
             }
           }
           await _userManager.AddToRoleAsync(user, "NormalUser");
+          // await _userManager.AddClaimsAsync(user, new List<System.Security.Claims.Claim>() {
+          //   new System.Security.Claims.Claim("username", user.UserName),
+          //   new System.Security.Claims.Claim("name", user.Name),
+          //   new System.Security.Claims.Claim("email", user.Email),
+          // });
           _logger.LogInformation("User created a new account.");
           // var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
           // code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

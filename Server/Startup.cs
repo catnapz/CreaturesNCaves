@@ -3,14 +3,17 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
-using EntityFramework.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using HotChocolate;
+using HotChocolate.Configuration;
+using HotChocolate.AspNetCore;
+using EntityFramework.Models;
+using Server.GraphQL.Types;
 
 namespace Server
 {
@@ -31,6 +34,13 @@ namespace Server
                 options.UseNpgsql("Host=localhost;Port=5433;Database=cnc;Username=cnc_admin;Password=2674");
             });
 
+            services.AddGraphQL(
+                SchemaBuilder.New()
+                .AddQueryType<QueryType>()
+                .AddType<UserType>()
+                .AddAuthorizeDirectiveType()
+                .Create());
+
             // services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
             services.AddIdentity<User, IdentityRole>(options =>
                 {
@@ -50,7 +60,7 @@ namespace Server
                 .AddInMemoryApiResources(Config.Apis)
                 .AddInMemoryClients(Config.Clients);
 
-            services.AddAuthentication()
+            services.AddAuthentication("Bearer")
                 .AddIdentityServerJwt();
 
             services.AddControllers();
@@ -88,9 +98,17 @@ namespace Server
 
             app.UseRouting();
 
-            app.UseAuthentication();
             app.UseIdentityServer();
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseGraphQL("/api");
+
+            if (env.IsDevelopment())
+            {
+                app.UsePlayground("/api");
+            }
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
