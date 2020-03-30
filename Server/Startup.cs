@@ -68,7 +68,7 @@ namespace Server
             services.ConfigureApplicationCookie(configure => 
             {
                configure.SlidingExpiration = true;
-               configure.ExpireTimeSpan = TimeSpan.FromDays(30); 
+               configure.ExpireTimeSpan = TimeSpan.FromHours(3); 
             });
 
             // In production, the React files will be served from this directory
