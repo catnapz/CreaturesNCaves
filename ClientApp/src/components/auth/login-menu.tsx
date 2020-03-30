@@ -1,20 +1,16 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { signIn } from "./auth-store.slice";
-import { ApplicationPaths } from "./api-auth-constants";
+import { UserManager } from "oidc-client";
 
-
-export const LoginMenu = () => {
-  const dispatch = useDispatch();
+export const LoginMenu = (props: {userManager: UserManager}) => {
   
-  async function authorize() {
+  async function authorize(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    event.preventDefault();
     const form: HTMLFormElement = document.getElementById('thisform') as HTMLFormElement; 
     const resp = await fetch('/Account/Login', {
       method: 'post',
       body: new FormData(form)
     });
-    if(resp.ok) dispatch(signIn());
-    // if(resp.ok) window.location.assign(ApplicationPaths.Login);
+    if(resp.ok) props.userManager.signinRedirect();;
   }
   
   return (
@@ -36,7 +32,7 @@ export const LoginMenu = () => {
               type="checkbox" />
           </label>
           <br/>
-          <button onClick={(e) => {e.preventDefault(); authorize()}}>Login</button>
+          <button onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {authorize(event)}}>Login</button>
         </form>
       </div>
     </>

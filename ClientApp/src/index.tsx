@@ -8,14 +8,38 @@ import { ReduxStore, history } from "./store/ReduxStore";
 import { App } from "./app";
 import * as serviceWorker from "./serviceWorker";
 import "./index.scss";
-import { initializeUserManager } from "./components/auth/auth-store.slice";
-import { initUserManager } from "./components/auth/auth-service";
+import { initUserManager, loadUser } from "./components/auth/auth-service";
+import { UserManager } from "oidc-client";
+import { AuthProvider } from "./components/auth/auth-provider";
 
 // root load animation
 const loader: HTMLElement | null = document.getElementById("loader");
 const loading = () => (loader!.style.display = "block");
 const loaded = () => (loader!.style.display = "none");
-initUserManager(ReduxStore);
+
+initUserManager()
+  .then((userManager: UserManager | null) => {
+    if(userManager !== null) {
+      loadUser(userManager, ReduxStore);
+      ReactDOM.render(
+        <Provider store={ReduxStore}>
+          <ConnectedRouter history={history}>
+            <AuthProvider userManager={userManager}>
+              {/* <ApolloProvider client={apolloClient}> */}
+                <App userManager={userManager} loading={loading} loaded={loaded} />
+              {/* </ApolloProvider> */}
+            </AuthProvider>
+          </ConnectedRouter>
+        </Provider>,
+        document.getElementById("root")
+      );
+    }
+  })
+
+  .catch(error => {
+    console.log(error);
+    // render error page?
+  });
 // const apiEndpointHostname = "localhost:5001";
 // const apolloClient = new ApolloClient({
 //   uri: "https://" + apiEndpointHostname + "/api"
@@ -36,17 +60,6 @@ initUserManager(ReduxStore);
 //     `
 //   })
 //   .then(result => console.log(result));
-
-ReactDOM.render(
-  <Provider store={ReduxStore}>
-    <ConnectedRouter history={history}>
-      {/* <ApolloProvider client={apolloClient}> */}
-        <App loading={loading} loaded={loaded} />
-      {/* </ApolloProvider> */}
-    </ConnectedRouter>
-  </Provider>,
-  document.getElementById("root")
-);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

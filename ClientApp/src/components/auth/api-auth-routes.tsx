@@ -2,21 +2,35 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { ApplicationPaths } from "./api-auth-constants";
 import { LoginCallback } from "./login-callback";
-import { Logout } from "./logout";
 import { LogoutCallback } from "./logout-callback";
-import { SilentRenew } from "./silent-renew";
-import { Login } from "./login";
+import { UserManager } from "oidc-client";
+import { useHistory } from "react-router-dom";
 
-export const ApiAuthorizationRoutes = () => (
-  <>
-    <Route exact path={ApplicationPaths.Login} component={Login} />
-    <Route exact path={ApplicationPaths.SilentRenew} component={SilentRenew} />
-    {/* <Route exact path={ApplicationPaths.LoginFailed} component={Logout} /> */}
-    <Route exact path={ApplicationPaths.LoginCallback} component={LoginCallback} />
-    {/* <Route exact path={ApplicationPaths.Profile} component={} /> */}
-    {/* <Route exact path={ApplicationPaths.Register} component={} /> */}
-    <Route exact path={ApplicationPaths.LogOut} component={Logout} />
-    <Route exact path={ApplicationPaths.LogOutCallback} component={LogoutCallback} />
-    {/* <Route exact path={ApplicationPaths.LoggedOut} component={} /> */}
-  </>
-);
+export const ApiAuthorizationRoutes = (props: {userManager: UserManager}) => {
+  const histroy = useHistory();
+  return (
+    <>
+      <Route exact path={ApplicationPaths.LoginCallback} render={ (routerProps) => 
+        <LoginCallback {...routerProps} 
+          userManager={props.userManager}
+          successCallback = {(user) => histroy.replace("/")}
+          errorCallback = {error => {
+            histroy.push("/");
+            console.error(error);
+          }}
+        /> 
+      }/>
+      
+      <Route exact path={ApplicationPaths.LogOutCallback} render={ (routerProps) => 
+        <LogoutCallback {...routerProps} 
+          userManager={props.userManager}
+          successCallback = {() => histroy.push("/")}
+          errorCallback = {error => {
+            histroy.push("/");
+            console.error(error);
+          }}
+        /> 
+      }/>
+    </>
+  );
+};

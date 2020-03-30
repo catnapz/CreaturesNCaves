@@ -10,20 +10,22 @@ import { ApplicationPaths } from "./components/auth/api-auth-constants";
 import { ProtectedRoute } from "./components/auth/protected-route";
 import { LoginMenu } from "./components/auth/login-menu";
 import { SignUpMenu } from "./components/auth/sign-up-menu";
-import { selectAuthCheckLoading } from "./components/auth/auth-store.slice";
+import { selectUserLoading } from "./components/auth/auth-store.slice";
 import { ApiAuthorizationRoutes } from "./components/auth/api-auth-routes";
 import { LogoutMenu } from "./components/auth/logout-menu";
 import { Profile } from "./components/auth/profile";
+import { UserManager } from "oidc-client";
 
 import "./app.scss";
 
 export interface AppProps {
   loading: () => void;
   loaded: () => void;
+  userManager: UserManager;
 }
 
 export const App = (props: AppProps) => {
-  const loading = useSelector(selectAuthCheckLoading);
+  const loading = useSelector(selectUserLoading);
 
   if (loading) {
     props.loading();
@@ -35,13 +37,13 @@ export const App = (props: AppProps) => {
         <Layout>
           <Route exact path="/" component={Home} />
           <ProtectedRoute path="/counter" component={Counter} />
-          <Route path="/login" component={LoginMenu} />
-          <Route path="/logout" component={LogoutMenu} />
+          <Route path="/login" render={ (routerProps) => <LoginMenu {...routerProps} userManager={props.userManager}/> }/>
+          <Route path="/logout" render={ (routerProps) => <LogoutMenu {...routerProps} userManager={props.userManager}/> }/>
           <Route path="/signup" component={SignUpMenu} />
           <ProtectedRoute path="/profile" component={Profile} />
           <Route
             path={ApplicationPaths.ApiAuthorizationPrefix}
-            component={ApiAuthorizationRoutes}
+            render={ (routerProps) => <ApiAuthorizationRoutes {...routerProps} userManager={props.userManager}/> }
           />
         </Layout>
       </>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUserProfile, signOut } from './auth-store.slice';
+import { selectUserProfile } from './auth-store.slice';
 
 export const Profile = () => {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ export const Profile = () => {
   function deleteConfirmation(){
     if(window.confirm("Are you sure you want to delete your account?")) {
       // TODO: delete account
-      dispatch(signOut());
+      window.location.assign("/");
     }
   }
 

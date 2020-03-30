@@ -1,9 +1,32 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { signInCallback } from "./auth-store.slice";
+import React, { useEffect } from "react";
+import { UserManager, User } from "oidc-client";
 
-export const LoginCallback = () => {
+interface LoginCallbackProps {
+  userManager: UserManager;
+  successCallback: (user: User) => void;
+  errorCallback: (error: Error) => void;
+  children?: React.ReactNode;
+
+}
+export const LoginCallback = (props: LoginCallbackProps) => {
   
-  useDispatch()(signInCallback());
-  return <span>loading</span>;
+  useEffect(() => {
+    props.userManager.signinCallback()
+      .then((user: User) => {
+        onRedirectSuccess(user);
+      })
+      .catch(error => {
+        onRedirectError(error);
+      });
+  }, []);
+  
+  const onRedirectSuccess = (user: User) => {
+    props.successCallback(user);
+  };
+
+  const onRedirectError = (error: Error) => {
+    props.errorCallback(error);
+  }
+
+  return <>{props.children}</>;
 };

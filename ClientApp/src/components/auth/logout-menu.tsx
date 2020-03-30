@@ -1,17 +1,19 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { signOut } from "./auth-store.slice";
+import { UserManager } from "oidc-client";
 
+export const LogoutMenu = (props: {userManager: UserManager}) => {
 
-export const LogoutMenu = () => {
-  const dispatch = useDispatch();
-  
+  function logout(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    event.preventDefault();
+    props.userManager.signoutRedirect();
+  }
+
   return (
     <>
       <div>
         <h1> Logout? </h1>
-          <button onClick={() => dispatch(signOut())}>Yes</button>
-          <button onClick={() => window.location.href = '/'}>No</button>
+          <button onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => logout(event)}>Yes</button>
+          <button onClick={() => window.location.assign('/')}>No</button>
       </div>
     </>
   );
