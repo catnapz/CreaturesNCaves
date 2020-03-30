@@ -8,18 +8,18 @@ import { ThunkAction } from 'redux-thunk';
 
 export const HEALTH_STORE_FEATURE_KEY = 'healthStore';
 
-export type healthStoreError = {
+export type HealthStoreError = {
   msg: string;
 };
 
 export interface IHealthStoreState {
   healthy: boolean;
   loading?: boolean;
-  error?: healthStoreError;
+  error?: HealthStoreError;
 }
 
 export interface HealthResponseAction { statusCode: number }
-export interface HealthErrorAction { error: healthStoreError }
+export interface HealthErrorAction { error: HealthStoreError }
 
 export const initialhealthStoreState: IHealthStoreState = {
   healthy: false

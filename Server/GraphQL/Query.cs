@@ -26,7 +26,7 @@ namespace Server.GraphQL
     public async Task<User> GetUser([Service] DatabaseContext dbContext, string userId) =>
       await dbContext
         .Users
-        .Where(user => user.UserId == userId)
+        .Where(user => user.Id == userId)
         .Include(user => user.Campaigns)
         .SingleAsync();
     

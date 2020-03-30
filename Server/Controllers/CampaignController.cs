@@ -26,23 +26,12 @@ namespace Server.Controllers
     [HttpGet]
     public IActionResult Get()
     {
-      List<Campaign> list = _db.Campaigns
+      var campaigns = _db.Campaigns
           .ToList();
-      var Campaigns = list;
 
-      var dtos = new List<CampaignDto>();
-      if (Campaigns.Any())
+      if (campaigns.Any())
       {
-        foreach (var campaign in Campaigns)
-        {
-          var dto = new CampaignDto();
-          dto.CampaignId = campaign.CampaignId;
-          dto.Description = campaign.Description;
-          dto.Name = campaign.Description;
-          dto.UserId = campaign.UserId;
-          dtos.Add(dto);
-        }
-        return new JsonResult(dtos);
+        return new JsonResult(campaigns);
       }
       return new NotFoundResult();
     }

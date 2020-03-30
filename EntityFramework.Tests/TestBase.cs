@@ -2,13 +2,17 @@ using System;
 using Npgsql.EntityFrameworkCore;
 using EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using IdentityServer4.EntityFramework.Options;
 
 namespace EntityFramework.Tests
 {
     public class TestBase : IDisposable
-    {
+    { 
+        public IOptions<OperationalStoreOptions> OperationalStoreOptions { get; private set; }
         public DbContextOptions<DatabaseContext> ContextOptions { get; private set; }
-        public DatabaseContext DatabaseContext { get => new DatabaseContext(ContextOptions); }
+        public DatabaseContext DatabaseContext { get => new DatabaseContext(ContextOptions, OperationalStoreOptions); }
         public TestBase()
         {
             ContextOptions = new DbContextOptionsBuilder<DatabaseContext>()
@@ -17,7 +21,7 @@ namespace EntityFramework.Tests
             .Options;
 
             // Insert seed data into the database using one instance of the context
-            using (var context = new DatabaseContext(ContextOptions))
+            using (var context = new DatabaseContext(ContextOptions, OperationalStoreOptions))
             {
                 context.Campaigns.Add(new Campaign { CampaignId = "1", UserId = "1", Name = "campaign1", Description = "Descrition1" });
                 context.Campaigns.Add(new Campaign { CampaignId = "2", UserId = "2", Name = "campaign2", Description = "Descrition2" });

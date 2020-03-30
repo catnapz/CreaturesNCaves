@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using EntityFramework.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Server.Controllers
 {
+    
+    [Authorize]
     [ApiController]
     [Route("user")]
     public class UserController : ControllerBase
@@ -28,26 +31,11 @@ namespace Server.Controllers
         {
             // var campaigns = _db.Campaigns.Include(campaign => campaign.User).ToList();
             var users = _db.Users
-                .Include(user => user.Campaigns)
                 .ToList();
             
-            var dtos = new List<UserDto>();
             if(users.Any())
             {
-                foreach(var user in users)
-                {
-                    var dto = new UserDto();
-                    dto.UserId = user.UserId;
-                    dto.Description = user.Description;
-                    dto.Name = user.Description;
-                    dto.Username = user.Username;
-                    foreach(var campaign in user.Campaigns)
-                    {
-                        dto.CampaignIds.Add(campaign.CampaignId);
-                    }
-                    dtos.Add(dto);
-                }
-                return new JsonResult(dtos);
+                return new JsonResult(users);
             }
             return new NotFoundResult();            
         }
@@ -55,23 +43,14 @@ namespace Server.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
+            // var users = _db.Users
+            //     .Where(user => user.Id == id)
+            //     .Include(user => user.Campaigns);
             var users = _db.Users
-                .Where(user => user.UserId == id)
-                .Include(user => user.Campaigns);;
-                
+                .Where(user => user.Id == id);
             if(users.Any())
             {
-                var user = users.First();
-                var dto = new UserDto();
-                dto.UserId = user.UserId;
-                dto.Description = user.Description;
-                dto.Name = user.Name;
-                dto.Username = user.Username;
-                foreach(var campaign in user.Campaigns)
-                {
-                    dto.CampaignIds.Add(campaign.CampaignId);
-                }
-                return new JsonResult(dto);
+                return new JsonResult(users);
             }
             return new NotFoundResult();
         }
