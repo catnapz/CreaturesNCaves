@@ -26,7 +26,6 @@ export interface AppProps {
 
 export const App = (props: AppProps) => {
   const loading = useSelector(selectUserLoading);
-
   if (loading) {
     props.loading();
     return <></>;

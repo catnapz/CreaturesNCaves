@@ -37,10 +37,10 @@ export const loadUser = async (userManager: UserManager, store: EnhancedStore): 
   let user: User | null = null;
   
   try {
+    await userManager.signinSilent();
     user = await userManager.getUser();
     getUserCallback(user, store);
   } catch (error) {
-    console.error(error);
     errorCallback(error, store);
   }
   
@@ -58,7 +58,6 @@ const getUserCallback = async (user: User | null = null, store: EnhancedStore): 
 }
 
 const errorCallback = (error: Error, store: EnhancedStore) => {
-  console.error(`ERROR: loadUser() => : ${error.message}`);
   store.dispatch(userLoadingError());
 }
 

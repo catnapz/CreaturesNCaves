@@ -1,10 +1,14 @@
 import React from "react";
 import { UserManager } from "oidc-client";
+import { useApolloClient } from "@apollo/react-hooks";
 
 export const LogoutMenu = (props: {userManager: UserManager}) => {
+  const apolloClient = useApolloClient();
 
   function logout(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     event.preventDefault();
+    
+    apolloClient.resetStore();
     props.userManager.signoutRedirect();
   }
 

@@ -20,13 +20,15 @@ const loaded = () => (loader!.style.display = "none");
 const apolloClient = new ApolloClient({
   uri: 'https://localhost:5001/api',
 });
+apolloClient.resetStore();
 
 initUserManager()
   .then((userManager: UserManager | null) => {
     if(userManager !== null) {
-      loadUser(userManager, ReduxStore);
-      ReactDOM.render(
-        <Provider store={ReduxStore}>
+      loadUser(userManager, ReduxStore).then(user => {
+
+        ReactDOM.render(
+          <Provider store={ReduxStore}>
           <ConnectedRouter history={history}>
             <AuthProvider userManager={userManager}>
               <ApolloProvider client={apolloClient}>
@@ -36,7 +38,11 @@ initUserManager()
           </ConnectedRouter>
         </Provider>,
         document.getElementById("root")
-      );
+        );
+      })
+      .catch(error => {
+        console.error(error);
+      })
     }
   })
 

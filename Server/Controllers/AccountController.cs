@@ -50,7 +50,7 @@ namespace Server.Controllers
     public string Password { get; set; }
 
     [JsonPropertyName("rememberMe")]
-    public bool RememberMe { get; set; }
+    public string RememberMe { get; set; } = "off";
 
     public bool isValid()
     {
@@ -157,7 +157,8 @@ namespace Server.Controllers
       {
         // This doesn't count login failures towards account lockout
         // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-        var result = await _signInManager.PasswordSignInAsync(input.UserName, input.Password, input.RememberMe, lockoutOnFailure: false);
+        bool persistent = string.Equals(input.RememberMe, "on");
+        var result = await _signInManager.PasswordSignInAsync(input.UserName, input.Password, persistent, lockoutOnFailure: false);
         if (result.Succeeded)
         {
           _logger.LogInformation($"\n{input.UserName} logged in.\n");
