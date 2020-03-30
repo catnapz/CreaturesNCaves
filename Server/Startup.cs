@@ -45,7 +45,10 @@ namespace Server
                 .AddEntityFrameworkStores<DatabaseContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<User, DatabaseContext>();
+                .AddApiAuthorization<User, DatabaseContext>()
+                .AddInMemoryIdentityResources(Config.Ids)
+                .AddInMemoryApiResources(Config.Apis)
+                .AddInMemoryClients(Config.Clients);
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
@@ -55,7 +58,7 @@ namespace Server
             services.ConfigureApplicationCookie(configure => 
             {
                configure.SlidingExpiration = true;
-               configure.ExpireTimeSpan = TimeSpan.FromSeconds(10); 
+               configure.ExpireTimeSpan = TimeSpan.FromDays(30); 
             });
 
             // In production, the React files will be served from this directory

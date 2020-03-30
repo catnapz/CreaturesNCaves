@@ -32,7 +32,6 @@ export const ApplicationPaths = {
   SilentRenew: `${prefix}/${LoginAction.SilentRenew}`,
   Register: `${prefix}/${LoginAction.Register}`,
   Profile: `${prefix}/${LoginAction.Profile}`,
-  LogOut: `${prefix}/${LogoutAction.Logout}`,
   LoggedOut: `${prefix}/${LogoutAction.LoggedOut}`,
   LogOutCallback: `${prefix}/${LogoutAction.LogoutCallback}`,
   IdentityRegisterPath: '/Account/Register',

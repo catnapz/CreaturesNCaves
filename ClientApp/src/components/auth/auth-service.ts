@@ -14,7 +14,8 @@ export const initUserManager = async (): Promise<UserManager | null> => {
       const settings: UserManagerSettings = {
         ...(await response.json()),
         automaticSilentRenew: true,
-        silent_redirect_uri: "http://localhost:5001/silentrenew.html"   
+        accessTokenExpiringNotificationTime: 3,
+        silent_redirect_uri: "https://localhost:5001/silentrenew.html"   
       };
       userManager = new UserManager(settings);
       console.log({ API_AUTH_CLIENT_CONFIG_RESPONSE: settings });

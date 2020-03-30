@@ -178,7 +178,7 @@ namespace Server.Controllers
     }
   
     [Authorize]
-    [HttpPost("Logout")]
+    [HttpGet("Logout")]
     public async Task<IActionResult> Logout()
     {
       await _signInManager.SignOutAsync();
