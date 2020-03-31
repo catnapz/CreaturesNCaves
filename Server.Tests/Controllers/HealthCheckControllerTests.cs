@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Xunit;
 using Moq;
 using FluentAssertions;
+using static Xunit.Assert;
 
 namespace Server.Tests.Controllers
 {
@@ -21,7 +22,7 @@ namespace Server.Tests.Controllers
             var result = controller.Get();
 
             // Assert
-            var okResult = Assert.IsType<OkResult>(result);
+            IsType<OkResult>(result);
 
         }
 

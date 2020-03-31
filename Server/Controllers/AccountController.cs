@@ -1,66 +1,15 @@
-using System.Data;
 using System;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Text.Encodings.Web;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore;
 using EntityFramework.Models;
+using Server.Controllers.Models;
 
 namespace Server.Controllers
 {
-
-  public class RegisterData
-  {
-    [JsonPropertyName("username")]
-    public string UserName { get; set; }
-
-    [JsonPropertyName("password")]
-    public string Password { get; set; }
-
-    [JsonPropertyName("email")]
-    public string Email { get; set; }
-
-    public bool isValid()
-    {
-      return (
-        !string.IsNullOrEmpty(this.UserName) &&
-        !string.IsNullOrEmpty(this.Password) &&
-        !string.IsNullOrEmpty(this.Email)
-      );
-    }
-  }
-
-  public class LoginData
-  {
-    [JsonPropertyName("username")]
-    public string UserName { get; set; }
-
-    [JsonPropertyName("password")]
-    public string Password { get; set; }
-
-    [JsonPropertyName("rememberMe")]
-    public string RememberMe { get; set; } = "off";
-
-    public bool isValid()
-    {
-      return (
-        !string.IsNullOrEmpty(this.UserName) &&
-        !string.IsNullOrEmpty(this.Password)
-      );
-    }
-  }
-
   [ApiController]
   [Route("account")]
   public class AccountController : ControllerBase
@@ -93,54 +42,55 @@ namespace Server.Controllers
     }
 
     [HttpPost("Register")]
-    public async Task<IActionResult> Register([FromForm] RegisterData input)
+    public async Task<IActionResult> Register([FromForm] RegisterInput input)
     {
+      _ = input ?? throw new ArgumentNullException(nameof(input));
+      
       _logger.LogInformation(JsonSerializer.Serialize(input));
-      if (input.isValid())
+      if (!input.IsValid()) return new StatusCodeResult(400);
+      
+      var user = new User { UserName = input.UserName, Email = input.Email };
+      var createUserResult = await _userManager.CreateAsync(user, input.Password);
+      if (!createUserResult.Succeeded) return new StatusCodeResult(400);
+      
+      if (!_roleManager.RoleExistsAsync("NormalUser").Result)
       {
-        var user = new User { UserName = input.UserName, Email = input.Email };
-        var createUserResult = await _userManager.CreateAsync(user, input.Password);
-        if (createUserResult.Succeeded)
+        var role = new IdentityRole();
+        role.Name = "NormalUser";
+        var createRoleResult = await _roleManager.CreateAsync(role);
+        if (!createRoleResult.Succeeded)
         {
-          if (!_roleManager.RoleExistsAsync("NormalUser").Result)
-          {
-            IdentityRole role = new IdentityRole();
-            role.Name = "NormalUser";
-            IdentityResult createRoleResult = await _roleManager.CreateAsync(role);
-            if (!createRoleResult.Succeeded)
-            {
-              _logger.LogError("Error while creating role");
-              return new StatusCodeResult(500);
-            }
-          }
-          await _userManager.AddToRoleAsync(user, "NormalUser");
-          // await _userManager.AddClaimsAsync(user, new List<System.Security.Claims.Claim>() {
-          //   new System.Security.Claims.Claim("username", user.UserName),
-          //   new System.Security.Claims.Claim("name", user.Name),
-          //   new System.Security.Claims.Claim("email", user.Email),
-          // });
-          _logger.LogInformation("User created a new account.");
-          // var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-          // code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-          // var callbackUrl = Url.Page(
-          //   "/Account/ConfirmEmail",
-          //   pageHandler: null,
-          //   values: new { area = "Identity", userId = user.Id, code = code },
-          //   protocol: Request.Scheme);
-
-          // await _emailSender.SendEmailAsync(input.Email, "Confirm your email",
-          //     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-          // if (_userManager.Options.SignIn.RequireConfirmedAccount)
-          // {
-          //   return RedirectToPage("RegisterConfirmation", new { email = input.Email });
-          // } else
-          // await _signInManager.SignInAsync(user, isPersistent: false);
-          return LocalRedirect(Url.Content("~/"));
+          _logger.LogError("Error while creating role");
+          return new StatusCodeResult(500);
         }
       }
+      
+      await _userManager.AddToRoleAsync(user, "NormalUser");
+      // await _userManager.AddClaimsAsync(user, new List<System.Security.Claims.Claim>() {
+      //   new System.Security.Claims.Claim("username", user.UserName),
+      //   new System.Security.Claims.Claim("name", user.Name),
+      //   new System.Security.Claims.Claim("email", user.Email),
+      // });
+      
+      _logger.LogInformation("User created a new account.");
+      // var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+      // code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+      // var callbackUrl = Url.Page(
+      //   "/Account/ConfirmEmail",
+      //   pageHandler: null,
+      //   values: new { area = "Identity", userId = user.Id, code = code },
+      //   protocol: Request.Scheme);
 
-      return new StatusCodeResult(400);
+      // await _emailSender.SendEmailAsync(input.Email, "Confirm your email",
+      //     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+      // if (_userManager.Options.SignIn.RequireConfirmedAccount)
+      // {
+      //   return RedirectToPage("RegisterConfirmation", new { email = input.Email });
+      // } else
+      // await _signInManager.SignInAsync(user, isPersistent: false);
+      
+      return LocalRedirect(Url.Content("~/"));
     }
 
     [HttpGet("Login")]
@@ -150,38 +100,39 @@ namespace Server.Controllers
     }
 
     [HttpPost("Login")]
-    public async Task<IActionResult> Login([FromForm] LoginData input)
+    public async Task<IActionResult> Login([FromForm] LoginInput input)
     {
+      _ = input ?? throw new ArgumentNullException(nameof(input));
+      
       var returnUrl = Url.Content("~/");
-      if (ModelState.IsValid)
+      if (!ModelState.IsValid) return new StatusCodeResult(500);
+      
+      // This doesn't count login failures towards account lockout
+      // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+      bool persistent = string.Equals(input.RememberMe, "on");
+      var result = await _signInManager.PasswordSignInAsync(input.UserName, input.Password, persistent, lockoutOnFailure: false);
+      
+      if (result.Succeeded)
       {
-        // This doesn't count login failures towards account lockout
-        // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-        bool persistent = string.Equals(input.RememberMe, "on");
-        var result = await _signInManager.PasswordSignInAsync(input.UserName, input.Password, persistent, lockoutOnFailure: false);
-        if (result.Succeeded)
-        {
-          _logger.LogInformation($"\n{input.UserName} logged in.\n");
-          return LocalRedirect(returnUrl);
-        }
-        // if (result.RequiresTwoFactor)
-        // {
-        //   return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = input.RememberMe });
-        // }
-        // if (result.IsLockedOut)
-        // {
-        //   _logger.LogWarning("User account locked out.");
-        //   return RedirectToPage("./Lockout");
-        // }
-        else
-        {
-          _logger.LogError("Invalid login attempt.");
-          return new StatusCodeResult(400);
-        }
+        _logger.LogInformation($"\n{input.UserName} logged in.\n");
+        return LocalRedirect(returnUrl);
       }
-
-      // If we got this far, something failed
-      return new StatusCodeResult(500);
+      
+      // if (result.RequiresTwoFactor)
+      // {
+      //   return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = input.RememberMe });
+      // }
+      // if (result.IsLockedOut)
+      // {
+      //   _logger.LogWarning("User account locked out.");
+      //   return RedirectToPage("./Lockout");
+      // }
+      
+      else
+      {
+        _logger.LogError("Invalid login attempt.");
+        return new StatusCodeResult(400);
+      }
     }
   
     [Authorize]

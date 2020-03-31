@@ -9,7 +9,7 @@ namespace Server.Tests.GraphQL
 {
     public class QueryTests : IClassFixture<TestBase>
     {
-        readonly TestBase _base;
+        private readonly TestBase _base;
         public QueryTests(TestBase testBase)
         {
             _base = testBase;
@@ -18,7 +18,7 @@ namespace Server.Tests.GraphQL
         [Fact]
         async public void GetUsers_UsersExist()
         {
-            using ( var context = new DatabaseContext(_base.ContextOptions, _base.OperationalStoreOptions))
+            using ( var context = _base.DatabaseContext)
             {
                 // Arrange
                 var query = new Query();
