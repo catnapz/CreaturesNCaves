@@ -18,7 +18,7 @@ namespace Server.Tests.GraphQL
         [Fact]
         async public void GetUsers_UsersExist()
         {
-            using ( var context = _base.DatabaseContext )
+            using ( var context = new DatabaseContext(_base.ContextOptions, _base.OperationalStoreOptions))
             {
                 // Arrange
                 var query = new Query();
@@ -42,20 +42,12 @@ namespace Server.Tests.GraphQL
 
                 // Act
                 User actualUser = users.First();
-                var expectedUser = new User 
-                { 
-                    Id = "1",
-                    UserName = "username1",
-                    Name = "User1",
-                    Description = "User2",
-                    PasswordHash = "1234",
-                    Campaigns = new List<Campaign>(){new Campaign { CampaignId = "1", UserId = "1", Name = "campaign1", Description = "Descrition1" }}
-                };
+                var expectedUser = new User { Id = "U1", Description = "UD1", Name = "UN1" };
 
                 // Assert // Don't know best way to do object equality yet
                 Assert.Equal(expectedUser.Id, actualUser.Id);
-                Assert.Equal(expectedUser.Campaigns.First().CampaignId, actualUser.Campaigns.First().CampaignId);
                 Assert.Equal(expectedUser.Description, actualUser.Description);
+                Assert.Equal(expectedUser.Name, actualUser.Name);
             }
         }
     }

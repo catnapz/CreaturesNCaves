@@ -3,6 +3,8 @@ using EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using IdentityServer4.EntityFramework.Options;
+using Moq;
+using System.Collections.Generic;
 
 namespace Server.Tests
 {
@@ -18,11 +20,27 @@ namespace Server.Tests
             .EnableSensitiveDataLogging()
             .Options;
 
+            OperationalStoreOptions = Mock.Of<IOptions<OperationalStoreOptions>>();
+            Mock.Get(OperationalStoreOptions).Setup(x => x.Value).Returns(new OperationalStoreOptions
+            {
+                DeviceFlowCodes =
+                {
+                    Name = "DeviceCodes"
+                },
+                PersistedGrants =
+                {
+                    Name = "PersistedGrants"
+                },
+                TokenCleanupBatchSize = 100,
+                TokenCleanupInterval = 3600
+            });
+
             // Insert seed data into the database using one instance of the context
             using (var context = new DatabaseContext(ContextOptions, OperationalStoreOptions))
             {
-                context.Campaigns.Add(new Campaign { CampaignId = "1", UserId = "1", Name = "campaign1", Description = "Descrition1" });
-                context.Campaigns.Add(new Campaign { CampaignId = "2", UserId = "2", Name = "campaign2", Description = "Descrition2" });
+                context.Users.Add(new User { Id = "U1", Description = "UD1", Name = "UN1" });
+                context.Users.Add(new User { Id = "U2", Description = "UD2", Name = "UN2" });
+                
                 context.SaveChanges();
             }
         }
