@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
+using CreaturesNCaves.EntityFramework.Models;
 using HotChocolate;
-using EntityFramework.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace Server.GraphQL.Resolvers
+namespace CreaturesNCaves.Server.GraphQL.Resolvers
 {
   public class UserResolvers
   {

@@ -1,6 +1,6 @@
 using HotChocolate.Types;
 
-namespace Server.GraphQL.Types
+namespace CreaturesNCaves.Server.GraphQL.Types
 {
   public class QueryType : ObjectType<Query>
   {

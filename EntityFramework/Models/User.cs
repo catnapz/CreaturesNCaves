@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace EntityFramework.Models
+namespace CreaturesNCaves.EntityFramework.Models
 {
     public partial class User : IdentityUser
     {

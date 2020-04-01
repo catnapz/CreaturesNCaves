@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+﻿using System;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Server.Controllers
+namespace CreaturesNCaves.Server.Controllers
 {
     public class OidcConfigurationController : Controller
     {
@@ -10,8 +11,8 @@ namespace Server.Controllers
 
         public OidcConfigurationController(IClientRequestParametersProvider clientRequestParametersProvider, ILogger<OidcConfigurationController> logger)
         {
-            ClientRequestParametersProvider = clientRequestParametersProvider;
-            _logger = logger;
+            ClientRequestParametersProvider = clientRequestParametersProvider ?? throw new ArgumentNullException(nameof(clientRequestParametersProvider));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public IClientRequestParametersProvider ClientRequestParametersProvider { get; }

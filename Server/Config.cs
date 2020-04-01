@@ -1,7 +1,7 @@
-using IdentityServer4.Models;
 using System.Collections.Generic;
+using IdentityServer4.Models;
 
-namespace Server
+namespace CreaturesNCaves.Server
 {
   public static class Config
   {

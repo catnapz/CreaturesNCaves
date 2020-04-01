@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EntityFramework.Models;
+using CreaturesNCaves.EntityFramework.Models;
 using Xunit;
 
 namespace EntityFramework.Tests
@@ -15,7 +15,7 @@ namespace EntityFramework.Tests
         }
 
         [Fact]
-        public void Test1()
+        public void Campaigns()
         {
             using ( var context = _base.DatabaseContext )
             {

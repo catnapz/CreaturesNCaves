@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace EntityFramework.Models
+﻿namespace CreaturesNCaves.EntityFramework.Models
 {
     public partial class Campaign
     {
