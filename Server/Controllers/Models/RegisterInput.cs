@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Server.Controllers.Models
+namespace CreaturesNCaves.Server.Controllers.Models
 {
     public class RegisterInput : IRegisterData
     {

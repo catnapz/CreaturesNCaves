@@ -1,8 +1,8 @@
+using CreaturesNCaves.EntityFramework.Models;
+using CreaturesNCaves.Server.GraphQL.Resolvers;
 using HotChocolate.Types;
-using EntityFramework.Models;
-using Server.GraphQL.Resolvers;
 
-namespace Server.GraphQL.Types
+namespace CreaturesNCaves.Server.GraphQL.Types
 {
   public class UserType : ObjectType<User>
   {

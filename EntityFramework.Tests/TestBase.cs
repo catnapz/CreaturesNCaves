@@ -1,6 +1,6 @@
 using System;
+using CreaturesNCaves.EntityFramework.Models;
 using Npgsql.EntityFrameworkCore;
-using EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
@@ -47,11 +47,11 @@ namespace EntityFramework.Tests
 
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool _disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
@@ -61,7 +61,7 @@ namespace EntityFramework.Tests
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
 
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 

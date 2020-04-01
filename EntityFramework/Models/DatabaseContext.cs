@@ -1,11 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Options;
+﻿using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using IdentityServer4.EntityFramework.Options;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
-namespace EntityFramework.Models
+namespace CreaturesNCaves.EntityFramework.Models
 {
     public partial class DatabaseContext : ApiAuthorizationDbContext<User>
     {

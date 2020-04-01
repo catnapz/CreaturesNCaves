@@ -1,13 +1,12 @@
-using Server.Controllers;
-using System;
+using CreaturesNCaves.Server.Controllers;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Xunit;
 using Moq;
-using FluentAssertions;
+using Xunit;
 using static Xunit.Assert;
 
-namespace Server.Tests.Controllers
+namespace CreaturesNCaves.Server.Tests.Controllers
 {
     public class HealthCheckControllerTests: ControllerBase
     {

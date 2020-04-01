@@ -1,13 +1,13 @@
 ﻿using System;
+using CreaturesNCaves.Server.Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
-using Server.Controllers;
 
-namespace Server.Tests.Controllers
+namespace CreaturesNCaves.Server.Tests.Controllers
 {
     public class OidcConfigControllerTests
     {

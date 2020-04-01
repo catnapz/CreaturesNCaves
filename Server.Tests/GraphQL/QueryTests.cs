@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using EntityFramework.Models;
+using CreaturesNCaves.EntityFramework.Models;
+using CreaturesNCaves.Server.GraphQL;
 using Xunit;
-using Server.GraphQL;
 
-namespace Server.Tests.GraphQL
+namespace CreaturesNCaves.Server.Tests.GraphQL
 {
     public class QueryTests : IClassFixture<TestBase>
     {

@@ -1,14 +1,14 @@
 using System;
 using System.Text.Json;
-using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
+using CreaturesNCaves.EntityFramework.Models;
+using CreaturesNCaves.Server.Controllers.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Identity;
-using EntityFramework.Models;
-using Server.Controllers.Models;
 
-namespace Server.Controllers
+namespace CreaturesNCaves.Server.Controllers
 {
   [ApiController]
   [Route("account")]
@@ -105,7 +105,8 @@ namespace Server.Controllers
       _ = input ?? throw new ArgumentNullException(nameof(input));
       
       var returnUrl = Url.Content("~/");
-      if (!ModelState.IsValid) return new StatusCodeResult(500);
+      
+      if (!input.IsValid()) return new StatusCodeResult(400);
       
       // This doesn't count login failures towards account lockout
       // To enable password failures to trigger account lockout, set lockoutOnFailure: true

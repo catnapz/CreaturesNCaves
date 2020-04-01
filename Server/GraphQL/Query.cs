@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CreaturesNCaves.EntityFramework.Models;
 using HotChocolate;
 using Microsoft.EntityFrameworkCore;
-using EntityFramework.Models;
 
-namespace Server.GraphQL
+namespace CreaturesNCaves.Server.GraphQL
 {
   public class Query
   {

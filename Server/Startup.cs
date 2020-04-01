@@ -1,21 +1,19 @@
 using System;
+using CreaturesNCaves.EntityFramework.Models;
+using CreaturesNCaves.Server.GraphQL.Types;
+using HotChocolate;
+using HotChocolate.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using HotChocolate;
-using HotChocolate.Configuration;
-using HotChocolate.AspNetCore;
-using EntityFramework.Models;
-using Server.GraphQL.Types;
 
-namespace Server
+namespace CreaturesNCaves.Server
 {
     public class Startup
     {

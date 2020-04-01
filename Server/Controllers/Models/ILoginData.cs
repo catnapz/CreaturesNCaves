@@ -1,4 +1,4 @@
-﻿namespace Server.Controllers.Models
+﻿namespace CreaturesNCaves.Server.Controllers.Models
 {
     public interface ILoginData : IUserData
     {
