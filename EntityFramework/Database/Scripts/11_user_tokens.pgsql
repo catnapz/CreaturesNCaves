@@ -1,21 +1,21 @@
--- Table: public.user_tokens
+-- Table: public."AspNetUserTokens"
 
--- DROP TABLE public.user_tokens;
+-- DROP TABLE public."AspNetUserTokens";
 
-CREATE TABLE public.user_tokens
+CREATE TABLE public."AspNetUserTokens"
 (
-    user_id text COLLATE pg_catalog."default" NOT NULL,
-    login_provider text COLLATE pg_catalog."default" NOT NULL,
-    name text COLLATE pg_catalog."default" NOT NULL,
-    value text COLLATE pg_catalog."default",
-    CONSTRAINT user_tokens_pkey PRIMARY KEY (user_id, login_provider, name),
-    CONSTRAINT user_tokens_users_user_id_fkey FOREIGN KEY (user_id)
-        REFERENCES public.users (id) MATCH SIMPLE
+    "UserId" text COLLATE pg_catalog."default" NOT NULL,
+    "LoginProvider" text COLLATE pg_catalog."default" NOT NULL,
+    "Name" text COLLATE pg_catalog."default" NOT NULL,
+    "Value" text COLLATE pg_catalog."default",
+    CONSTRAINT "PK_AspNetUserTokens" PRIMARY KEY ("UserId", "LoginProvider", "Name"),
+    CONSTRAINT "FK_AspNetUserTokens_AspNetUsers_UserId" FOREIGN KEY ("UserId")
+        REFERENCES public."AspNetUsers" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.user_tokens
+ALTER TABLE public."AspNetUserTokens"
     OWNER to cnc_admin;

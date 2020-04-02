@@ -1,46 +1,46 @@
--- Table: public.users
+-- Table: public."AspNetUsers"
 
--- DROP TABLE public.users;
+-- DROP TABLE public."AspNetUsers";
 
-CREATE TABLE public.users
+CREATE TABLE public."AspNetUsers"
 (
-    id text COLLATE pg_catalog."default" NOT NULL,
-    user_name text COLLATE pg_catalog."default",
-    normalized_user_name text COLLATE pg_catalog."default",
-    email text COLLATE pg_catalog."default",
-    normalized_email text COLLATE pg_catalog."default",
-    email_confirmed integer NOT NULL,
-    password_hash text COLLATE pg_catalog."default",
-    security_stamp text COLLATE pg_catalog."default",
-    concurrency_stamp text COLLATE pg_catalog."default",
-    phone_number text COLLATE pg_catalog."default",
-    phone_number_confirmed integer NOT NULL,
-    two_factor_enabled integer NOT NULL,
-    lockout_end text COLLATE pg_catalog."default",
-    lockout_enabled integer NOT NULL,
-    access_failed_count integer NOT NULL,
-    description text COLLATE pg_catalog."default",
-    name text COLLATE pg_catalog."default",
-    CONSTRAINT users_pkey PRIMARY KEY (id)
+    "Id" text COLLATE pg_catalog."default" NOT NULL,
+    "UserName" text COLLATE pg_catalog."default",
+    "NormalizedUserName" text COLLATE pg_catalog."default",
+    "Email" text COLLATE pg_catalog."default",
+    "NormalizedEmail" text COLLATE pg_catalog."default",
+    "PasswordHash" text COLLATE pg_catalog."default",
+    "SecurityStamp" text COLLATE pg_catalog."default",
+    "ConcurrencyStamp" text COLLATE pg_catalog."default",
+    "PhoneNumber" text COLLATE pg_catalog."default",
+    "Description" text COLLATE pg_catalog."default",
+    "Name" text COLLATE pg_catalog."default",
+    "EmailConfirmed" boolean NOT NULL,
+    "PhoneNumberConfirmed" boolean NOT NULL,
+    "TwoFactorEnabled" boolean NOT NULL,
+    "LockoutEnabled" boolean NOT NULL,
+    "AccessFailedCount" integer,
+    "LockoutEnd" date,
+    CONSTRAINT "PK_AspNetUsers" PRIMARY KEY ("Id")
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.users
+ALTER TABLE public."AspNetUsers"
     OWNER to cnc_admin;
--- Index: email_index
+-- Index: EmailIndex
 
--- DROP INDEX public.email_index;
+-- DROP INDEX public."EmailIndex";
 
-CREATE INDEX email_index
-    ON public.users USING btree
-    (normalized_email COLLATE pg_catalog."default" ASC NULLS LAST)
+CREATE INDEX "EmailIndex"
+    ON public."AspNetUsers" USING btree
+    ("NormalizedEmail" COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
--- Index: user_name_index
+-- Index: UserNameIndex
 
--- DROP INDEX public.user_name_index;
+-- DROP INDEX public."UserNameIndex";
 
-CREATE UNIQUE INDEX user_name_index
-    ON public.users USING btree
-    (normalized_user_name COLLATE pg_catalog."default" ASC NULLS LAST)
+CREATE UNIQUE INDEX "UserNameIndex"
+    ON public."AspNetUsers" USING btree
+    ("NormalizedUserName" COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

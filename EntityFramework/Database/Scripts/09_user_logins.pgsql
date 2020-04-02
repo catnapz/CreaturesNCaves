@@ -1,29 +1,29 @@
--- Table: public.user_logins
+-- Table: public."AspNetUserLogins"
 
--- DROP TABLE public.user_logins;
+-- DROP TABLE public."AspNetUserLogins";
 
-CREATE TABLE public.user_logins
+CREATE TABLE public."AspNetUserLogins"
 (
-    login_provider text COLLATE pg_catalog."default" NOT NULL,
-    provider_key text COLLATE pg_catalog."default" NOT NULL,
-    provider_display_name text COLLATE pg_catalog."default",
-    user_id text COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT user_logins_pkey PRIMARY KEY (login_provider, provider_key),
-    CONSTRAINT user_logins_users_user_id_fkey FOREIGN KEY (user_id)
-        REFERENCES public.users (id) MATCH SIMPLE
+    "LoginProvider" text COLLATE pg_catalog."default" NOT NULL,
+    "ProviderKey" text COLLATE pg_catalog."default" NOT NULL,
+    "ProviderDisplayName" text COLLATE pg_catalog."default",
+    "UserId" text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "PK_AspNetUserLogins" PRIMARY KEY ("LoginProvider", "ProviderKey"),
+    CONSTRAINT "FK_AspNetUserLogins_AspNetUsers_UserId" FOREIGN KEY ("UserId")
+        REFERENCES public."AspNetUsers" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.user_logins
+ALTER TABLE public."AspNetUserLogins"
     OWNER to cnc_admin;
--- Index: IX_UserLogins_UserId
+-- Index: IX_AspNetUserLogins_UserId
 
--- DROP INDEX public.user_logins_user_id_index;
+-- DROP INDEX public."IX_AspNetUserLogins_UserId";
 
-CREATE INDEX user_logins_user_id_index
-    ON public.user_logins USING btree
-    (user_id COLLATE pg_catalog."default" ASC NULLS LAST)
+CREATE INDEX "IX_AspNetUserLogins_UserId"
+    ON public."AspNetUserLogins" USING btree
+    ("UserId" COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
