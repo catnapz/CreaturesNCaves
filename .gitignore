@@ -1,5 +1,8 @@
 tempkey.rsa
 
+# Dev Settings
+appsettings.Development.json
+
 # Generated files
 EntityFramework/Database/DummyData/*.csv
 
