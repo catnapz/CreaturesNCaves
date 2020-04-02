@@ -17,6 +17,8 @@ Do either of the following:
 
 * Then run the SQL scripts under the Scripts directory in order (filename prefix 0_ is before 1_)
 
+> Below is no longer valid until this note is removed
+```
 * Run the `generate.sh` bash script under DummyData directory.
   * Usage: ```generate.sh [(optional) # of users to generate] [(optional) # of campaigns per users to generate]  ```
   * If no arguments are passed to the script, 10 is used for both.
@@ -27,6 +29,7 @@ Do either of the following:
     * ```COPY public.campaigns (campaign_id, user_id, name, description) FROM 'path/to/generated.csv' CSV QUOTE '\"' ESCAPE ''''; ```
     * OR the psql `\copy` cmd. ```  \copy campaigns  FROM ..path/tp/csv .csv DELIMITER ',' CSV ```
   
+```
 
 ### NOTE: To log into psql as cnc_admin and connect to the cnc database:
 `psql -h 127.0.0.1 -U cnc_admin cnc`
