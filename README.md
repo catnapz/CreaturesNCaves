@@ -7,6 +7,8 @@
 * Install dotnet aspnet runtime, dotnet runtime, and dotnet sdk (currently version 3.1) [Download](https://dotnet.microsoft.com/download)
 * Node lts (currently 12.16.0) [Download](https://nodejs.org/en/download/)
 
+## DATABASE
+Follow instructuons [Here](/EntityFramework/Database/README.md)
 ## DOCKER
 * To build the docker image, run ```docker build -t cnc:latest .``` in the same directory as the `Dockerfile` file.
 * To run the image in a container, run ```docker run -it -p 8080:80 cnc:latest```. The app can now be accessed from [localhost:8080](http://localhost:8080)
