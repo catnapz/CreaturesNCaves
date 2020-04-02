@@ -17,6 +17,24 @@ A tool for DMs
 * Install dotnet aspnet runtime, dotnet runtime, and dotnet sdk (currently version 3.1) - [Download](https://dotnet.microsoft.com/download)
 * Node lts (currently 12.16.0) - [Download](https://nodejs.org/en/download/)
 
+## APPSETTINGS
+Create a file named `appsettings.Development.json` in the same directory as `appsettings.json` with the following:
+```json
+{
+  "ConnectionStrings": {
+    "DBConnectionString": "Host=localhost;Port=<PORT>;Username=cnc_admin;Password=<PASSWORD>;Database=cnc;"
+  },
+  "IdentityServer": {
+    "Key": {
+      "Type": "Development"
+    }
+  }
+}
+```
+> DBConnectionString: \
+> \<PORT\> = the port of your postgres server. See instructions under the [DATABASE](#DATABASE) instructions \
+> \<PASSWORD\> = the password you set for the cnc_admin psql user. See instructions under the [DATABASE](#DATABASE) instructions
+
 ## DATABASE
 Follow instructuons [here](/EntityFramework/Database/README.md)
 
