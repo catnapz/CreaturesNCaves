@@ -29,7 +29,7 @@ namespace CreaturesNCaves.Server
         {
             services.AddDbContext<DatabaseContext>(options =>
             {
-                options.UseNpgsql();
+                options.UseNpgsql(Configuration.GetConnectionString("DBConnectionString"));
             });
 
             services.AddGraphQL(
