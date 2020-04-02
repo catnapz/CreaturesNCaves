@@ -1,25 +1,25 @@
--- Table: public.roles
+-- Table: public."AspNetRoles"
 
--- DROP TABLE public.roles;
+-- DROP TABLE public."AspNetRoles";
 
-CREATE TABLE public.roles
+CREATE TABLE public."AspNetRoles"
 (
-    id text COLLATE pg_catalog."default" NOT NULL,
-    name text COLLATE pg_catalog."default",
-    normalized_name text COLLATE pg_catalog."default",
-    concurrency_stamp text COLLATE pg_catalog."default",
-    CONSTRAINT roles_pkey PRIMARY KEY (id)
+    "Id" text COLLATE pg_catalog."default" NOT NULL,
+    "Name" text COLLATE pg_catalog."default",
+    "NormalizedName" text COLLATE pg_catalog."default",
+    "ConcurrencyStamp" text COLLATE pg_catalog."default",
+    CONSTRAINT "PK_AspNetRoles" PRIMARY KEY ("Id")
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.roles
+ALTER TABLE public."AspNetRoles"
     OWNER to cnc_admin;
--- Index: role_name_index
+-- Index: RoleNameIndex
 
--- DROP INDEX public.role_name_index;
+-- DROP INDEX public."RoleNameIndex";
 
-CREATE UNIQUE INDEX role_name_index
-    ON public.roles USING btree
-    (normalized_name COLLATE pg_catalog."default" ASC NULLS LAST)
+CREATE UNIQUE INDEX "RoleNameIndex"
+    ON public."AspNetRoles" USING btree
+    ("NormalizedName" COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

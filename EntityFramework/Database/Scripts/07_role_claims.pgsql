@@ -1,29 +1,29 @@
--- Table: public.role_claims
+-- Table: public."AspNetRoleClaims"
 
--- DROP TABLE public.role_claims;
+-- DROP TABLE public."AspNetRoleClaims";
 
-CREATE TABLE public.role_claims
+CREATE TABLE public."AspNetRoleClaims"
 (
-    id integer NOT NULL,
-    role_id text COLLATE pg_catalog."default" NOT NULL,
-    claim_type text COLLATE pg_catalog."default",
-    claim_value text COLLATE pg_catalog."default",
-    CONSTRAINT role_claims_pkey PRIMARY KEY (id),
-    CONSTRAINT role_claims_roles_role_id_fkey FOREIGN KEY (role_id)
-        REFERENCES public.roles (id) MATCH SIMPLE
+    "Id" integer NOT NULL,
+    "RoleId" text COLLATE pg_catalog."default" NOT NULL,
+    "ClaimType" text COLLATE pg_catalog."default",
+    "ClaimValue" text COLLATE pg_catalog."default",
+    CONSTRAINT "PK_AspNetRoleClaims" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_AspNetRoleClaims_AspNetRoles_RoleId" FOREIGN KEY ("RoleId")
+        REFERENCES public."AspNetRoles" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.role_claims
+ALTER TABLE public."AspNetRoleClaims"
     OWNER to cnc_admin;
--- Index: IX_RoleClaims_RoleId
+-- Index: IX_AspNetRoleClaims_RoleId
 
--- DROP INDEX public.role_claims_role_id_index;
+-- DROP INDEX public."IX_AspNetRoleClaims_RoleId";
 
-CREATE INDEX role_claims_role_id_index
-    ON public.role_claims USING btree
-    (role_id COLLATE pg_catalog."default" ASC NULLS LAST)
+CREATE INDEX "IX_AspNetRoleClaims_RoleId"
+    ON public."AspNetRoleClaims" USING btree
+    ("RoleId" COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;

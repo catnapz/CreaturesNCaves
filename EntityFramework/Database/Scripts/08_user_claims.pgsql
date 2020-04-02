@@ -1,29 +1,29 @@
--- Table: public.user_claims
+-- Table: public."AspNetUserClaims"
 
--- DROP TABLE public.user_claims;
+-- DROP TABLE public."AspNetUserClaims";
 
-CREATE TABLE public.user_claims
+CREATE TABLE public."AspNetUserClaims"
 (
-    id integer NOT NULL,
-    user_id text COLLATE pg_catalog."default" NOT NULL,
-    claim_type text COLLATE pg_catalog."default",
-    claim_value text COLLATE pg_catalog."default",
-    CONSTRAINT user_claims_pkey PRIMARY KEY (id),
-    CONSTRAINT user_claims_users_user_id_fkey FOREIGN KEY (user_id)
-        REFERENCES public.users (id) MATCH SIMPLE
+    "Id" integer NOT NULL,
+    "UserId" text COLLATE pg_catalog."default" NOT NULL,
+    "ClaimType" text COLLATE pg_catalog."default",
+    "ClaimValue" text COLLATE pg_catalog."default",
+    CONSTRAINT "PK_AspNetUserClaims" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_AspNetUserClaims_AspNetUsers_UserId" FOREIGN KEY ("UserId")
+        REFERENCES public."AspNetUsers" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.user_claims
+ALTER TABLE public."AspNetUserClaims"
     OWNER to cnc_admin;
--- Index: IX_UserClaims_UserId
+-- Index: IX_AspNetUserClaims_UserId
 
--- DROP INDEX public.user_claims_user_id_index;
+-- DROP INDEX public."IX_AspNetUserClaims_UserId";
 
-CREATE INDEX user_claims_user_id_index
-    ON public.user_claims USING btree
-    (user_id COLLATE pg_catalog."default" ASC NULLS LAST)
+CREATE INDEX "IX_AspNetUserClaims_UserId"
+    ON public."AspNetUserClaims" USING btree
+    ("UserId" COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
