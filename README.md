@@ -1,6 +1,6 @@
-![Build Pipeline](https://github.com/ansh-projects/CreaturesNCaves/workflows/Build%20Pipeline/badge.svg)
+![Build Pipeline](https://github.com/catnapz/CreaturesNCaves/workflows/Build%20Pipeline/badge.svg)
 
-[![codecov](https://codecov.io/gh/ansh-projects/CreaturesNCaves/branch/master/graph/badge.svg)](https://codecov.io/gh/ansh-projects/CreaturesNCaves)
+[![codecov](https://codecov.io/gh/catnapz/CreaturesNCaves/branch/master/graph/badge.svg)](https://codecov.io/gh/catnapz/CreaturesNCaves)
 
 # Creatures & Caves
 A tool for DMs
