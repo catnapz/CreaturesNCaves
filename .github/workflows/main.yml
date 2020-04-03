@@ -11,6 +11,7 @@ on:
 jobs:
   
   test:
+    if: contains(github.event.head_commit.message, [skip-ci])
     name: Unit Tests
     runs-on: ubuntu-latest
 
@@ -60,7 +61,7 @@ jobs:
         # User defined upload name. Visible in Codecov UI
         name: ClientApp
         # Repository upload token - get it from codecov.io
-        token: c148f571-5080-4421-b1ec-72a4d397a7db
+        token: ${{ secrets.CODECOV_TOKEN }}
         # Path to coverage file to upload
         file: TestResults/frontend.json
         # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
@@ -74,7 +75,7 @@ jobs:
         # User defined upload name. Visible in Codecov UI
         name: Server
         # Repository upload token - get it from codecov.io
-        token: c148f571-5080-4421-b1ec-72a4d397a7db
+        token: ${{ secrets.CODECOV_TOKEN }}
         # Path to coverage file to upload
         file: TestResults/server.opencover.xml
         # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
@@ -88,7 +89,7 @@ jobs:
         # User defined upload name. Visible in Codecov UI
         name: EntityFramework
         # Repository upload token - get it from codecov.io
-        token: c148f571-5080-4421-b1ec-72a4d397a7db
+        token: ${{ secrets.CODECOV_TOKEN }}
         # Path to coverage file to upload
         file: TestResults/entityframework.opencover.xml
         # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
