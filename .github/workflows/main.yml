@@ -11,7 +11,7 @@ on:
 jobs:
   
   test:
-    if: contains(github.event.head_commit.message, '[skip-ci]')
+    if: "!contains(github.event.head_commit.message, '[skip-ci]')"
     name: Unit Tests
     runs-on: ubuntu-latest
 
