@@ -21,14 +21,21 @@ A tool for DMs
 Create a file named `appsettings.Development.json` in the same directory as `appsettings.json` with the following:
 ```json
 {
-  "ConnectionStrings": {
-    "DBConnectionString": "Host=localhost;Port=<PORT>;Username=cnc_admin;Password=<PASSWORD>;Database=cnc;"
-  },
-  "IdentityServer": {
-    "Key": {
-      "Type": "Development"
+    "Logging": {
+        "LogLevel": {
+            "Default": "Debug",
+            "System": "Information",
+            "Microsoft": "Information"
+        }
+    },
+    "ConnectionStrings": {
+        "DBConnectionString": "Host=localhost;Port=<PORT>;Username=cnc_admin;Password=<PASSWORD>;Database=cnc;"
+    },
+    "IdentityServer": {
+        "Key": {
+            "Type": "Development"
+        }
     }
-  }
 }
 ```
 > DBConnectionString: \
