@@ -1,4 +1,4 @@
-![Build Pipeline](https://github.com/catnapz/CreaturesNCaves/workflows/Build%20Pipeline/badge.svg)
+[![Build Pipeline](https://github.com/catnapz/CreaturesNCaves/workflows/Build%20Pipeline/badge.svg)](https://github.com/catnapz/CreaturesNCaves/actions?query=workflow%3A%22Build+Pipeline%22)
 
 [![codecov](https://codecov.io/gh/catnapz/CreaturesNCaves/branch/master/graph/badge.svg)](https://codecov.io/gh/catnapz/CreaturesNCaves)
 
@@ -78,3 +78,6 @@ Written in C# (`.cs`) with dotnet core
 
 ## Client
 Client is written in Typescript (`.ts`) and React Typescript (`.tsx`). Uses Redux for state management
+
+## Making Commits
+* Add `[skip-ci]` in your commit message to skip ci
