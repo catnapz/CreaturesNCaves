@@ -15,6 +15,7 @@ import { LogoutMenu } from "./components/auth/logout-menu";
 import { Profile } from "./components/auth/profile";
 import { UserManager } from "oidc-client";
 import { CheckUsers } from "./components/check-users";
+import { InProgress } from "./components/in-progress";
 
 import "./app.scss";
 
@@ -40,6 +41,13 @@ export const App = (props: AppProps) => {
           <Route path="/logout" render={ (routerProps) => <LogoutMenu {...routerProps} userManager={props.userManager}/> }/>
           <Route path="/signup" component={SignUpMenu} />
           <Route path="/checkusers" component={CheckUsers} />
+          
+          <Route path="/campaigns" component={InProgress}/>
+          <Route path="/characters" component={InProgress}/>
+          <Route path="/roll-initiative" component={InProgress}/>
+          <Route path="/boblin" component={InProgress}/>
+          <Route path="/loot" component={InProgress}/>
+          
           <ProtectedRoute path="/profile" component={Profile} />
           <Route
             path={ApplicationPaths.ApiAuthorizationPrefix}

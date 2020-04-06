@@ -2,15 +2,19 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { counterStoreSlice } from './counter-store.slice';
 import './incrementer.scss';
+import Button from "@material-ui/core/Button";
 
 export const Incrementer = () => {
   const dispatch = useDispatch();
 
   return (
     <>
-      <button onClick={() => { dispatch(counterStoreSlice.actions.increment()) }}>
+      <Button 
+        variant="contained"
+        onClick={() => { dispatch(counterStoreSlice.actions.increment()) }}
+      >
         Increment
-      </button>
+      </Button>
     </>
   )
 };

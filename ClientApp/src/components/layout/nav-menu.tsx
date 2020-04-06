@@ -93,8 +93,8 @@ const AuthenticatedView = () => {
       >
         <Typography id="navbar-account-menu-header" variant="overline"> {"Hello " + userProfile?.name} </Typography>
         <Divider variant="middle"/>
-        <MenuItem onClick={closeMenu}><Link to="/profile"><Typography>Profile</Typography></Link></MenuItem>
-        <MenuItem onClick={closeMenu}><Link to="/logout"><Typography>Logout</Typography></Link></MenuItem>
+        <Link to="/profile"><MenuItem onClick={closeMenu}><Typography>Profile</Typography></MenuItem></Link>
+        <Link to="/logout"><MenuItem onClick={closeMenu}><Typography>Logout</Typography></MenuItem></Link>
       </Menu>
     </>
   );

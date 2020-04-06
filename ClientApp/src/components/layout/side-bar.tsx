@@ -1,8 +1,7 @@
 ﻿import React from 'react';
 import clsx from 'clsx';
-import {Drawer} from "@material-ui/core";
+import Drawer from "@material-ui/core/Drawer";
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -12,9 +11,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import useTheme from "@material-ui/core/styles/useTheme";
 import {useStyles} from "./shared-styles";
-import Typography from "@material-ui/core/Typography";
-import {NavLink} from "react-router-dom";
+import {SideBarItem} from "./side-bar-item";
+import {SideBarCategory} from "./side-bar-category";
 import "./side-bar.scss";
+import {useSelector} from "react-redux";
+import {selectAuthenticated} from "../auth/auth-store.slice";
 
 interface SidebarProps {
   handleDrawerClose: () => void;
@@ -24,6 +25,7 @@ interface SidebarProps {
 export const SideBar = (props: SidebarProps) => {
   const theme = useTheme();
   const classes = useStyles(theme);
+  const authenticated = useSelector(selectAuthenticated);
   
   return (
     <Drawer
@@ -45,37 +47,34 @@ export const SideBar = (props: SidebarProps) => {
           {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </IconButton>
       </div>
-        <Typography variant="h6" className={clsx('sidebar-category-text', {
-          'visible': props.isDrawerOpen
-        })} >Campaign</Typography>
-      <Divider variant='middle'/>
-      <List>
-        <ListItem button>
-          <ListItemIcon><InboxIcon/></ListItemIcon>
-          <ListItemText primary="Campaigns" />
-        </ListItem>
-      </List>
-      <Typography variant="h6" className={clsx('sidebar-category-text', {
-        'visible': props.isDrawerOpen
-      })} >Utility</Typography>
-      <Divider variant='middle'/>
-      <List>
-        
-        <NavLink className="sidebar-nav-link" to="/counter">
-          <ListItem button className="sidebar-nav-list-item">
-            <ListItemIcon className="sidebar-nav-list-item-icon"><InboxIcon/></ListItemIcon>
-            <ListItemText className="sidebar-nav-list-item-text" primary="Counter" />
-          </ListItem>
-        </NavLink>
 
-        <NavLink className="sidebar-nav-link" to="/checkusers">
-          <ListItem button className="sidebar-nav-list-item">
-            <ListItemIcon className="sidebar-nav-list-item-icon"><InboxIcon/></ListItemIcon>
-            <ListItemText className="sidebar-nav-list-item-text" primary="Users" />
-          </ListItem>
-        </NavLink>
-        
-      </List>
+      { authenticated &&
+      <SideBarCategory open={props.isDrawerOpen} title={"Game Master"}>
+          <List>
+              <SideBarItem to="/counter" title={"Counter"} subtitle={"Dev Test"} open={props.isDrawerOpen}/>
+
+              <SideBarItem
+                  icon={<InboxIcon/>}
+                  to="/checkusers"
+                  title={"Users"}
+                  subtitle={"Dev Test"}
+                  open={props.isDrawerOpen}
+              />
+              
+              <SideBarItem to="/campaigns" title={"Sessions"}/>
+              <SideBarItem to="/characters" title={"Characters"}/>
+              
+          </List>
+      </SideBarCategory>
+      }
+
+      <SideBarCategory open={props.isDrawerOpen} title={"Quick "}>
+        <List>
+          <SideBarItem to="/roll-initiative" title={"Combat"}/>
+          <SideBarItem to="/boblin" title={"Random Character"}/>
+          <SideBarItem to="/loot" title={"Random Loot"}/>
+        </List>
+      </SideBarCategory>
     </Drawer>
   );
 }
