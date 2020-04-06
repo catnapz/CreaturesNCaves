@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import clsx from 'clsx';
-import {AppBar, Avatar, createStyles, IconButton, Toolbar} from "@material-ui/core";
+import {AppBar, Avatar, IconButton, Toolbar, ButtonBase, Divider} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import useTheme from "@material-ui/core/styles/useTheme";
 import {
   selectAuthenticated,
@@ -23,7 +22,6 @@ interface NavMenuProps {
 
 export const NavMenu = (props: NavMenuProps) => {
   const authenticated = useSelector(selectAuthenticated);
-  const userProfile = useSelector(selectUserProfile);
   const theme = useTheme();
   const classes = useStyles(theme);
   
@@ -51,7 +49,7 @@ export const NavMenu = (props: NavMenuProps) => {
           <div id="nav-bar-title">
             <Link to="/"><Typography className="text">Creatures &amp; Caves</Typography></Link>
           </div>
-          {authenticated ? <AuthenticatedView username={userProfile?.name}/> : <UnauthenticatedView/>}
+          {authenticated ? <AuthenticatedView/> : <UnauthenticatedView/>}
         </Toolbar>
       </AppBar>
     </>
@@ -66,8 +64,9 @@ const UnauthenticatedView = () => (
   </>
 );
 
-const AuthenticatedView = (props: any) => {
+const AuthenticatedView = () => {
 
+  const userProfile = useSelector(selectUserProfile);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   
@@ -92,8 +91,10 @@ const AuthenticatedView = (props: any) => {
         open={open}
         onClose = {closeMenu}
       >
-        <MenuItem onClick={closeMenu}><Link to="/profile">Profile</Link></MenuItem>
-        <MenuItem onClick={closeMenu}><Link to="/logout">Logout</Link></MenuItem>
+        <Typography id="navbar-account-menu-header" variant="overline"> {"Hello " + userProfile?.name} </Typography>
+        <Divider variant="middle"/>
+        <MenuItem onClick={closeMenu}><Link to="/profile"><Typography>Profile</Typography></Link></MenuItem>
+        <MenuItem onClick={closeMenu}><Link to="/logout"><Typography>Logout</Typography></Link></MenuItem>
       </Menu>
     </>
   );

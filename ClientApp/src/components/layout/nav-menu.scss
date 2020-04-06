@@ -21,11 +21,23 @@
 
     &.active {
       background-color: rgb(238, 145, 6);
-      color: white;
+      color: #333;
     }
   }
   
   #menu-button {
     color: whitesmoke;
+  }
+}
+
+#navbar-account-menu {
+  text-align: center;
+  
+  a {
+    text-decoration: none;
+  }
+
+  #navbar-account-menu-header {
+    padding: 10px;
   }
 }

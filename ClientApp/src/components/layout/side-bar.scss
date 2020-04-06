@@ -4,8 +4,7 @@
     display: none;
     &.visible {
       display: block;
-      padding-bottom: 5px;
-      text-align: center;
+      padding: 0px 0px 10px 10px;
     }
   }
   .sidebar-nav-link {

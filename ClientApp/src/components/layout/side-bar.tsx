@@ -45,20 +45,20 @@ export const SideBar = (props: SidebarProps) => {
           {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </IconButton>
       </div>
-        <Typography variant="h5" className={clsx('sidebar-category-text', {
+        <Typography variant="h6" className={clsx('sidebar-category-text', {
           'visible': props.isDrawerOpen
         })} >Campaign</Typography>
-      <Divider/>
+      <Divider variant='middle'/>
       <List>
         <ListItem button>
           <ListItemIcon><InboxIcon/></ListItemIcon>
           <ListItemText primary="Campaigns" />
         </ListItem>
       </List>
-      <Typography variant="h5" className={clsx('sidebar-category-text', {
+      <Typography variant="h6" className={clsx('sidebar-category-text', {
         'visible': props.isDrawerOpen
       })} >Utility</Typography>
-      <Divider/>
+      <Divider variant='middle'/>
       <List>
         
         <NavLink className="sidebar-nav-link" to="/counter">

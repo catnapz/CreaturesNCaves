@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { CheckHealthButton } from './check-health-button';
 import { selectHealthCheckLoading, selectHealthy, checkHealth } from './health-store.slice';
+import Typography from '@material-ui/core/Typography';
 
 export const HealthDisplay = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,9 @@ export const HealthDisplay = () => {
     <>
       <div>
         <div>
-          <p> I am <strong> {status} </strong> </p>
+          <Typography variant="h6"> 
+            I am <strong> {status} </strong>
+          </Typography>
           <CheckHealthButton />
         </div>
       </div>
