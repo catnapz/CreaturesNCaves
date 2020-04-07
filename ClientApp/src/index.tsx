@@ -7,10 +7,10 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { ReduxStore, history } from "./store/ReduxStore";
 import { App } from "./app";
 import * as serviceWorker from "./serviceWorker";
-import "./index.scss";
 import { initUserManager, loadUser } from "./components/auth/auth-service";
 import { UserManager } from "oidc-client";
 import { AuthProvider } from "./components/auth/auth-provider";
+import "./index.scss";
 
 // root load animation
 const loader: HTMLElement | null = document.getElementById("loader");
@@ -20,7 +20,10 @@ const loaded = () => (loader!.style.display = "none");
 const apolloClient = new ApolloClient({
   uri: 'https://localhost:5001/api',
 });
-apolloClient.resetStore();
+apolloClient.resetStore()
+  .catch(error => {
+    console.error(error);
+  });
 
 initUserManager()
   .then((userManager: UserManager | null) => {

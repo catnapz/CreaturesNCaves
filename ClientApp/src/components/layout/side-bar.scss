@@ -1,0 +1,37 @@
+﻿#side-bar {
+
+  .sidebar-category-text {
+    display: none;
+    &.visible {
+      text-align: center;
+      display: block;
+      padding: 0px 0px 10px 10px;
+    }
+  }
+  .sidebar-nav-link {
+    text-decoration: none;
+    color: #333333;
+    
+    .sidebar-nav-list-item {
+      transition: background-color, color, 0.4s;
+    }
+    
+    .sidebar-nav-list-item-icon {
+      transition: background-color, color, 0.4s;
+    }
+  
+    &.active {
+      .sidebar-nav-list-item {
+        background-color: #333333;
+        
+        .sidebar-nav-list-item-text, p {
+          color: whitesmoke;
+        }
+      }
+      .sidebar-nav-list-item-icon {
+        color: whitesmoke;
+      }
+    }
+  }
+
+}

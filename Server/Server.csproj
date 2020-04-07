@@ -31,11 +31,29 @@
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
+    <Content Include="..\ClientApp\src\components\layout\side-bar.scss">
+      <Link>src\components\layout\side-bar.scss</Link>
+    </Content>
     <Content Include="..\README.md">
       <Link>README.md</Link>
     </Content>
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    <None Include="..\ClientApp\src\components\in-progress.tsx">
+      <Link>src\components\in-progress.tsx</Link>
+    </None>
+    <None Include="..\ClientApp\src\components\layout\shared-styles.ts">
+      <Link>src\components\layout\shared-styles.ts</Link>
+    </None>
+    <None Include="..\ClientApp\src\components\layout\side-bar-catagory-text.tsx">
+      <Link>src\components\layout\side-bar-catagory-text.tsx</Link>
+    </None>
+    <None Include="..\ClientApp\src\components\layout\side-bar-item.tsx">
+      <Link>src\components\layout\side-bar-item.tsx</Link>
+    </None>
+    <None Include="..\ClientApp\src\components\layout\side-bar.tsx">
+      <Link>src\components\layout\side-bar.tsx</Link>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

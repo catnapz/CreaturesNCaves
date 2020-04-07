@@ -4,23 +4,19 @@ import { selectCount } from './counter-store.slice';
 import { Incrementer } from './incrementer';
 import { Decrementer } from './decrementer';
 import './counter.scss';
+import Typography from "@material-ui/core/Typography";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 export const Counter = () => {
   const count = useSelector(selectCount);
   return (
     <>
-        <div>
-          <header>
-            Counter
-          </header>
-
-          <div>
-            <p>Current_count: <strong>{count}</strong></p>
-            <Incrementer />
-            <Decrementer />
-          </div>
-        </div>
-      </>
+      <Typography>Current count: <strong>{count}</strong></Typography>
+      <div className="counter-buttons-container">
+        <Incrementer />
+        <Decrementer />
+      </div>
+    </>
   );  
 };
 
