@@ -24,7 +24,7 @@ describe("Decrementer", () => {
   it("should render successfully", async () => {
     const { baseElement } = wrappedRender(<Decrementer />);
     await wait(() => getByText(baseElement, (content, element) => {
-      return element.tagName.toLowerCase() === 'button' && content === 'Decrement';
+      return element.tagName.toLowerCase() === 'span' && content === 'Decrement';
     }));
   });
 
@@ -34,7 +34,7 @@ describe("Decrementer", () => {
     expect(store.getState()[COUNTER_STORE_FEATURE_KEY].count).toBe(0);    
 
     fireEvent.click(getByText(baseElement, (content, element) => {
-      return element.tagName.toLowerCase() === 'button' && content === 'Decrement';
+      return element.tagName.toLowerCase() === 'span' && content === 'Decrement';
     }));
 
     expect(store.getState()[COUNTER_STORE_FEATURE_KEY].count).toBe(-1);    

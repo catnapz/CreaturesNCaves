@@ -31,6 +31,6 @@ describe("Counter", () => {
 
   it("should render successfully", async () => {
     const { baseElement } = wrappedRender(<Counter />);    
-    await wait(() => getByText(baseElement, "Counter", {exact: false}));
+    await wait(() => getByText(baseElement, "count", {exact: false}));
   });
 });

@@ -24,7 +24,7 @@ describe("Incrementer", () => {
   it("should render successfully", async () => {
     const { baseElement } = wrappedRender(<Incrementer />);
     await wait(() => getByText(baseElement, (content, element) => {
-      return element.tagName.toLowerCase() === 'button' && content === 'Increment';
+      return element.tagName.toLowerCase() === 'span' && content === 'Increment';
     }));
   });
 
@@ -33,7 +33,7 @@ describe("Incrementer", () => {
     expect(store.getState()[COUNTER_STORE_FEATURE_KEY].count).toBe(0);    
 
     fireEvent.click(getByText(baseElement, (content, element) => {
-      return element.tagName.toLowerCase() === 'button' && content === 'Increment';
+      return element.tagName.toLowerCase() === 'span' && content === 'Increment';
     }));
 
     expect(store.getState()[COUNTER_STORE_FEATURE_KEY].count).toBe(1);    

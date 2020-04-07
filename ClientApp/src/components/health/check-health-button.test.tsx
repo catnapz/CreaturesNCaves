@@ -1,3 +1,4 @@
+
 /** 
  * Unit tests for CheckHealthButton
  * Note: Used to figure out how to test React-redux
@@ -41,14 +42,14 @@ describe('CheckHealthButton', () => {
   it('should have button with text', async () => {
     const { baseElement } = wrappedRender(<CheckHealthButton />);
     await wait(() => getByText(baseElement, (content, element) => {
-      return element.tagName.toLowerCase() === 'button' && content === 'Check Health';
+      return element.tagName.toLowerCase() === 'span' && content === 'Check Health';
     }));
   });
 
   it('should call dispatch on click', () => {
     const { baseElement } = wrappedRender(<CheckHealthButton />);
     fireEvent.click(getByText(baseElement, (content, element) => {
-      return element.tagName.toLowerCase() === 'button' && content === 'Check Health';
+      return element.tagName.toLowerCase() === 'span' && content === 'Check Health';
     }));
     expect(mockDispatch).toHaveBeenCalled();
   });
