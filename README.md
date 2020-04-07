@@ -43,7 +43,7 @@ Create a file named `appsettings.Development.json` in the same directory as `app
 > \<PASSWORD\> = the password you set for the cnc_admin psql user. See instructions under the [DATABASE](#DATABASE) instructions
 
 ## DATABASE
-Follow instructuons [here](/EntityFramework/Database/README.md)
+Follow instructions [here](/EntityFramework/Database/README.md)
 
 ## DOCKER
 * To build the docker image, run ```docker build -t cnc:latest .``` in the same directory as the `Dockerfile` file.
@@ -52,8 +52,8 @@ Follow instructuons [here](/EntityFramework/Database/README.md)
 * You can retrieve the `container id` by running ```docker ps```
 
 ## BUILD INSTRUCTIONS
-* Run ```npm install``` in the ClientApp dir to install node dependancies
-* Run ```dotnet restore``` in the root dir to install dotnet dependancies
+* Run ```npm install``` in the ClientApp dir to install node dependencies
+* Run ```dotnet restore``` in the root dir to install dotnet dependencies
 * Run ```dotnet build``` in the root dir to build the backend services
 * To build a production build of the app
     * Delete the node_modules folder in ClientApp
