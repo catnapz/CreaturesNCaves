@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using CreaturesNCaves.EntityFramework.Models;
@@ -135,7 +136,21 @@ namespace CreaturesNCaves.Server.Controllers
         return new StatusCodeResult(400);
       }
     }
-  
+
+    [HttpPost("Delete")]
+    public async Task<IActionResult> Delete([FromBody] UserToDelete u)
+    {
+      _logger.LogInformation(u.UserId);
+      if (string.IsNullOrEmpty((u.UserId))) return new StatusCodeResult(400);
+
+      var user = await _userManager.FindByIdAsync(u.UserId);
+      var result = await _userManager.DeleteAsync(user);
+      
+      if(!result.Succeeded) return new StatusCodeResult(500);
+      
+      return new OkResult();
+    }
+    
     [Authorize]
     [HttpGet("Logout")]
     public async Task<IActionResult> Logout()

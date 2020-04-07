@@ -1,15 +1,21 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectUserProfile } from './auth-store.slice';
+import { UserManager } from "oidc-client";
 
-export const Profile = () => {
-  const dispatch = useDispatch();
+export const Profile = (props: { userManager: UserManager }) => {
   const profile = useSelector(selectUserProfile);
 
-  function deleteConfirmation(){
+  async function deleteConfirmation(){
     if(window.confirm("Are you sure you want to delete your account?")) {
-      // TODO: delete account
-      window.location.assign("/");
+      const resp = await fetch('/Account/Delete', {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({"userId": profile?.sub})
+      });
+      if (resp.ok) await props.userManager.signoutRedirect();
     }
   }
 

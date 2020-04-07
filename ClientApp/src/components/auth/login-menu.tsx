@@ -76,7 +76,7 @@ export const LoginMenu = (props: { userManager: UserManager }) => {
       method: 'post',
       body: new FormData(form)
     });
-    if (resp.ok) props.userManager.signinRedirect();;
+    if (resp.ok) props.userManager.signinRedirect();
   }
 
   return (

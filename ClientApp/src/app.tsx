@@ -48,7 +48,7 @@ export const App = (props: AppProps) => {
           <Route path="/boblin" component={InProgress}/>
           <Route path="/loot" component={InProgress}/>
           
-          <ProtectedRoute path="/profile" component={Profile} />
+          <Route path="/profile" render={ (routerProps) => <Profile {...routerProps} userManager={props.userManager}/> }/>
           <Route
             path={ApplicationPaths.ApiAuthorizationPrefix}
             render={ (routerProps) => <ApiAuthorizationRoutes {...routerProps} userManager={props.userManager}/> }
