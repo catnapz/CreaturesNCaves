@@ -3,12 +3,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using CreaturesNCaves.EntityFramework.Models;
 using HotChocolate;
+using HotChocolate.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace CreaturesNCaves.Server.GraphQL
 {
   public class Query
   {
+
+    /// <summary>
+    /// Return current user
+    /// </summary>
+    [Authorize]
+    public async Task<User> GetMe(
+      [Service] DatabaseContext dbContext,
+      [GlobalState] string currentUserId
+    ) =>
+      await dbContext
+        .Users
+        .Include(user => user.Campaigns)
+        .SingleAsync(user => user.Id == currentUserId);
 
     /// <summary>
     /// Return a list of all users

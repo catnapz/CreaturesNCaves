@@ -4,8 +4,10 @@ import { gql } from 'apollo-boost';
 
 const GET_USERS = gql`
   {
-    users {
-      id
+    me {
+      campaigns {
+        campaignId
+      }
     }
   }
 `;
@@ -16,11 +18,12 @@ export const CheckUsers = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  return data.users.map(({ id }: {id:string}) => (
+  return <> {JSON.stringify((data))} </>
+/*  return data.users.map(({ id }: {id:string}) => (
     <div key={id}>
       <p>
         {"id"}: {id}
       </p>
     </div>
-  ));
-}
+  ));*/
+};
