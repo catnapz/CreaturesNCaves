@@ -37,7 +37,10 @@ namespace CreaturesNCaves.Server
             services.AddGraphQL(
                 SchemaBuilder.New()
                 .AddQueryType<QueryType>()
+                .AddMutationType<MutationType>()
                 .AddType<UserType>()
+                .AddType<CampaignType>()
+                .AddType<CampaignInputType>()
                 .AddAuthorizeDirectiveType()
                 .Create());
             
