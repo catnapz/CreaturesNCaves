@@ -21,6 +21,7 @@ namespace CreaturesNCaves.Server.GraphQL
     ) =>
       await dbContext
         .Users
+        .AsNoTracking()
         .Include(user => user.Campaigns)
         .SingleAsync(user => user.Id == currentUserId);
 
@@ -30,6 +31,7 @@ namespace CreaturesNCaves.Server.GraphQL
     public async Task<IEnumerable<User>> GetUsers([Service] DatabaseContext dbContext) =>
       await dbContext
         .Users
+        .AsNoTracking()
         .Include(user => user.Campaigns)
         .OrderBy(user => user.Name)
         .ToListAsync();
@@ -40,6 +42,7 @@ namespace CreaturesNCaves.Server.GraphQL
     public async Task<User> GetUser([Service] DatabaseContext dbContext, string userId) =>
       await dbContext
         .Users
+        .AsNoTracking()
         .Where(user => user.Id == userId)
         .Include(user => user.Campaigns)
         .SingleAsync();
@@ -50,6 +53,7 @@ namespace CreaturesNCaves.Server.GraphQL
     public async Task<IEnumerable<Campaign>> GetAllCampaigns([Service] DatabaseContext dbContext) =>
       await dbContext
         .Campaigns
+        .AsNoTracking()
         .OrderBy(campaignName => campaignName.Name)
         .ToListAsync();
 

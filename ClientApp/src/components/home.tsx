@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { HealthDisplay } from './health/health-display';
 import { Typography } from '@material-ui/core';
 
 export const Home = () => (

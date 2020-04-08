@@ -14,10 +14,10 @@ import { ApiAuthorizationRoutes } from "./components/auth/api-auth-routes";
 import { LogoutMenu } from "./components/auth/logout-menu";
 import { Profile } from "./components/auth/profile";
 import { UserManager } from "oidc-client";
-import { CheckUsers } from "./components/check-users";
 import { InProgress } from "./components/in-progress";
 
 import "./app.scss";
+import {Campaigns} from "./components/campaigns/campaigns";
 
 export interface AppProps {
   loading: () => void;
@@ -40,9 +40,8 @@ export const App = (props: AppProps) => {
           <Route path="/login" render={ (routerProps) => <LoginMenu {...routerProps} userManager={props.userManager}/> }/>
           <Route path="/logout" render={ (routerProps) => <LogoutMenu {...routerProps} userManager={props.userManager}/> }/>
           <Route path="/signup" component={SignUpMenu} />
-          <Route path="/checkusers" component={CheckUsers} />
-          
-          <Route path="/campaigns" component={InProgress}/>
+
+          <Route path="/campaigns" component={Campaigns} />
           <Route path="/characters" component={InProgress}/>
           <Route path="/roll-initiative" component={InProgress}/>
           <Route path="/boblin" component={InProgress}/>

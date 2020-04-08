@@ -52,16 +52,7 @@ export const SideBar = (props: SidebarProps) => {
       <SideBarCategory open={props.isDrawerOpen} title={"Game Master"}>
           <List>
               <SideBarItem to="/counter" title={"Counter"} subtitle={"Dev Test"} open={props.isDrawerOpen}/>
-
-              <SideBarItem
-                  icon={<InboxIcon/>}
-                  to="/checkusers"
-                  title={"Users"}
-                  subtitle={"Dev Test"}
-                  open={props.isDrawerOpen}
-              />
-              
-              <SideBarItem to="/campaigns" title={"Sessions"}/>
+              <SideBarItem to="/campaigns" title={"Campaigns"}/>
               <SideBarItem to="/characters" title={"Characters"}/>
               
           </List>
