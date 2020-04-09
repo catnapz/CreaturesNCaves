@@ -4,17 +4,19 @@
 
 CREATE TABLE public.campaigns
 (
-    id text COLLATE pg_catalog."default" NOT NULL,
+    id SERIAL NOT NULL,
     name text COLLATE pg_catalog."default",
     user_id text COLLATE pg_catalog."default" NOT NULL,
     description text COLLATE pg_catalog."default",
-    CONSTRAINT campaigns_pkey PRIMARY KEY (id),
     CONSTRAINT "campaigns_AspNetRoles_user_id_fkey" FOREIGN KEY (user_id)
         REFERENCES public."AspNetUsers" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT campaigns_pkey PRIMARY KEY (id, user_id)
 )
-
+WITH (
+    OIDS = FALSE
+)
 TABLESPACE pg_default;
 
 ALTER TABLE public.campaigns

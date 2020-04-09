@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using CreaturesNCaves.EntityFramework.Models;
 using CreaturesNCaves.Server.GraphQL.Types;
 using HotChocolate;
@@ -35,9 +37,22 @@ namespace CreaturesNCaves.Server
             services.AddGraphQL(
                 SchemaBuilder.New()
                 .AddQueryType<QueryType>()
+                .AddMutationType<MutationType>()
                 .AddType<UserType>()
+                .AddType<CampaignType>()
                 .AddAuthorizeDirectiveType()
                 .Create());
+            
+            services.AddQueryRequestInterceptor((httpContext, queryBuilder, cancellationToken) =>
+            {;
+                if (!httpContext.User.Identity.IsAuthenticated) return Task.CompletedTask;
+                
+                var userIdClaim = httpContext.User.Claims.Single(claim => claim.Type == "sub");
+                var userId = userIdClaim.Value;
+                queryBuilder.AddProperty("currentUserId", userId);
+
+                return Task.CompletedTask;
+            });
 
             // services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
             services.AddIdentity<User, IdentityRole>(options =>

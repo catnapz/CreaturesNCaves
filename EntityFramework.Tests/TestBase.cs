@@ -39,8 +39,8 @@ namespace EntityFramework.Tests
             // Insert seed data into the database using one instance of the context
             using (var context = new DatabaseContext(ContextOptions, OperationalStoreOptions))
             {
-                context.Campaigns.Add(new Campaign { CampaignId = "C1", Description = "CD1", Name = "CN1", User = null, UserId = "U1" });
-                context.Campaigns.Add(new Campaign { CampaignId = "C2", Description = "CD2", Name = "CN2", User = null, UserId = "U2" });
+                context.Campaigns.Add(new Campaign { CampaignId = 1, Description = "CD1", Name = "CN1", User = null, UserId = "U1" });
+                context.Campaigns.Add(new Campaign { CampaignId = 2, Description = "CD2", Name = "CN2", User = null, UserId = "U2" });
                 context.SaveChanges();
             }
         }

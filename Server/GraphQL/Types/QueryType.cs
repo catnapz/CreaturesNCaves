@@ -12,6 +12,10 @@ namespace CreaturesNCaves.Server.GraphQL.Types
       base.Configure(descriptor);
 
       descriptor
+        .Field(f => f.GetMe(default, default))
+        .Name(("me"));
+      
+      descriptor
         .Field(f => f.GetUser(default, default))
         .Name("user")
         .Argument("userId", a => a.Type<NonNullType<StringType>>());

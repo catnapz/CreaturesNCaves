@@ -16,12 +16,7 @@ namespace CreaturesNCaves.Server.GraphQL.Resolvers
     /// <summary>
     /// Return a campaigns by campaignId
     /// </summary>
-    public IEnumerable<Campaign> GetCampaign([Parent] User user, string campaignId) => user
-        .Campaigns
-        .Where(campaign => 
-          campaign.UserId == user.Id && campaign.CampaignId == campaignId
-        )
-        .OrderBy(campaignName => campaignName.Name)
-        .ToList();
+    public Campaign GetCampaign([Parent] User user, int campaignId) => user.Campaigns
+      .Single(campaign => campaign.CampaignId == campaignId);
   }
 }
