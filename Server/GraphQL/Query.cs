@@ -28,6 +28,7 @@ namespace CreaturesNCaves.Server.GraphQL
     /// <summary>
     /// Return a list of all users
     /// </summary>
+    // TODO: Make authorized for admin only
     public async Task<IEnumerable<User>> GetUsers([Service] DatabaseContext dbContext) =>
       await dbContext
         .Users
@@ -39,6 +40,7 @@ namespace CreaturesNCaves.Server.GraphQL
     /// <summary>
     /// Return a user by id
     /// </summary>
+    // TODO: Make authorized for admin only
     public async Task<User> GetUser([Service] DatabaseContext dbContext, string userId) =>
       await dbContext
         .Users
@@ -50,6 +52,7 @@ namespace CreaturesNCaves.Server.GraphQL
     /// <summary>
     /// Return a list of all campaigns
     /// </summary>
+    // TODO: Make authorized for admin only
     public async Task<IEnumerable<Campaign>> GetAllCampaigns([Service] DatabaseContext dbContext) =>
       await dbContext
         .Campaigns

@@ -33,15 +33,6 @@ namespace CreaturesNCaves.Server.Tests
                 TokenCleanupBatchSize = 100,
                 TokenCleanupInterval = 3600
             });
-
-            // Insert seed data into the database using one instance of the context
-            using (var context = new DatabaseContext(ContextOptions, OperationalStoreOptions))
-            {
-                context.Users.Add(new User { Id = "U1", Description = "UD1", Name = "UN1" });
-                context.Users.Add(new User { Id = "U2", Description = "UD2", Name = "UN2" });
-                
-                context.SaveChanges();
-            }
         }
 
 
@@ -54,6 +45,12 @@ namespace CreaturesNCaves.Server.Tests
             
             if (disposing)
             {
+                using (var context = DatabaseContext)
+                {
+                    context.Campaigns.RemoveRange(DatabaseContext.Campaigns);
+                    context.Users.RemoveRange(DatabaseContext.Users);
+                    context.SaveChanges();
+                }
                 ContextOptions = null;
                 OperationalStoreOptions = null;
             }

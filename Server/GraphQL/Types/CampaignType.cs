@@ -1,5 +1,4 @@
 using CreaturesNCaves.EntityFramework.Models;
-using CreaturesNCaves.Server.GraphQL.Resolvers;
 using HotChocolate.Types;
 
 namespace CreaturesNCaves.Server.GraphQL.Types
@@ -16,13 +15,6 @@ namespace CreaturesNCaves.Server.GraphQL.Types
             descriptor.Field(t => t.UserId).Type<NonNullType<IdType>>().Authorize();
             descriptor.Field(t => t.Name).Type<NonNullType<StringType>>();
             descriptor.Field(t => t.Description);
-
-            descriptor.Field<UserResolvers>(r => r.GetCampaigns(default))
-                .Name("campaigns");
-
-            descriptor.Field<UserResolvers>(r => r.GetCampaign(default, default))
-                .Argument("campaignId", a => a.Type<NonNullType<IdType>>())
-                .Name("campaign");
         }
     }
 }
