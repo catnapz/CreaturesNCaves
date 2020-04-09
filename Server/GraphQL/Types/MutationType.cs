@@ -8,7 +8,7 @@ namespace CreaturesNCaves.Server.GraphQL.Types
         {
             descriptor.Field(f => f.CreateCampaign(default, default, default))
                 .Type<NonNullType<CampaignType>>()
-                .Argument("campaign", a => a.Type<NonNullType<CampaignInputType>>())
+                .Argument("campaignInput", a => a.Type<NonNullType<CampaignInputType>>())
                 .Authorize();
         }
     }

@@ -17,6 +17,7 @@ export const Campaigns = () => {
     if (loading) {
         return (
             <>
+                <p>{JSON.stringify(error)}</p>
                 <p>Loading...</p>
                 <CreateCampaignMenu/>
             </>

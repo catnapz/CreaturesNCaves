@@ -40,7 +40,6 @@ namespace CreaturesNCaves.Server
                 .AddMutationType<MutationType>()
                 .AddType<UserType>()
                 .AddType<CampaignType>()
-                .AddType<CampaignInputType>()
                 .AddAuthorizeDirectiveType()
                 .Create());
             

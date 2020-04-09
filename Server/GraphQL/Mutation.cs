@@ -8,10 +8,10 @@ namespace CreaturesNCaves.Server.GraphQL
     public class Mutation
     {
 
-        public async Task<int> CreateCampaign(
+        public async Task<Campaign> CreateCampaign(
             [Service] DatabaseContext dbContext,
             [GlobalState] string currentUserId,
-            CampaignInputType campaignInput
+            Campaign campaignInput
             
         )
         {
@@ -21,7 +21,8 @@ namespace CreaturesNCaves.Server.GraphQL
                 Name = campaignInput.Name,
                 Description = campaignInput.Description ?? ""
             });
-            return campaignEntry.Entity.CampaignId;
+            await dbContext.SaveChangesAsync();
+            return campaignEntry.Entity; 
         }
     }
 }

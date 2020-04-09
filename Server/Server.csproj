@@ -48,9 +48,6 @@
     <None Include="..\ClientApp\src\components\campaigns\campaigns.tsx">
       <Link>src\components\campaigns\campaigns.tsx</Link>
     </None>
-    <None Include="..\ClientApp\src\components\campaigns\create-campaign.tsx">
-      <Link>src\components\campaigns\create-campaign.tsx</Link>
-    </None>
     <None Include="..\ClientApp\src\components\in-progress.tsx">
       <Link>src\components\in-progress.tsx</Link>
     </None>

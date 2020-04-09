@@ -13,13 +13,13 @@ export const GET_CAMPAIGNS = gql`
 `;
 
 export const CREATE_CAMPAIGN = gql`
-mutation createCampaignMutation($campaign: CampaignInput!) {
-  createCampaign(campaign: $campaign) {
-    campaignId
-    name
-    description
+  mutation createCampaignMutation($campaignInput: CampaignInput!) {
+    createCampaign(campaignInput: $campaignInput) {
+      campaignId
+      name
+      description
+    }
   }
-}
 `;
 
 export interface CampaignMutationInput {

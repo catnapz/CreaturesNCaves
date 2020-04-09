@@ -19,7 +19,7 @@ export const CreateCampaignMenu = () => {
                         description: descriptionInput?.value ?? ""
                     };
                     
-                    createCampaign({ variables: { "campaign": campaignInput }})
+                    createCampaign({ variables: { campaignInput: campaignInput }})
                         .catch(error => console.error(error));
                     
                     nameInput.value = '';
