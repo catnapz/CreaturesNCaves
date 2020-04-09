@@ -23,13 +23,15 @@ namespace CreaturesNCaves.EntityFramework.Models
             {
                 entity.HasKey(e => e.CampaignId)
                     .HasName("id");
-                
+
                 entity.HasKey(e => e.UserId)
                     .HasName("user_id");
 
                 entity.ToTable("campaigns");
 
-                entity.Property(e => e.CampaignId).HasColumnName("id");
+                entity.Property(e => e.CampaignId)
+                    .HasColumnName("id")
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Description).HasColumnName("description");
 
