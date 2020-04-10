@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using CreaturesNCaves.EntityFramework.Models;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
@@ -8,15 +9,17 @@ using Moq;
 namespace CreaturesNCaves.Server.Tests
 {
     public class TestBase : IDisposable
-    { 
-        public IOptions<OperationalStoreOptions> OperationalStoreOptions { get; private set; }
-        public DbContextOptions<DatabaseContext> ContextOptions { get; private set; }
-        public DatabaseContext DatabaseContext { get => new DatabaseContext(ContextOptions, OperationalStoreOptions); }
-        public TestBase()
+    {
+        private IOptions<OperationalStoreOptions> OperationalStoreOptions { get; set; }
+        private DbContextOptions<DatabaseContext> ContextOptions { get; set; }
+        public DatabaseContext DatabaseContext => new DatabaseContext(ContextOptions, OperationalStoreOptions);
+        
+        public TestBase(string databaseName = null)
         {
             ContextOptions = new DbContextOptionsBuilder<DatabaseContext>()
-            .UseInMemoryDatabase(databaseName: "cnc")
+            .UseInMemoryDatabase(databaseName: databaseName ?? "cnc")
             .EnableSensitiveDataLogging()
+            .EnableDetailedErrors()
             .Options;
 
             OperationalStoreOptions = Mock.Of<IOptions<OperationalStoreOptions>>();
@@ -33,6 +36,8 @@ namespace CreaturesNCaves.Server.Tests
                 TokenCleanupBatchSize = 100,
                 TokenCleanupInterval = 3600
             });
+
+            DatabaseContext.Database.EnsureCreated();
         }
 
 
@@ -45,12 +50,7 @@ namespace CreaturesNCaves.Server.Tests
             
             if (disposing)
             {
-                using (var context = DatabaseContext)
-                {
-                    context.Campaigns.RemoveRange(DatabaseContext.Campaigns);
-                    context.Users.RemoveRange(DatabaseContext.Users);
-                    context.SaveChanges();
-                }
+                DatabaseContext.Database.EnsureDeleted();
                 ContextOptions = null;
                 OperationalStoreOptions = null;
             }

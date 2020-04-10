@@ -9,27 +9,22 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
 {
     public class QueryTests : IDisposable
     {
-        private readonly TestBase _base;
+        private readonly TestBase _tb;
         public QueryTests()
         {
-            _base = new TestBase();
-            using var context = _base.DatabaseContext;
+            _tb = new TestBase("cnc_query_tests");
+            using var context = _tb.DatabaseContext;
             context.Users.Add(new User { Id = "U1", Description = "UD1", Name = "UN1" });
             context.Users.Add(new User { Id = "U2", Description = "UD2", Name = "UN2" });
             context.Campaigns.Add(new Campaign {CampaignId = 1, Description = "CD1", Name = "CN1", UserId = "U1"});
             context.Campaigns.Add(new Campaign {CampaignId = 2, Description = "CD2", Name = "CN2", UserId = "U2"});
             context.SaveChanges();
         }
-
-        public void Dispose()
-        {
-            _base.Dispose();
-        }
         
         [Fact]
         public async void GetMe()
         {
-            await using var context = _base.DatabaseContext;
+            await using var context = _tb.DatabaseContext;
             // Arrange
             var query = new Query();
 
@@ -46,7 +41,7 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
         [Fact]
         public async void GetUser()
         {
-            await using var context = _base.DatabaseContext;
+            await using var context = _tb.DatabaseContext;
             // Arrange
             var query = new Query();
 
@@ -63,7 +58,7 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
         [Fact]
         public async void GetUsers_UsersExist()
         {
-            await using var context = _base.DatabaseContext;
+            await using var context = _tb.DatabaseContext;
             // Arrange
             var query = new Query();
             IEnumerable<User> users = await query.GetUsers(context);
@@ -75,7 +70,7 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
         [Fact]
         public async void GetUsers()
         {
-            await using var context = _base.DatabaseContext;
+            await using var context = _tb.DatabaseContext;
             // Arrange
             var query = new Query();
             IEnumerable<User> users = await query.GetUsers(context);
@@ -83,8 +78,8 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
             // Act
             var actualUser = users.First();
             var expectedUser = new User { Id = "U1", Description = "UD1", Name = "UN1" };
-
-            // Assert // Don't know best way to do object equality yet
+            
+            // Assert 
             Assert.Equal(expectedUser.Id, actualUser.Id);
             Assert.Equal(expectedUser.Description, actualUser.Description);
             Assert.Equal(expectedUser.Name, actualUser.Name);
@@ -93,7 +88,7 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
         [Fact]
         public async void GetAllCampaigns_Count()
         {
-            await using var context = _base.DatabaseContext;
+            await using var context = _tb.DatabaseContext;
             // Arrange
             var query = new Query();
             IEnumerable<Campaign> campaigns = await query.GetAllCampaigns(context);
@@ -105,7 +100,7 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
         [Fact]
         public async void GetAllCampaigns_MatchExpected()
         {
-            await using var context = _base.DatabaseContext;
+            await using var context = _tb.DatabaseContext;
             // Arrange
             var query = new Query();
             IEnumerable<Campaign> campaigns = await query.GetAllCampaigns(context);
@@ -113,12 +108,16 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
             // Act
             var actualCampaign = campaigns.First();
             var expectedCampaign = new Campaign { CampaignId = 1, Description = "CD1", Name = "CN1", UserId = "U1"};
-
-            // Assert // Don't know best way to do object equality yet
+            
+            // Assert
             Assert.Equal(expectedCampaign.CampaignId, actualCampaign.CampaignId);
             Assert.Equal(expectedCampaign.Description, actualCampaign.Description);
             Assert.Equal(expectedCampaign.Name, actualCampaign.Name);
         }
-        
+
+        public void Dispose()
+        {
+            _tb.Dispose();
+        }
     }
 }

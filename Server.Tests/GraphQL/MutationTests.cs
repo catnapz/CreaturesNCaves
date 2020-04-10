@@ -9,24 +9,19 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
 {
     public class MutationTests : IDisposable
     {
-        private readonly TestBase _base;
+        private readonly TestBase _tb;
 
         public MutationTests()
         {
-            _base = new TestBase();
+            _tb = new TestBase("cnc_mutation_tests");
         }
 
-        public void Dispose()
-        {
-            _base.Dispose();
-        }
-        
         [Fact]
         public async void CreateCampaign_CreatesCampaign()
         {
             // Arrange
-            await using var context = _base.DatabaseContext;
-            var numCampaigns = await context.Campaigns.CountAsync();
+            await using var context = _tb.DatabaseContext;
+            var numCampaigns = context.Campaigns.Count();
             var campaignInput = new Campaign
             {
                 Name = "New Campaign",
@@ -35,9 +30,9 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
             var mutation = new Mutation();
             
             // Act
-            var campaign = await mutation.CreateCampaign(context, "U1", campaignInput);
-            var campaigns = await context.Campaigns.ToListAsync();
-            
+            var campaign = await mutation.CreateCampaign(context, "MutationTests User 1", campaignInput);
+            var campaigns = context.Campaigns.ToList();
+                        
             // Assert
             Assert.Equal(numCampaigns + 1, campaigns.Count);
             Assert.True(string.Equals(campaign.Name, campaigns.Last().Name));
@@ -47,7 +42,7 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
         public async void CreateCampaign_ReturnsCreatedCampaign()
         {
             // Arrange
-            await using var context = _base.DatabaseContext;
+            await using var context = _tb.DatabaseContext;
             var campaignInput = new Campaign
             {
                 Name = "New Campaign",
@@ -56,10 +51,15 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
             var mutation = new Mutation();
             
             // Act
-            var campaign = await mutation.CreateCampaign(context, "U1", campaignInput);
-            
+            var campaign = await mutation.CreateCampaign(context, "MutationTests User 2", campaignInput);
+                        
             // Assert
-            Assert.True(string.Equals("U1", campaign.UserId));
+            Assert.True(string.Equals("MutationTests User 2", campaign.UserId));
+        }
+
+        public void Dispose()
+        {
+            _tb?.Dispose();
         }
     }
 }
