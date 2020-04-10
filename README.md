@@ -1,5 +1,4 @@
 [![Build Pipeline](https://github.com/catnapz/CreaturesNCaves/workflows/Build%20Pipeline/badge.svg)](https://github.com/catnapz/CreaturesNCaves/actions?query=workflow%3A%22Build+Pipeline%22)
-
 [![codecov](https://codecov.io/gh/catnapz/CreaturesNCaves/branch/master/graph/badge.svg)](https://codecov.io/gh/catnapz/CreaturesNCaves)
 
 # Creatures & Caves
