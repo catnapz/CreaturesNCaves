@@ -81,7 +81,8 @@
     },
     "coverageReporters": [
       "text",
-      "json"
+      "json",
+      "lcov"
     ]
   }
 }
