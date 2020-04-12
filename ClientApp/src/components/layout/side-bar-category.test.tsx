@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup, render, wait, getByText } from '@testing-library/react';
 import { SideBarCategory } from "./side-bar-category";
 
-describe("CreateCampaignMenu", () => {
+describe("SideBarCategory", () => {
 
   afterAll(() => {
     cleanup();
