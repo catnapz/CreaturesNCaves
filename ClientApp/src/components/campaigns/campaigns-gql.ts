@@ -35,7 +35,7 @@ export interface CampaignsQueryResult {
 }
 
 export interface CampaignResult {
-    campaignId: string;
+    campaignId: number;
     name: string;
     description: string;
 }
