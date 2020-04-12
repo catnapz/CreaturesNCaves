@@ -5,17 +5,13 @@ import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import useTheme from "@material-ui/core/styles/useTheme";
-import {useStyles} from "./shared-styles";
-import {SideBarItem} from "./side-bar-item";
-import {SideBarCategory} from "./side-bar-category";
+import { useStyles } from "./shared-styles";
+import { SideBarItem } from "./side-bar-item";
+import { SideBarCategory } from "./side-bar-category";
 import "./side-bar.scss";
-import {useSelector} from "react-redux";
-import {selectAuthenticated} from "../auth/auth-store.slice";
+import { useSelector } from "react-redux";
+import { selectAuthenticated } from "../auth/auth-store.slice";
 
 interface SidebarProps {
   handleDrawerClose: () => void;
@@ -26,7 +22,7 @@ export const SideBar = (props: SidebarProps) => {
   const theme = useTheme();
   const classes = useStyles(theme);
   const authenticated = useSelector(selectAuthenticated);
-  
+
   return (
     <Drawer
       variant="permanent"
@@ -48,22 +44,22 @@ export const SideBar = (props: SidebarProps) => {
         </IconButton>
       </div>
 
-      { authenticated &&
-      <SideBarCategory open={props.isDrawerOpen} title={"Game Master"}>
+      {authenticated &&
+        <SideBarCategory open={props.isDrawerOpen} title={"Game Master"}>
           <List>
-              <SideBarItem to="/counter" title={"Counter"} subtitle={"Dev Test"} open={props.isDrawerOpen}/>
-              <SideBarItem to="/campaigns" title={"Campaigns"}/>
-              <SideBarItem to="/characters" title={"Characters"}/>
-              
+            <SideBarItem to="/counter" title={"Counter"} subtitle={"Dev Test"} open={props.isDrawerOpen} />
+            <SideBarItem to="/campaigns" title={"Campaigns"} />
+            <SideBarItem to="/characters" title={"Characters"} />
+
           </List>
-      </SideBarCategory>
+        </SideBarCategory>
       }
 
-      <SideBarCategory open={props.isDrawerOpen} title={"Quick "}>
+      <SideBarCategory open={props.isDrawerOpen} title={"Quick Tools"}>
         <List>
-          <SideBarItem to="/roll-initiative" title={"Combat"}/>
-          <SideBarItem to="/boblin" title={"Random Character"}/>
-          <SideBarItem to="/loot" title={"Random Loot"}/>
+          <SideBarItem to="/roll-initiative" title={"Combat"} />
+          <SideBarItem to="/boblin" title={"Random Character"} />
+          <SideBarItem to="/loot" title={"Random Loot"} />
         </List>
       </SideBarCategory>
     </Drawer>
