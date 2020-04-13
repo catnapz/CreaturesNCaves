@@ -25,7 +25,7 @@ function wrappedRender( componentToRender: JSX.Element ) {
 
 describe("Counter", () => {
 
-  afterAll(() => {
+  afterEach(() => {
     cleanup();
   });
 

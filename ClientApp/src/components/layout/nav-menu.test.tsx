@@ -31,7 +31,7 @@ function wrappedRender(componentToRender: React.ReactNode) {
 
 describe('NavMenu', () => {
 
-  afterAll(() => {
+  afterEach(() => {
     cleanup();
     handleMenuButtonClickMock.mockClear();
     selectAuthenticatedSpy.mockClear();
@@ -59,6 +59,12 @@ describe('NavMenu', () => {
       />
     );
     await wait(() => getByText(baseElement, "Hello test user"));
+  });
+
+  afterAll(() => {
+    handleMenuButtonClickMock.mockRestore();
+    selectAuthenticatedSpy.mockRestore();
+    selectUserProfileSpy.mockRestore();
   });
 
 });

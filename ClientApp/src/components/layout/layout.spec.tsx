@@ -12,7 +12,7 @@ jest.mock('./side-bar', () => ({
 
 describe('Layout', () => {
 
-  afterAll(() => {
+  afterEach(() => {
     cleanup();
   });
   

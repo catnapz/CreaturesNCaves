@@ -5,7 +5,7 @@ import { SideBarItem } from "./side-bar-item";
 
 describe("SideBarItem", () => {
 
-  afterAll(() => {
+  afterEach(() => {
     cleanup();
   });
 

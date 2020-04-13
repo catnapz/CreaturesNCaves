@@ -18,7 +18,7 @@ jest.mock('./create-campaign-menu', () => ({
 
 describe("CreateCampaignMenu", () => {
 
-  afterAll(() => {
+  afterEach(() => {
     cleanup();
   });
 
