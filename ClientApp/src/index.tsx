@@ -27,25 +27,25 @@ apolloClient.resetStore()
 
 initUserManager()
   .then((userManager: UserManager | null) => {
-    if(userManager !== null) {
+    if (userManager !== null) {
       loadUser(userManager, ReduxStore).then(user => {
 
         ReactDOM.render(
           <Provider store={ReduxStore}>
-          <ConnectedRouter history={history}>
-            <AuthProvider userManager={userManager}>
-              <ApolloProvider client={apolloClient}>
-                <App userManager={userManager} loading={loading} loaded={loaded} />
-              </ApolloProvider>
-            </AuthProvider>
-          </ConnectedRouter>
-        </Provider>,
-        document.getElementById("root")
+            <ConnectedRouter history={history}>
+              <AuthProvider userManager={userManager}>
+                <ApolloProvider client={apolloClient}>
+                  <App userManager={userManager} loading={loading} loaded={loaded} />
+                </ApolloProvider>
+              </AuthProvider>
+            </ConnectedRouter>
+          </Provider>,
+          document.getElementById("root")
         );
       })
-      .catch(error => {
-        console.error(error);
-      })
+        .catch(error => {
+          console.error(error);
+        })
     }
   })
 
