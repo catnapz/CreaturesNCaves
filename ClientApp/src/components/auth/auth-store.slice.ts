@@ -18,6 +18,7 @@ export type AuthStoreError = {
 export interface IAuthStoreState {
   user: User | null;
   userLoading: boolean;
+  error?: AuthStoreError;
 }
 
 export interface ApiAuthClientConfigResponseAction {
@@ -51,7 +52,8 @@ export const authStoreSlice = createSlice({
       state.user = null;
       state.userLoading = false;
     },
-    userLoadingError: state => {
+    userLoadingError: (state, action: PayloadAction<AuthErrorAction>) => {
+      state.error = action.payload.error;
       state.user = null;
       state.userLoading = false;
     },
@@ -59,7 +61,8 @@ export const authStoreSlice = createSlice({
       state.user = null;
       state.userLoading = false;
     },
-    silentRenewError: state => {
+    silentRenewError: (state, action: PayloadAction<AuthErrorAction>) => {
+      state.error = action.payload.error;
       state.user = null;
       state.userLoading = false;
     },
