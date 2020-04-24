@@ -71,6 +71,12 @@
       "src/**/*.{ts,tsx}",
       "!<rootDir>/node_modules/"
     ],
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "<rootDir>/src/index.tsx",
+      "<rootDir>/src/react-app-env.d.ts",
+      "<rootDir>/src/store/ReduxStore.ts"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 0,
@@ -79,10 +85,6 @@
         "statements": 0
       }
     },
-    "coverageReporters": [
-      "text",
-      "json",
-      "lcov"
-    ]
+    "coverageReporters": ["text", "json", "lcov"]
   }
 }
