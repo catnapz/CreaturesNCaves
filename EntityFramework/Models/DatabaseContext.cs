@@ -21,10 +21,8 @@ namespace CreaturesNCaves.EntityFramework.Models
 
             modelBuilder.Entity<Campaign>(entity =>
             {
-                entity.HasKey(e => e.CampaignId)
-                    .HasName("id");
-
-                entity.HasKey(e => e.UserId)
+                entity.HasKey(e => new {e.CampaignId, e.UserId})
+                    .HasName("id")
                     .HasName("user_id");
 
                 entity.ToTable("campaigns");
