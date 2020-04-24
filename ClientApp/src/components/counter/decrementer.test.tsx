@@ -17,7 +17,7 @@ function wrappedRender( componentToRender: JSX.Element ) {
 
 describe("Decrementer", () => {
   
-  afterAll(() => {
+  afterEach(() => {
     cleanup();
   });
 

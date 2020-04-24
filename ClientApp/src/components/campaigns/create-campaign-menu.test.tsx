@@ -14,7 +14,7 @@ function wrappedRender(componentToRender: JSX.Element, queryMocks: MockedRespons
 
 describe("CreateCampaignMenu", () => {
 
-  afterAll(() => {
+  afterEach(() => {
     cleanup();
   });
 

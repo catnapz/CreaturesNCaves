@@ -1,114 +1,72 @@
 import React from 'react';
+import { cleanup, getByText, render, wait } from '@testing-library/react';
+import * as ReactRedux from "react-redux";
+import { StaticRouter } from 'react-router'
+import { configureStore } from '@reduxjs/toolkit';
+import { UserManager } from "oidc-client";
+import * as authStore from '../src/components/auth/auth-store.slice';
+import { App, AppProps } from './app';
 
-it("Dummy", () => {
-  expect(2).toBe(2);
-})
-// import { cleanup, getByText, render, wait } from '@testing-library/react';
-// import { configureStore } from '@reduxjs/toolkit';
-// import React from 'react';
-// import * as ReactRedux from "react-redux";
-// import { App, AppProps } from './app';
-// import { StaticRouter } from 'react-router'
+jest.mock('oidc-client', () => ({
+  UserManager: jest.fn(() => ({}))
+}));
+const loadedMock = jest.fn();
+const loadingMock = jest.fn();
+const selectUserLoadingSpy = jest.spyOn(authStore, "selectUserLoading");
 
-// // it('renders without crashing', () => {
-// //     const storeFake = (state: any) => ({
-// //         default: () => {},
-// //         subscribe: () => {},
-// //         dispatch: () => {},
-// //         getState: () => ({ ...state })
-// //     });
-// //     const store = storeFake({}) as any;
+// Test setup
+const store = configureStore({
+  reducer: {
+    [authStore.AUTH_STORE_FEATURE_KEY]: authStore.authStoreReducer,
+  }
+});
 
-// //     ReactDOM.render(
-// //         <Provider store={store}>
-// //             <MemoryRouter>
-// //                 <App/>
-// //             </MemoryRouter>
-// //         </Provider>, document.createElement('div'));
-// // });
+function wrappedRender(componentToRender: React.ReactNode) {
+  return render(
+    <ReactRedux.Provider store={store}>
+      <StaticRouter>
+        {componentToRender}
+      </StaticRouter>
+    </ReactRedux.Provider>
+  )
+}
 
-// // Test setup
-// // const store = configureStore({
-// //   reducer: { 
-// //     [I18N_STORE_FEATURE_KEY]: i18nStoreReducer,
-// //   }
-// // });
+describe('App', () => {
+  let appProps: AppProps;
 
-// // function wrappedRender( componentToRender ) {
-// //   return render(
-// //     <ReactRedux.Provider store={store}>
-// //         <StaticRouter>
-// //             {componentToRender}
-// //         </StaticRouter>
-// //     </ReactRedux.Provider>)
-// // }
+  beforeEach(() => {
+    appProps = {
+      loading: loadingMock,
+      loaded: loadingMock,
+      userManager: new UserManager({})
+    }
+  });
 
-// jest.mock('./components/layout/layout', () => ({
-//     Layout: 'mocked-layout'
-// }));
+  afterEach(() => {
+    cleanup();
+    loadedMock.mockClear();
+    loadingMock.mockClear();
+    selectUserLoadingSpy.mockClear();
+  });
 
-// jest.mock('./components/home', () => ({
-//     Home: 'mocked-home'
-// }));
+  it('renders successfully', async () => {
+    const { baseElement } = wrappedRender(<App {...appProps}/>);
+    await wait(() => getByText(baseElement, "Creatures & Caves"));
+  });
 
-// jest.mock('./components/counter/counter', () => ({
-//   Counter: 'mocked-counter'
-// }));
+  it('renders nothing when loading', async () => {
+    selectUserLoadingSpy.mockReturnValue(true);
+    const { baseElement } = wrappedRender(<App {...appProps}/>);
+    expect(baseElement.childElementCount).toBe(1);
+    expect(baseElement.firstElementChild?.tagName.toLowerCase()).toBe("div");
+    expect(baseElement.firstElementChild?.childElementCount).toBe(0);
+  });
+  
+  afterAll(() => {
+    loadedMock.mockRestore();
+    loadingMock.mockRestore();
+    selectUserLoadingSpy.mockRestore();
+    jest.restoreAllMocks();
+  });
 
-// const useSelectorMock = jest.spyOn(ReactRedux, "useSelector");
-
-// const loadingMock = jest.fn();
-// const loadedMock = jest.fn();
-
-// // Unit Tests 
-// describe('App', () => {
-// 	let props: AppProps;
-
-// 	beforeEach(() => {
-// 		props = {
-// 			loading: loadingMock,
-// 			loaded: loadedMock
-// 		}
-// 	});
-
-// 	afterEach(() => {
-// 		loadingMock.mockReset();
-// 		loadedMock.mockReset();
-// 		useSelectorMock.mockReset();
-// 		cleanup();
-// 	});
-
-//   //// put back in when useSelecter(appLoaded)
-// 	// it('should call loading prop when loading', () => {
-// 	// 	useSelectorMock.mockReturnValue(false);
-// 	// 	// wrappedRender(<App {...props}/>);
-// 	// 	// render(<App {...props}/>);
-// 	// 	expect(loadingMock).toHaveBeenCalled();
-// 	// });
-	
-// 	it('should call loaded prop when loaded', () => {
-// 		useSelectorMock.mockReturnValue(true);
-// 		render(<App {...props}/>);
-// 		expect(loadedMock).toHaveBeenCalled();
-// 	});
-
-	
-// 	it('should contain Layout component', async () => {
-// 		const { baseElement } = render(<App {...props}/>);
-// 		await wait(() => getByText(baseElement, (content, element) => {
-// 			return element.tagName.toLowerCase() === 'mocked-layout';
-// 		}));
-// 	});
-
-//   it('should contain Counter component', async () => {
-// 		const { baseElement } = render(<App {...props}/>);
-// 		await wait(() => getByText(baseElement, (content, element) => {
-// 			return element.tagName.toLowerCase() === 'mocked-counter';
-// 		}));
-// 	});
-	
-// 	afterAll(() => {
-// 		jest.clearAllMocks();
-// 	 });
-// });
-
+});

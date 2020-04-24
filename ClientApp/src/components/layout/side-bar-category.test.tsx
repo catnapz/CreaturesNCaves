@@ -4,7 +4,7 @@ import { SideBarCategory } from "./side-bar-category";
 
 describe("SideBarCategory", () => {
 
-  afterAll(() => {
+  afterEach(() => {
     cleanup();
   });
 

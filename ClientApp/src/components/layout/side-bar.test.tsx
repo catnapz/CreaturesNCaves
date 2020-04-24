@@ -34,7 +34,7 @@ function wrappedRender(componentToRender: React.ReactNode) {
 
 describe('SideBar', () => {
 
-  afterAll(() => {
+  afterEach(() => {
     cleanup();
     handleDrawerCloseMock.mockClear();
     selectAuthenticatedSpy.mockClear();
@@ -64,6 +64,11 @@ describe('SideBar', () => {
     await wait(() => getByText(baseElement, (content, element) => {
       return element.attributes.getNamedItem("title")?.value === "Game Master"
     }));
+  });
+
+  afterAll(() => {
+    handleDrawerCloseMock.mockRestore();
+    selectAuthenticatedSpy.mockRestore();
   });
 
 });

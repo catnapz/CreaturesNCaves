@@ -17,7 +17,7 @@ function wrappedRender( componentToRender: JSX.Element ) {
 
 describe("Incrementer", () => {
   
-  afterAll(() => {
+  afterEach(() => {
     cleanup();
   });
 

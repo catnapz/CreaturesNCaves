@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Route, Redirect, RouteProps } from "react-router-dom";
 import { selectAuthenticated } from "./auth-store.slice";
 
-interface ProtectedRouteProps extends RouteProps {
+export interface ProtectedRouteProps extends RouteProps {
   component: any;
 }
 
