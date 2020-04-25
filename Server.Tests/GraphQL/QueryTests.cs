@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CreaturesNCaves.EntityFramework.Models;
 using CreaturesNCaves.Server.GraphQL;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace CreaturesNCaves.Server.Tests.GraphQL
@@ -18,6 +19,7 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
             context.Users.Add(new User { Id = "U2", Description = "UD2", Name = "UN2" });
             context.Campaigns.Add(new Campaign {CampaignId = 1, Description = "CD1", Name = "CN1", UserId = "U1"});
             context.Campaigns.Add(new Campaign {CampaignId = 2, Description = "CD2", Name = "CN2", UserId = "U2"});
+            context.Campaigns.Add(new Campaign {CampaignId = 3, Description = "CD3", Name = "CN3", UserId = "U1"});
             context.SaveChanges();
         }
         
@@ -36,6 +38,7 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
             Assert.Equal(expectedUser.Id, me.Id);
             Assert.Equal(expectedUser.Description, me.Description);
             Assert.Equal(expectedUser.Name, me.Name);
+            Assert.Equal(2, me.Campaigns.Count());
         }
 
         [Fact]
@@ -94,7 +97,7 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
             IEnumerable<Campaign> campaigns = await query.GetAllCampaigns(context);
 
             // Act & Assert
-            Assert.Equal(2, campaigns.Count());
+            Assert.Equal(3, campaigns.Count());
         }
         
         [Fact]
