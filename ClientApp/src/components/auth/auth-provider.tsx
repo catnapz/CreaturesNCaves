@@ -38,7 +38,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
   // event callback when silent renew errored
   const onSilentRenewError = (error: any) => {
     console.error(`ERROR: onSilentRenewError => ${error}`);
-    dispatch(silentRenewError());
+    dispatch(silentRenewError({error}));
   };
 
   // event callback when the access token expired
