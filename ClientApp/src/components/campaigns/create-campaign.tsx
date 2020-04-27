@@ -16,13 +16,12 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import { CampaignMutationInput } from './campaigns-gql';
 import './create-campaign.scss';
-import { string } from 'yup';
 
-interface CreateCampaignMenuProps {
+interface CreateCampaignProps {
   mutationFn: (options?: MutationFunctionOptions<any, Record<string, any>> | undefined) => Promise<ExecutionResult<any>>
 }
 
-export const CreateCampaignMenu = (props: CreateCampaignMenuProps) => {
+export const CreateCampaign = (props: CreateCampaignProps) => {
   const [name, setName] = useState('');
   const [nameCheck, setNameCheck] = useState({ error: false, helperText: '' });
   const [description, setDescription] = useState('');

@@ -6,11 +6,11 @@ import {
   cleanup,
   fireEvent,
 } from "@testing-library/react";
-import { CreateCampaignMenu } from "./create-campaign";
+import { CreateCampaign } from "./create-campaign";
 
 const mutationFnMock = jest.fn();
 
-describe("CreateCampaignMenu", () => {
+describe("CreateCampaign", () => {
   const props = {
     mutationFn: mutationFnMock,
   };
@@ -21,8 +21,10 @@ describe("CreateCampaignMenu", () => {
   });
 
   it("should render successfully", async () => {
-    const { baseElement } = render(<CreateCampaignMenu {...props} />);
-    await wait(() => getByText(baseElement, "Add Campaign", { exact: false }));
+    const { baseElement } = render(<CreateCampaign {...props} />);
+    await wait(() => getByText(baseElement, (content, element) => {
+      return element.tagName.toLowerCase() === 'button' && element.getAttribute('title') === 'Add Campaign';
+    }));
   });
 
   it("should call mutation function on add campaign button click", async () => {
@@ -35,22 +37,29 @@ describe("CreateCampaignMenu", () => {
       },
     };
     mutationFnMock.mockResolvedValue(true);
-    const { baseElement } = render(<CreateCampaignMenu {...props} />);
+    const { baseElement } = render(<CreateCampaign {...props} />);
+    fireEvent.click(getByText(baseElement, (content, element) => {
+      return element.tagName.toLowerCase() === 'button' && element.getAttribute('title') === 'Add Campaign';
+    }));
+
     fireEvent.change(
       getByText(baseElement, (content, element) => {
-        return element.id === "create-campaign-name-input";
+        return element.id === "create-campaign-name";
       }),
       { target: { value: "name" } }
     );
 
     fireEvent.change(
       getByText(baseElement, (content, element) => {
-        return element.id === "create-campaign-description-input";
+        return element.id === "create-campaign-description";
       }),
       { target: { value: "description" } }
     );
 
-    fireEvent.click(getByText(baseElement, "Add Campaign", { exact: false }));
+    fireEvent.click(getByText(baseElement, (content, element) => {
+      return element.tagName.toLowerCase() === 'span' && content === 'Add';
+    }));
+
 
     expect(mutationFnMock).toHaveBeenCalledWith(expectedData);
   });

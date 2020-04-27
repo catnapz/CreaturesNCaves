@@ -12,8 +12,8 @@ function wrappedRender(componentToRender: JSX.Element, queryMocks: MockedRespons
   )
 }
 
-jest.mock('./create-campaign-menu', () => ({
-  CreateCampaignMenu: 'mocked-create-campaign-menu'
+jest.mock('./create-campaign', () => ({
+  CreateCampaign: 'mocked-create-campaign'
 }));
 
 describe("CreateCampaignMenu", () => {
@@ -25,7 +25,7 @@ describe("CreateCampaignMenu", () => {
   it("should render successfully", async () => {
     const { baseElement } = wrappedRender(<Campaigns />);
     await wait(() => getByText(baseElement, (content, element) => {
-      return element.tagName.toLowerCase() === 'mocked-create-campaign-menu';
+      return element.tagName.toLowerCase() === 'mocked-create-campaign';
     }));
   });
 

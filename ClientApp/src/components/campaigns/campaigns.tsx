@@ -9,7 +9,7 @@ import {
   MutationResult,
 } from "./campaigns-gql";
 import Snackbar from "@material-ui/core/Snackbar";
-import { CreateCampaignMenu } from "./create-campaign";
+import { CreateCampaign } from "./create-campaign";
 import { CampaignCard } from "./campaign-card";
 import { EmptyCampaigns } from "./empty-campaings";
 import "./campaigns.scss";
@@ -71,7 +71,7 @@ export const Campaigns = () => {
     return (
       <>
         <p>Loading...</p>
-        <CreateCampaignMenu mutationFn={createCampaign} />
+        <CreateCampaign mutationFn={createCampaign} />
       </>
     );
   }
@@ -81,7 +81,7 @@ export const Campaigns = () => {
       <>
         <p>{JSON.stringify(queryError)}</p>
         <p>Error :( </p>
-        <CreateCampaignMenu mutationFn={createCampaign} />
+        <CreateCampaign mutationFn={createCampaign} />
       </>
     );
   }
@@ -102,7 +102,7 @@ export const Campaigns = () => {
       </div>
       
       <div className='create-campaigns-container'>
-        <CreateCampaignMenu mutationFn={createCampaign} />
+        <CreateCampaign mutationFn={createCampaign} />
       </div>
 
       <Snackbar
