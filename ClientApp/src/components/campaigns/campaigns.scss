@@ -1,7 +1,41 @@
 .campaigns-card {
-  max-width: 345px;
+  width: 345px;
+  margin: 1em;
   
   .campaigns-card-media {
     height: 140px;
   }
+}
+
+.campaigns-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.create-campaigns-container {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+  border-radius: 100%;
+}
+
+.empty-campaigns-container.MuiPaper-root {
+  padding: 1em;
+  width: 100%;
+  text-align: center;
+  color: grey;
+  background-color: #333;
+}
+
+.snackbar .MuiSnackbarContent-root {
+  display: flex;
+  justify-content: center;
+
+}
+.snackbar-success .MuiSnackbarContent-root {
+  background-color: rgb(9, 167, 9);
+}
+
+.snackbar-error .MuiSnackbarContent-root {
+  background-color: rgb(207, 39, 27);
 }
