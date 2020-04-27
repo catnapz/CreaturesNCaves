@@ -6,7 +6,7 @@ import {
   CampaignResult,
   CREATE_CAMPAIGN,
 } from "./campaigns-gql";
-import { CreateCampaignMenu } from "./create-campaign-menu";
+import { CreateCampaignMenu } from "./create-campaign";
 import "./campaigns.scss";
 import { CampaignCard } from "./campaign-card";
 

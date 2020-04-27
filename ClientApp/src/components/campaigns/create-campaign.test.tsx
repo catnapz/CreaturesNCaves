@@ -6,7 +6,7 @@ import {
   cleanup,
   fireEvent,
 } from "@testing-library/react";
-import { CreateCampaignMenu } from "./create-campaign-menu";
+import { CreateCampaignMenu } from "./create-campaign";
 
 const mutationFnMock = jest.fn();
 
