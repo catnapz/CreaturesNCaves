@@ -9,9 +9,10 @@ import {
 import { CreateCampaignMenu } from "./create-campaign";
 import "./campaigns.scss";
 import { CampaignCard } from "./campaign-card";
+import { EmptyCampaigns } from "./empty-campaings";
 
 export const Campaigns = () => {
-  
+
   const {
     loading: queryLoading,
     error: queryError,
@@ -53,13 +54,22 @@ export const Campaigns = () => {
   }
 
   const campaignsResult: CampaignsQueryResult = queryData;
+  const campaigns = campaignsResult.me.campaigns;
 
   return (
     <>
-      {campaignsResult.me.campaigns.map((campaign: CampaignResult) => (
-        <CampaignCard campaign={campaign} />
-      ))}
-      <CreateCampaignMenu mutationFn={createCampaign} />
+      <div className='campaigns-container'>
+        {campaigns.length > 0 ? 
+          campaigns.map((campaign: CampaignResult) => (
+            <CampaignCard campaign={campaign} />
+          )) 
+        : 
+        <EmptyCampaigns/>}
+        
+      </div>
+      <div className='create-campaigns-container'>
+        <CreateCampaignMenu mutationFn={createCampaign} />
+      </div>
     </>
   );
 };

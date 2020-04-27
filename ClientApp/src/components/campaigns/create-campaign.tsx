@@ -70,7 +70,7 @@ export const CreateCampaignMenu = (props: CreateCampaignMenuProps) => {
     <>
       <Tooltip title="Add Campaign" arrow>
         <Fab onClick={handleOpen}>
-          <AddIcon />
+          <AddIcon className='add-campaign-icon'/>
         </Fab>
       </Tooltip>
 
@@ -116,6 +116,7 @@ export const CreateCampaignMenu = (props: CreateCampaignMenuProps) => {
             <FormControl variant="outlined" fullWidth>
               <InputLabel htmlFor="create-campaign-description">Description</InputLabel>
               <OutlinedInput
+                multiline
                 id="create-campaign-description"
                 label="Description"
                 value={description}
