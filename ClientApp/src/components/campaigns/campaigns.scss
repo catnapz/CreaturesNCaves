@@ -26,3 +26,16 @@
   color: grey;
   background-color: #333;
 }
+
+.snackbar .MuiSnackbarContent-root {
+  display: flex;
+  justify-content: center;
+
+}
+.snackbar-success .MuiSnackbarContent-root {
+  background-color: rgb(9, 167, 9);
+}
+
+.snackbar-error .MuiSnackbarContent-root {
+  background-color: rgb(207, 39, 27);
+}

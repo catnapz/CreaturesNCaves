@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import clsx from 'clsx';
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   GET_CAMPAIGNS,
   CampaignsQueryResult,
   CampaignResult,
   CREATE_CAMPAIGN,
+  MutationResult,
 } from "./campaigns-gql";
+import Snackbar from "@material-ui/core/Snackbar";
 import { CreateCampaignMenu } from "./create-campaign";
-import "./campaigns.scss";
 import { CampaignCard } from "./campaign-card";
 import { EmptyCampaigns } from "./empty-campaings";
+import "./campaigns.scss";
+import { ApolloError } from "apollo-boost";
 
 export const Campaigns = () => {
+
+  const [snack, setSnack] = useState({
+    open: false,
+    error: false,
+    msg: '',
+  });
+
+  const handleCloseSnack = () => {
+    setSnack({
+      open: false,
+      error: false,
+      msg: '',
+    });
+  };
 
   const {
     loading: queryLoading,
@@ -19,10 +37,8 @@ export const Campaigns = () => {
     data: queryData,
   } = useQuery(GET_CAMPAIGNS);
 
-  const [
-    createCampaign,
-    { loading: mutationLoading, error: mutationError, data: mutationData }, // used for toast msgs
-  ] = useMutation(CREATE_CAMPAIGN, {
+  const [ createCampaign, { loading: mutationLoading }] = useMutation(CREATE_CAMPAIGN, {
+    
     update(cache, { data: { createCampaign } }) {
       const cachedData: CampaignsQueryResult = cache.readQuery({
         query: GET_CAMPAIGNS,
@@ -32,6 +48,23 @@ export const Campaigns = () => {
         data: cachedData.me.campaigns.push(createCampaign),
       });
     },
+
+    onCompleted: (data) => {
+      let createdCampaign = (data as MutationResult)?.createCampaign?.name;
+      setSnack({
+        open: true,
+        error: false,
+        msg: "Campaign \"" + createdCampaign + "\" created",
+      });
+    },
+
+    onError: (error) => {
+      setSnack({
+        open: true,
+        error: true,
+        msg: error.message || "ERROR!",
+      });
+    }
   });
 
   if (queryLoading) {
@@ -67,9 +100,21 @@ export const Campaigns = () => {
         <EmptyCampaigns/>}
         
       </div>
+      
       <div className='create-campaigns-container'>
         <CreateCampaignMenu mutationFn={createCampaign} />
       </div>
+
+      <Snackbar
+        className={clsx('snackbar', {
+          'snackbar-error': snack.error,
+          'snackbar-success': !snack.error
+        })}
+        open={snack.open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnack}
+        message={snack.msg}
+      />
     </>
   );
 };
