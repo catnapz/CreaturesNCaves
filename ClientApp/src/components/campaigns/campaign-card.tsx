@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { CampaignResult } from './campaigns-gql';
 
 interface CampaignCardProps {
-  campaign: CampaignResult
+  campaign: CampaignResult;
 }
 
 export const CampaignCard = (props: CampaignCardProps) => (
