@@ -1,81 +1,65 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { GET_CAMPAIGNS, CampaignsQueryResult, CampaignResult } from './campaigns-gql';
+import React from "react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import {
+  GET_CAMPAIGNS,
+  CampaignsQueryResult,
+  CampaignResult,
+  CREATE_CAMPAIGN,
+} from "./campaigns-gql";
 import { CreateCampaignMenu } from "./create-campaign-menu";
-import './campaigns.scss';
+import "./campaigns.scss";
+import { CampaignCard } from "./campaign-card";
 
 export const Campaigns = () => {
-  const { loading, error, data } = useQuery(GET_CAMPAIGNS);
+  
+  const {
+    loading: queryLoading,
+    error: queryError,
+    data: queryData,
+  } = useQuery(GET_CAMPAIGNS);
 
-  if (loading) {
+  const [
+    createCampaign,
+    { loading: mutationLoading, error: mutationError, data: mutationData }, // used for toast msgs
+  ] = useMutation(CREATE_CAMPAIGN, {
+    update(cache, { data: { createCampaign } }) {
+      const cachedData: CampaignsQueryResult = cache.readQuery({
+        query: GET_CAMPAIGNS,
+      }) as CampaignsQueryResult;
+      cache.writeQuery({
+        query: GET_CAMPAIGNS,
+        data: cachedData.me.campaigns.push(createCampaign),
+      });
+    },
+  });
+
+  if (queryLoading) {
     return (
       <>
-        <p>{JSON.stringify(error)}</p>
         <p>Loading...</p>
-        <CreateCampaignMenu />
+        <CreateCampaignMenu mutationFn={createCampaign} />
       </>
     );
   }
 
-  if (error) {
+  if (queryError) {
     return (
       <>
-        <p>{JSON.stringify(error)}</p>
+        <p>{JSON.stringify(queryError)}</p>
         <p>Error :( </p>
-        <CreateCampaignMenu />
+        <CreateCampaignMenu mutationFn={createCampaign} />
       </>
-
     );
   }
 
-  const campaignsResult: CampaignsQueryResult = data;
+  const campaignsResult: CampaignsQueryResult = queryData;
 
   return (
     <>
       {campaignsResult.me.campaigns.map((campaign: CampaignResult) => (
-        <Card key={campaign.campaignId} className="campaigns-card">
-          <CardActionArea>
-            <CardMedia
-              className="campaigns-card-media"
-              // image="/static/images/cards/contemplative-reptile.jpg"
-              image="https://as1.ftcdn.net/jpg/00/74/00/86/500_F_74008682_y3MIzggMbN75SokhUkoGnNw6pr5Kyt6m.jpg"
-              title="Dragon"
-            />
-          </CardActionArea>
-
-          <CardContent>
-            <Typography
-              gutterBottom
-              variant="h5"
-              component="h2"
-              className="campaigns-card-name-text"
-            >
-              {campaign.name}
-            </Typography>
-            <Typography 
-              variant="body2" 
-              color="textSecondary" 
-              component="p"
-              className="campaigns-card-description-text"
-            >
-              {campaign.description}
-            </Typography>
-          </CardContent>
-
-          <CardActions>
-            <Button size="small">Button1</Button>
-          </CardActions>
-        </Card>
+        <CampaignCard campaign={campaign} />
       ))}
-      <CreateCampaignMenu />
+      <CreateCampaignMenu mutationFn={createCampaign} />
     </>
   );
-
 };

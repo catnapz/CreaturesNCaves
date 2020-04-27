@@ -2,7 +2,7 @@ import React from "react";
 import { render, wait, getByText, cleanup, fireEvent, act } from "@testing-library/react";
 import { MockedProvider, MockedResponse } from '@apollo/react-testing';
 import { Campaigns } from "./campaigns";
-import { GET_CAMPAIGNS, CampaignsQueryResult } from "./campaigns-gql";
+import { GET_CAMPAIGNS, CampaignsQueryResult, CampaignMutationInput } from "./campaigns-gql";
 
 function wrappedRender(componentToRender: JSX.Element, queryMocks: MockedResponse[] = []) {
   return render(
@@ -34,7 +34,7 @@ describe("CreateCampaignMenu", () => {
     const queryResult: CampaignsQueryResult = {
       me: {
         campaigns: [{
-          campaignId: 0,
+          campaignId: "0",
           description: "test-description",
           name: "test-name",
         }]

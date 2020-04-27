@@ -85,6 +85,10 @@
         "statements": 0
       }
     },
-    "coverageReporters": ["text", "json", "lcov"]
+    "coverageReporters": [
+      "text",
+      "json",
+      "lcov"
+    ]
   }
 }

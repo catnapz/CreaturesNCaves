@@ -1,16 +1,14 @@
 import React from 'react';
-import { CREATE_CAMPAIGN, CampaignMutationInput } from './campaigns-gql';
-import { useMutation } from "@apollo/react-hooks";
-import { ApolloError } from "apollo-boost";
+import { CampaignMutationInput } from './campaigns-gql';
+import { MutationFunctionOptions, ExecutionResult } from '@apollo/react-common';
 
-export const CreateCampaignMenu = () => {
+interface CreateCampaignMenuProps {
+  mutationFn: (options?: MutationFunctionOptions<any, Record<string, any>> | undefined) => Promise<ExecutionResult<any>>
+}
+
+export const CreateCampaignMenu = (props: CreateCampaignMenuProps) => { 
   let nameInput: HTMLInputElement;
   let descriptionInput: HTMLTextAreaElement;
-  const [createCampaign, { loading, error, data }] = useMutation(CREATE_CAMPAIGN);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
-  if (data) return <p>Created!</p>;
 
   return (
     <div>
@@ -23,8 +21,8 @@ export const CreateCampaignMenu = () => {
             description: descriptionInput?.value ?? ""
           };
 
-          createCampaign({ variables: { campaignInput: campaignInput } })
-            .catch(error => console.error(error));
+          props.mutationFn({ variables: { campaignInput: campaignInput } })
+            .catch((error) => console.error(error));
 
           nameInput.value = '';
           descriptionInput.value = '';
