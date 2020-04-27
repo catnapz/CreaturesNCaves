@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -10,16 +10,16 @@ import Typography from '@material-ui/core/Typography';
 import { GET_CAMPAIGNS, CampaignsQueryResult, CampaignResult } from './campaigns-gql';
 import { CreateCampaignMenu } from "./create-campaign-menu";
 import './campaigns.scss';
+import { CampaignCard } from './campaign-card';
 
 export const Campaigns = () => {
-  const { loading, error, data } = useQuery(GET_CAMPAIGNS);
-
+  const { loading, error, data, refetch} = useQuery(GET_CAMPAIGNS);
   if (loading) {
     return (
       <>
         <p>{JSON.stringify(error)}</p>
         <p>Loading...</p>
-        <CreateCampaignMenu />
+        <CreateCampaignMenu/>
       </>
     );
   }
@@ -29,7 +29,7 @@ export const Campaigns = () => {
       <>
         <p>{JSON.stringify(error)}</p>
         <p>Error :( </p>
-        <CreateCampaignMenu />
+        <CreateCampaignMenu/>
       </>
 
     );
@@ -40,41 +40,9 @@ export const Campaigns = () => {
   return (
     <>
       {campaignsResult.me.campaigns.map((campaign: CampaignResult) => (
-        <Card key={campaign.campaignId} className="campaigns-card">
-          <CardActionArea>
-            <CardMedia
-              className="campaigns-card-media"
-              // image="/static/images/cards/contemplative-reptile.jpg"
-              image="https://as1.ftcdn.net/jpg/00/74/00/86/500_F_74008682_y3MIzggMbN75SokhUkoGnNw6pr5Kyt6m.jpg"
-              title="Dragon"
-            />
-          </CardActionArea>
-
-          <CardContent>
-            <Typography
-              gutterBottom
-              variant="h5"
-              component="h2"
-              className="campaigns-card-name-text"
-            >
-              {campaign.name}
-            </Typography>
-            <Typography 
-              variant="body2" 
-              color="textSecondary" 
-              component="p"
-              className="campaigns-card-description-text"
-            >
-              {campaign.description}
-            </Typography>
-          </CardContent>
-
-          <CardActions>
-            <Button size="small">Button1</Button>
-          </CardActions>
-        </Card>
+        <CampaignCard campaign={campaign}/>
       ))}
-      <CreateCampaignMenu />
+      <CreateCampaignMenu/>
     </>
   );
 

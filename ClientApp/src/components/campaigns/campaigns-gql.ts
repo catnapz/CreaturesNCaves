@@ -1,4 +1,4 @@
-import {gql} from "apollo-boost";
+import { gql } from "apollo-boost";
 
 export const GET_CAMPAIGNS = gql`
   {
@@ -22,20 +22,28 @@ export const CREATE_CAMPAIGN = gql`
   }
 `;
 
-export interface CampaignMutationInput {
-    description?: string;
+export interface MutationResult {
+  createCampaign: {
+    campaignId: string;
     name: string;
+    description: string;
+  }
+}
+
+export interface CampaignMutationInput {
+  description?: string;
+  name: string;
 }
 
 
 export interface CampaignsQueryResult {
-    me: {
-        campaigns: CampaignResult[];
-    };
+  me: {
+    campaigns: CampaignResult[];
+  };
 }
 
 export interface CampaignResult {
-    campaignId: number;
-    name: string;
-    description: string;
+  campaignId: string;
+  name: string;
+  description: string;
 }
