@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, Dispatch } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { useSnackbar } from 'notistack';
-import { selectNotifications, INotification, removeNotification, NotificationAction } from "./notification-store.slice";
+import { useSnackbar, VariantType } from 'notistack';
+import { selectNotifications, INotification, removeNotification, NotificationAction, EnqueueNotificationAction, dismissNotification, enqueueNotification } from "./notification-store.slice";
+import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from '@material-ui/icons/Clear';
 
 let displayedIds: (string | number)[] = [];
 
@@ -55,3 +57,31 @@ export const Notifications = () => {
 
   return null;
 };
+
+export const createNotification = (dispatch: Dispatch<any>, message: string, variant: VariantType) => {
+  const notificationKey = new Date().getTime() + Math.random();
+  const enqueueActionPayload: EnqueueNotificationAction = {
+    notification: {
+      dismissed: false,
+      message: message,
+      key: notificationKey,
+      options: {
+        key: notificationKey,
+        variant: variant,
+        action: (key) => {
+          const dismissActionPayload: NotificationAction = { key };
+          return (
+            <IconButton
+              onClick={() =>
+                dispatch(dismissNotification(dismissActionPayload))
+              }
+            >
+              <ClearIcon/>
+            </IconButton>
+          );
+        },
+      },
+    },
+  };
+  dispatch(enqueueNotification(enqueueActionPayload));
+}

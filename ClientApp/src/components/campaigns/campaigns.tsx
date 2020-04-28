@@ -12,12 +12,7 @@ import { CreateCampaign } from "./create-campaign";
 import { CampaignCard } from "./campaign-card";
 import { EmptyCampaigns } from "./empty-campaings";
 import "./campaigns.scss";
-import {
-  enqueueNotification,
-  EnqueueNotificationAction,
-  dismissNotification,
-  NotificationAction,
-} from "../layout/notifications/notification-store.slice";
+import { createNotification } from "../layout/notifications/notifications";
 import Button from "@material-ui/core/Button";
 
 export const Campaigns = () => {
@@ -44,59 +39,11 @@ export const Campaigns = () => {
 
       onCompleted: (data) => {
         let createdCampaign = (data as MutationResult)?.createCampaign?.name;
-        const notificationKey = new Date().getTime() + Math.random();
-        const enqueueActionPayload: EnqueueNotificationAction = {
-          notification: {
-            dismissed: false,
-            message: 'Campaign "' + createdCampaign + '" created',
-            key: notificationKey,
-            options: {
-              key: notificationKey,
-              variant: "success",
-              action: (key) => {
-                const dismissActionPayload: NotificationAction = { key };
-                return (
-                  <Button
-                    onClick={() =>
-                      dispatch(dismissNotification(dismissActionPayload))
-                    }
-                  >
-                    Dismiss
-                  </Button>
-                );
-              },
-            },
-          },
-        };
-        dispatch(enqueueNotification(enqueueActionPayload));
+        createNotification(dispatch, 'Campaign "' + createdCampaign + '" created', "success");
       },
 
       onError: (error) => {
-        const notificationKey = new Date().getTime() + Math.random();
-        const enqueueActionPayload: EnqueueNotificationAction = {
-          notification: {
-            dismissed: false,
-            message: error.message || "ERROR!",
-            key: notificationKey,
-            options: {
-              key: notificationKey,
-              variant: "warning",
-              action: (key) => {
-                const dismissActionPayload: NotificationAction = { key };
-                return (
-                  <Button
-                    onClick={() =>
-                      dispatch(dismissNotification(dismissActionPayload))
-                    }
-                  >
-                    Dismiss
-                  </Button>
-                );
-              },
-            },
-          },
-        };
-        dispatch(enqueueNotification(enqueueActionPayload));
+        createNotification(dispatch, error.message || "ERROR!", "warning");
       },
     }
   );
