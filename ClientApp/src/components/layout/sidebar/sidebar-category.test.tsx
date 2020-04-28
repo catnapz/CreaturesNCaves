@@ -1,6 +1,6 @@
 import React from 'react';
 import { cleanup, render, wait, getByText } from '@testing-library/react';
-import { SideBarCategory } from "./side-bar-category";
+import { SideBarCategory } from "./sidebar-category";
 
 describe("SideBarCategory", () => {
 

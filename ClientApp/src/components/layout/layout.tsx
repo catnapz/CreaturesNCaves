@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavMenu } from './nav-menu';
-import { SideBar } from "./side-bar";
+import { NavMenu } from './nav-menu/nav-menu';
+import { SideBar } from "./sidebar/sidebar";
 import useTheme from "@material-ui/core/styles/useTheme";
 import { useStyles } from "./shared-styles";
 import CssBaseline from "@material-ui/core/CssBaseline";

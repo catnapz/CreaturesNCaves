@@ -13,7 +13,6 @@ import { CreateCampaign } from "./create-campaign";
 import { CampaignCard } from "./campaign-card";
 import { EmptyCampaigns } from "./empty-campaings";
 import "./campaigns.scss";
-import { ApolloError } from "apollo-boost";
 
 export const Campaigns = () => {
 
@@ -104,17 +103,6 @@ export const Campaigns = () => {
       <div className='create-campaigns-container'>
         <CreateCampaign mutationFn={createCampaign} />
       </div>
-
-      <Snackbar
-        className={clsx('snackbar', {
-          'snackbar-error': snack.error,
-          'snackbar-success': !snack.error
-        })}
-        open={snack.open}
-        autoHideDuration={3000}
-        onClose={handleCloseSnack}
-        message={snack.msg}
-      />
     </>
   );
 };

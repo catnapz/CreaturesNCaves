@@ -6,12 +6,12 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import useTheme from "@material-ui/core/styles/useTheme";
-import { useStyles } from "./shared-styles";
-import { SideBarItem } from "./side-bar-item";
-import { SideBarCategory } from "./side-bar-category";
-import "./side-bar.scss";
+import { useStyles } from "../shared-styles";
+import { SideBarItem } from "./sidebar-item";
+import { SideBarCategory } from "./sidebar-category";
+import "./sidebar.scss";
 import { useSelector } from "react-redux";
-import { selectAuthenticated } from "../auth/auth-store.slice";
+import { selectAuthenticated } from "../../auth/auth-store.slice";
 
 interface SidebarProps {
   handleDrawerClose: () => void;

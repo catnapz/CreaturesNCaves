@@ -2,9 +2,9 @@ import { cleanup, render, wait, getByText } from "@testing-library/react";
 import React from "react";
 import * as ReactRedux from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import * as authStore from "../auth/auth-store.slice";
+import * as authStore from "../../auth/auth-store.slice";
 
-import { SideBar } from "./side-bar";
+import { SideBar } from "./sidebar";
 
 jest.mock('./side-bar-item', () => ({
   SideBarItem: 'mocked-side-bar-item'

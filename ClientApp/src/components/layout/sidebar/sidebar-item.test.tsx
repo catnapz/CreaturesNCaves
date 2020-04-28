@@ -1,7 +1,7 @@
 import React from 'react';
 import { cleanup, render, wait, getByText } from '@testing-library/react';
 import { StaticRouter } from 'react-router';
-import { SideBarItem } from "./side-bar-item";
+import { SideBarItem } from "./sidebar-item";
 
 describe("SideBarItem", () => {
 
