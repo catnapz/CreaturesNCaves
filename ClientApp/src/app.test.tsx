@@ -4,7 +4,7 @@ import * as ReactRedux from "react-redux";
 import { StaticRouter } from 'react-router'
 import { configureStore } from '@reduxjs/toolkit';
 import { UserManager } from "oidc-client";
-import * as authStore from '../src/components/auth/auth-store.slice';
+import * as authStore from './components/user/auth/auth-store.slice';
 import { App, AppProps } from './app';
 
 jest.mock('oidc-client', () => ({

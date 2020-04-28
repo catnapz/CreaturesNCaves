@@ -2,7 +2,7 @@ import { cleanup, render, wait, getByText, fireEvent } from "@testing-library/re
 import React from "react";
 import * as ReactRedux from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import * as authStore from "../auth/auth-store.slice";
+import * as authStore from "./auth-store.slice";
 import { StaticRouter } from 'react-router';
 
 import { ProtectedRoute, ProtectedRouteProps } from "./protected-route";

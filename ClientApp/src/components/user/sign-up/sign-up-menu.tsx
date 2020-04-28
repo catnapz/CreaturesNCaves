@@ -10,7 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import FormHelperText from "@material-ui/core/FormHelperText";
-import './account-form.scss';
+import '../account-form.scss';
 
 interface inputFieldState {
   error: boolean;

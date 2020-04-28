@@ -11,7 +11,7 @@ import useTheme from "@material-ui/core/styles/useTheme";
 import {
   selectAuthenticated,
   selectUserProfile
-} from "../../auth/auth-store.slice";
+} from "../../user/auth/auth-store.slice";
 import {useStyles} from "../shared-styles";
 import "./nav-menu.scss";
 

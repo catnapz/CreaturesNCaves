@@ -11,7 +11,7 @@ import { SideBarItem } from "./sidebar-item";
 import { SideBarCategory } from "./sidebar-category";
 import "./sidebar.scss";
 import { useSelector } from "react-redux";
-import { selectAuthenticated } from "../../auth/auth-store.slice";
+import { selectAuthenticated } from "../../user/auth/auth-store.slice";
 
 interface SidebarProps {
   handleDrawerClose: () => void;

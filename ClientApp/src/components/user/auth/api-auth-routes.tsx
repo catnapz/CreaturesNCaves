@@ -1,8 +1,8 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { ApplicationPaths } from "./api-auth-constants";
-import { LoginCallback } from "./login-callback";
-import { LogoutCallback } from "./logout-callback";
+import { LoginCallback } from "../login/login-callback";
+import { LogoutCallback } from "../logout/logout-callback";
 import { UserManager } from "oidc-client";
 import { useHistory, useLocation, Redirect } from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectUserProfile } from './auth-store.slice';
+import { selectUserProfile } from '../auth/auth-store.slice';
 import { UserManager } from "oidc-client";
 
 export const Profile = (props: { userManager: UserManager }) => {
