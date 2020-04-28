@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import clsx from 'clsx';
-import {AppBar, Avatar, IconButton, Toolbar, ButtonBase, Divider} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+import AppBar from "@material-ui/core/AppBar";
+import Avatar from "@material-ui/core/Avatar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import MenuIcon from "@material-ui/icons/Menu";
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import useTheme from "@material-ui/core/styles/useTheme";
@@ -14,6 +18,7 @@ import {
 } from "../../user/auth/auth-store.slice";
 import {useStyles} from "../shared-styles";
 import "./nav-menu.scss";
+import { LogoutDialog } from "../../user/logout/logout-dialog";
 
 interface NavMenuProps {
   handleMenuButtonClick: () => void;
@@ -24,7 +29,7 @@ export const NavMenu = (props: NavMenuProps) => {
   const authenticated = useSelector(selectAuthenticated);
   const theme = useTheme();
   const classes = useStyles(theme);
-  
+
   return (
     <>
       <AppBar 
@@ -68,14 +73,24 @@ const AuthenticatedView = () => {
 
   const userProfile = useSelector(selectUserProfile);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  
+  const menuOpen = Boolean(anchorEl);
+  const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
+
   const openMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   
   const closeMenu = () => {
     setAnchorEl(null);
+  }
+  
+  const handleLogoutDialogOpen = () => {
+    closeMenu();
+    setLogoutDialogOpen(true);
+  };
+
+  const handleLogoutDialogClose = () => {
+    setLogoutDialogOpen(false);
   }
 
   return (
@@ -88,14 +103,15 @@ const AuthenticatedView = () => {
         id="navbar-account-menu"
         anchorEl={anchorEl}
         keepMounted
-        open={open}
+        open={menuOpen}
         onClose = {closeMenu}
       >
         <Typography id="navbar-account-menu-header" variant="overline"> {"Hello " + userProfile?.name} </Typography>
         <Divider variant="middle"/>
         <Link to="/profile"><MenuItem onClick={closeMenu}><Typography>Profile</Typography></MenuItem></Link>
-        <Link to="/logout"><MenuItem onClick={closeMenu}><Typography>Logout</Typography></MenuItem></Link>
+        <MenuItem onClick={handleLogoutDialogOpen}><Typography>Logout</Typography></MenuItem>
       </Menu>
+      <LogoutDialog open={logoutDialogOpen} onClose={handleLogoutDialogClose} />
     </>
   );
 };

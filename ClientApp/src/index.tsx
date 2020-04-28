@@ -35,7 +35,7 @@ initUserManager()
             <ConnectedRouter history={history}>
               <AuthProvider userManager={userManager}>
                 <ApolloProvider client={apolloClient}>
-                  <App userManager={userManager} loading={loading} loaded={loaded} />
+                  <App loading={loading} loaded={loaded} />
                 </ApolloProvider>
               </AuthProvider>
             </ConnectedRouter>

@@ -5,7 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import * as authStore from "../auth/auth-store.slice";
 import { MockedProvider } from '@apollo/react-testing';
 
-import { LogoutMenu } from "./logout-menu";
+import { LogoutMenu } from "./logout-dialog";
 import { UserManager } from "oidc-client";
 
 const mockSignoutRedirect = jest.fn();

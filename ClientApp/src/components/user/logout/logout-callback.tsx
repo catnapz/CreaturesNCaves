@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-import { UserManager, User, SignoutResponse } from "oidc-client";
+import { useDispatch } from 'react-redux';
+import { UserManager, SignoutResponse } from "oidc-client";
+import { createNotification } from "../../layout/notifications/notifications";
 
 interface LogoutCallbackProps {
   userManager: UserManager;
@@ -10,8 +12,10 @@ interface LogoutCallbackProps {
 }
 export const LogoutCallback = (props: LogoutCallbackProps) => {
   
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    props.userManager.signoutCallback()
+    props.userManager.signoutRedirect()
       .then((resp: void | SignoutResponse) => {
         onRedirectSuccess(resp);
       })
@@ -21,10 +25,12 @@ export const LogoutCallback = (props: LogoutCallbackProps) => {
   }, []);
   
   const onRedirectSuccess = (resp: void | SignoutResponse) => {
+    createNotification(dispatch, "Logged out successfully", "success");
     props.successCallback(resp);
   };
 
   const onRedirectError = (error: Error) => {
+    createNotification(dispatch, "Logged out failed", "error");
     props.errorCallback(error);
   }
 

@@ -3,12 +3,13 @@ import { Route } from "react-router-dom";
 import { ApplicationPaths } from "./api-auth-constants";
 import { LoginCallback } from "../login/login-callback";
 import { LogoutCallback } from "../logout/logout-callback";
-import { UserManager } from "oidc-client";
-import { useHistory, useLocation, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUserManager } from "./auth-store.slice";
 
-export const ApiAuthorizationRoutes = (props: { userManager: UserManager }) => {
+export const ApiAuthorizationRoutes = () => {
   const histroy = useHistory();
-  const location = useLocation();
+  const userManager = useSelector(selectUserManager);
 
   return (
     <>
@@ -18,7 +19,7 @@ export const ApiAuthorizationRoutes = (props: { userManager: UserManager }) => {
         render={routerProps => (
           <LoginCallback
             {...routerProps}
-            userManager={props.userManager}
+            userManager={userManager!}
             successCallback={user => histroy.replace("/")}
             errorCallback={error => {
               histroy.push("/");
@@ -34,7 +35,7 @@ export const ApiAuthorizationRoutes = (props: { userManager: UserManager }) => {
         render={routerProps => (
           <LogoutCallback
             {...routerProps}
-            userManager={props.userManager}
+            userManager={userManager!}
             successCallback={() => histroy.push("/")}
             errorCallback={error => {
               histroy.push("/");

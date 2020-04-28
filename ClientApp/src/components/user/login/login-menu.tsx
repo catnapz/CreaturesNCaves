@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { UserManager } from "oidc-client";
+import { useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -13,6 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import FormHelperText from "@material-ui/core/FormHelperText";
+import { selectUserManager } from "../auth/auth-store.slice";
 import '../account-form.scss';
 
 interface inputFieldState {
@@ -24,8 +25,9 @@ interface passwordInputFieldState extends inputFieldState {
   showPassword?: boolean;
 }
 
-export const LoginMenu = (props: { userManager: UserManager }) => {
+export const LoginMenu = () => {
 
+  const userManager = useSelector(selectUserManager);
   const [usernameState, setUsernameState] = useState({ error: false, helperText: "Required" } as inputFieldState);
   const [passwordState, setPasswordState] = useState({ error: false, helperText: "Required" } as passwordInputFieldState);
 
@@ -76,7 +78,7 @@ export const LoginMenu = (props: { userManager: UserManager }) => {
       method: 'post',
       body: new FormData(form)
     });
-    if (resp.ok) props.userManager.signinRedirect();
+    if (resp.ok) userManager?.signinRedirect();
   }
 
   return (
