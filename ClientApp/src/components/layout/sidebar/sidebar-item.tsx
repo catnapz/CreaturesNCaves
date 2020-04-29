@@ -14,7 +14,7 @@ interface SideBarItemProps {
   open?: boolean;
 }
 
-export const SideBarItem = (props: SideBarItemProps) => {
+export const SidebarItem = (props: SideBarItemProps) => {
   return (
     <NavLink className="sidebar-nav-link" exact={props.exact ?? true} to={props.to}>
       <ListItem button className="sidebar-nav-list-item">

@@ -3,10 +3,14 @@ import React from "react";
 import * as ReactRedux from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { StaticRouter } from 'react-router';
-import * as authStore from "../auth/auth-store.slice";
+import * as authStore from "../../user/auth/auth-store.slice";
 
 import { NavMenu } from "./nav-menu";
 import { Profile } from "oidc-client";
+
+jest.mock('../../user/logout/logout-dialog', () => ({
+  LogoutDialog: 'mocked-logout-dialog'
+}));
 
 const handleMenuButtonClickMock = jest.fn();
 const selectAuthenticatedSpy = jest.spyOn(authStore, "selectAuthenticated");

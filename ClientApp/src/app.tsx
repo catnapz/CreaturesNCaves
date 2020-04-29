@@ -5,15 +5,13 @@ import { useSelector } from "react-redux";
 import { Layout } from "./components/layout/layout";
 import { Home } from "./components/home";
 import { Counter } from "./components/counter/counter";
-import { ApplicationPaths } from "./components/auth/api-auth-constants";
-import { ProtectedRoute } from "./components/auth/protected-route";
-import { LoginMenu } from "./components/auth/login-menu";
-import { SignUpMenu } from "./components/auth/sign-up-menu";
-import { selectUserLoading } from "./components/auth/auth-store.slice";
-import { ApiAuthorizationRoutes } from "./components/auth/api-auth-routes";
-import { LogoutMenu } from "./components/auth/logout-menu";
-import { Profile } from "./components/auth/profile";
-import { UserManager } from "oidc-client";
+import { ApplicationPaths } from "./components/user/auth/api-auth-constants";
+import { ProtectedRoute } from "./components/user/auth/protected-route";
+import { LoginMenu } from "./components/user/login/login-menu";
+import { SignUpMenu } from "./components/user/sign-up/sign-up-menu";
+import { selectUserLoading } from "./components/user/auth/auth-store.slice";
+import { ApiAuthorizationRoutes } from "./components/user/auth/api-auth-routes";
+import { Profile } from "./components/user/profile/profile";
 import { InProgress } from "./components/in-progress";
 
 import "./app.scss";
@@ -22,7 +20,6 @@ import {Campaigns} from "./components/campaigns/campaigns";
 export interface AppProps {
   loading: () => void;
   loaded: () => void;
-  userManager: UserManager;
 }
 
 export const App = (props: AppProps) => {
@@ -37,9 +34,9 @@ export const App = (props: AppProps) => {
         <Layout>
           <Route exact path="/" component={Home} />
           <ProtectedRoute path="/counter" component={Counter} />
-          <Route path="/login" render={ (routerProps) => <LoginMenu {...routerProps} userManager={props.userManager}/> }/>
-          <Route path="/logout" render={ (routerProps) => <LogoutMenu {...routerProps} userManager={props.userManager}/> }/>
+          <Route path="/login" component={LoginMenu}/>
           <Route path="/signup" component={SignUpMenu} />
+          <Route path="/profile" component={Profile}/>
 
           <Route path="/campaigns" component={Campaigns} />
           <Route path="/characters" component={InProgress}/>
@@ -47,11 +44,8 @@ export const App = (props: AppProps) => {
           <Route path="/boblin" component={InProgress}/>
           <Route path="/loot" component={InProgress}/>
           
-          <Route path="/profile" render={ (routerProps) => <Profile {...routerProps} userManager={props.userManager}/> }/>
-          <Route
-            path={ApplicationPaths.ApiAuthorizationPrefix}
-            render={ (routerProps) => <ApiAuthorizationRoutes {...routerProps} userManager={props.userManager}/> }
-          />
+
+          <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes}/>
         </Layout>
       </>
     );

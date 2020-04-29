@@ -3,13 +3,14 @@ import { cleanup, getByText, render, wait } from '@testing-library/react';
 import * as ReactRedux from "react-redux";
 import { StaticRouter } from 'react-router'
 import { configureStore } from '@reduxjs/toolkit';
-import { UserManager } from "oidc-client";
-import * as authStore from '../src/components/auth/auth-store.slice';
+import * as authStore from './components/user/auth/auth-store.slice';
+import * as notifStore from './components/layout/notifications/notification-store.slice';
 import { App, AppProps } from './app';
 
 jest.mock('oidc-client', () => ({
   UserManager: jest.fn(() => ({}))
 }));
+
 const loadedMock = jest.fn();
 const loadingMock = jest.fn();
 const selectUserLoadingSpy = jest.spyOn(authStore, "selectUserLoading");
@@ -18,6 +19,7 @@ const selectUserLoadingSpy = jest.spyOn(authStore, "selectUserLoading");
 const store = configureStore({
   reducer: {
     [authStore.AUTH_STORE_FEATURE_KEY]: authStore.authStoreReducer,
+    [notifStore.NOTIFICATION_STORE_FEATURE_KEY]: notifStore.notificationStoreReducer
   }
 });
 
@@ -37,8 +39,7 @@ describe('App', () => {
   beforeEach(() => {
     appProps = {
       loading: loadingMock,
-      loaded: loadingMock,
-      userManager: new UserManager({})
+      loaded: loadingMock
     }
   });
 

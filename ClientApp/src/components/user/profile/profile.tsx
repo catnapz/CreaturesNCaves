@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectUserProfile } from './auth-store.slice';
+import { selectUserProfile } from '../auth/auth-store.slice';
 import { UserManager } from "oidc-client";
+import Button from '@material-ui/core/Button';
 
 export const Profile = (props: { userManager: UserManager }) => {
   const profile = useSelector(selectUserProfile);
@@ -22,7 +23,7 @@ export const Profile = (props: { userManager: UserManager }) => {
   return (
     <>
       <h1>Hello {profile?.preferred_username}</h1>
-      <button onClick={() => deleteConfirmation()}>Delete Account</button>
+      <Button variant='contained' onClick={() => deleteConfirmation()}>Delete Account</Button>
       
     </>
   );

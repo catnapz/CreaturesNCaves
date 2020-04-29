@@ -5,7 +5,8 @@ import { createBrowserHistory } from 'history';
 import thunk from 'redux-thunk';
 import { getFromLocalState, saveToLocalState } from './persistStore';
 import { COUNTER_STORE_FEATURE_KEY, counterStoreReducer, initialCounterStoreState, getCounterStorePersistableState } from '../components/counter/counter-store.slice';
-import { AUTH_STORE_FEATURE_KEY, authStoreReducer } from '../components/auth/auth-store.slice';
+import { AUTH_STORE_FEATURE_KEY, authStoreReducer } from '../components/user/auth/auth-store.slice';
+import { NOTIFICATION_STORE_FEATURE_KEY, notificationStoreReducer } from '../components/layout/notifications/notification-store.slice';
 
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href') as string;
@@ -30,6 +31,7 @@ let reducers = {
   // Merge in slice info
   [COUNTER_STORE_FEATURE_KEY]: counterStoreReducer,
   [AUTH_STORE_FEATURE_KEY]: authStoreReducer,
+  [NOTIFICATION_STORE_FEATURE_KEY]: notificationStoreReducer,
 };
 
 // Get the application-wide store instance, prepopulating with state from the server where available.

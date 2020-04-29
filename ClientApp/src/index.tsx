@@ -7,9 +7,9 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { ReduxStore, history } from "./store/ReduxStore";
 import { App } from "./app";
 import * as serviceWorker from "./serviceWorker";
-import { initUserManager, loadUser } from "./components/auth/auth-service";
+import { initUserManager, loadUser } from "./components/user/auth/auth-service";
 import { UserManager } from "oidc-client";
-import { AuthProvider } from "./components/auth/auth-provider";
+import { AuthProvider } from "./components/user/auth/auth-provider";
 import "./index.scss";
 
 // root load animation
@@ -35,7 +35,7 @@ initUserManager()
             <ConnectedRouter history={history}>
               <AuthProvider userManager={userManager}>
                 <ApolloProvider client={apolloClient}>
-                  <App userManager={userManager} loading={loading} loaded={loaded} />
+                  <App loading={loading} loaded={loaded} />
                 </ApolloProvider>
               </AuthProvider>
             </ConnectedRouter>

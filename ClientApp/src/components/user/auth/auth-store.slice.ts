@@ -18,17 +18,14 @@ export type AuthStoreError = {
 export interface IAuthStoreState {
   user: User | null;
   userLoading: boolean;
+  userManager: UserManager | null;
   error?: AuthStoreError;
-}
-
-export interface ApiAuthClientConfigResponseAction {
-  userManager: UserManager;
-  loading: boolean;
 }
 
 export const initialauthStoreState: IAuthStoreState = {
   user: null,
-  userLoading: false
+  userLoading: false,
+  userManager: null,
 };
 
 export interface AuthErrorAction {
@@ -36,6 +33,8 @@ export interface AuthErrorAction {
 }
 
 export interface UserFoundAction { user: User; }
+
+export interface LoadUserManagerAction { userManager: UserManager; }
 
 export const authStoreSlice = createSlice({
   name: AUTH_STORE_FEATURE_KEY,
@@ -122,7 +121,7 @@ export const getAuthStoreState = (rootState: any): IAuthStoreState =>
  */
 
 /**
- * Selector for authenticated state
+ * Selector for user loading state
  */
 export const selectUserLoading = createSelector(
   getAuthStoreState,

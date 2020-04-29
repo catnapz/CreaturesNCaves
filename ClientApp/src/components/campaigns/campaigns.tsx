@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import clsx from 'clsx';
+import React from "react";
+import { useDispatch } from "react-redux";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   GET_CAMPAIGNS,
@@ -8,28 +8,14 @@ import {
   CREATE_CAMPAIGN,
   MutationResult,
 } from "./campaigns-gql";
-import Snackbar from "@material-ui/core/Snackbar";
 import { CreateCampaign } from "./create-campaign";
 import { CampaignCard } from "./campaign-card";
 import { EmptyCampaigns } from "./empty-campaings";
 import "./campaigns.scss";
-import { ApolloError } from "apollo-boost";
+import { createNotification } from "../layout/notifications/notifications";
 
 export const Campaigns = () => {
-
-  const [snack, setSnack] = useState({
-    open: false,
-    error: false,
-    msg: '',
-  });
-
-  const handleCloseSnack = () => {
-    setSnack({
-      open: false,
-      error: false,
-      msg: '',
-    });
-  };
+  const dispatch = useDispatch();
 
   const {
     loading: queryLoading,
@@ -37,35 +23,29 @@ export const Campaigns = () => {
     data: queryData,
   } = useQuery(GET_CAMPAIGNS);
 
-  const [ createCampaign, { loading: mutationLoading }] = useMutation(CREATE_CAMPAIGN, {
-    
-    update(cache, { data: { createCampaign } }) {
-      const cachedData: CampaignsQueryResult = cache.readQuery({
-        query: GET_CAMPAIGNS,
-      }) as CampaignsQueryResult;
-      cache.writeQuery({
-        query: GET_CAMPAIGNS,
-        data: cachedData.me.campaigns.push(createCampaign),
-      });
-    },
+  const [createCampaign, { loading: mutationLoading }] = useMutation(
+    CREATE_CAMPAIGN,
+    {
+      update(cache, { data: { createCampaign } }) {
+        const cachedData: CampaignsQueryResult = cache.readQuery({
+          query: GET_CAMPAIGNS,
+        }) as CampaignsQueryResult;
+        cache.writeQuery({
+          query: GET_CAMPAIGNS,
+          data: cachedData.me.campaigns.push(createCampaign),
+        });
+      },
 
-    onCompleted: (data) => {
-      let createdCampaign = (data as MutationResult)?.createCampaign?.name;
-      setSnack({
-        open: true,
-        error: false,
-        msg: "Campaign \"" + createdCampaign + "\" created",
-      });
-    },
+      onCompleted: (data) => {
+        let createdCampaign = (data as MutationResult)?.createCampaign?.name;
+        createNotification(dispatch, 'Campaign "' + createdCampaign + '" created', "success");
+      },
 
-    onError: (error) => {
-      setSnack({
-        open: true,
-        error: true,
-        msg: error.message || "ERROR!",
-      });
+      onError: (error) => {
+        createNotification(dispatch, error.message || "ERROR!", "warning");
+      },
     }
-  });
+  );
 
   if (queryLoading) {
     return (
@@ -91,30 +71,19 @@ export const Campaigns = () => {
 
   return (
     <>
-      <div className='campaigns-container'>
-        {campaigns.length > 0 ? 
+      <div className="campaigns-container">
+        {campaigns.length > 0 ? (
           campaigns.map((campaign: CampaignResult) => (
             <CampaignCard campaign={campaign} />
-          )) 
-        : 
-        <EmptyCampaigns/>}
-        
-      </div>
-      
-      <div className='create-campaigns-container'>
-        <CreateCampaign mutationFn={createCampaign} />
+          ))
+        ) : (
+          <EmptyCampaigns />
+        )}
       </div>
 
-      <Snackbar
-        className={clsx('snackbar', {
-          'snackbar-error': snack.error,
-          'snackbar-success': !snack.error
-        })}
-        open={snack.open}
-        autoHideDuration={3000}
-        onClose={handleCloseSnack}
-        message={snack.msg}
-      />
+      <div className="create-campaigns-container">
+        <CreateCampaign mutationFn={createCampaign} />
+      </div>
     </>
   );
 };
