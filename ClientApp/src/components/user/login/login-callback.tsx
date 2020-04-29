@@ -10,6 +10,14 @@ interface LoginCallbackProps {
 }
 export const LoginCallback = (props: LoginCallbackProps) => {
   
+  const onRedirectSuccess = (user: User) => {
+    props.successCallback(user);
+  };
+
+  const onRedirectError = (error: Error) => {
+    props.errorCallback(error);
+  }
+
   useEffect(() => {
     props.userManager.signinCallback()
       .then((user: User) => {
@@ -20,13 +28,5 @@ export const LoginCallback = (props: LoginCallbackProps) => {
       });
   }, []);
   
-  const onRedirectSuccess = (user: User) => {
-    props.successCallback(user);
-  };
-
-  const onRedirectError = (error: Error) => {
-    props.errorCallback(error);
-  }
-
   return <>{props.children}</>;
 };

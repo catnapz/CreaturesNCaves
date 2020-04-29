@@ -9,7 +9,7 @@ interface SideBarCategoryProps {
   children?: React.ReactElement;
 }
 
-export const SideBarCategory = (props: SideBarCategoryProps) => {
+export const SidebarCategory = (props: SideBarCategoryProps) => {
   return (
     <>
       <Typography

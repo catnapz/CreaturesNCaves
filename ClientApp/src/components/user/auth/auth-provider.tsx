@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { UserManager, User } from 'oidc-client';
-import { userFound, silentRenewError, userExpired, sessionTerminated, userSignedOut, userExpiring, loadUserManager } from './auth-store.slice';
+import { userFound, silentRenewError, userExpired, sessionTerminated, userSignedOut, userExpiring } from './auth-store.slice';
 
 interface AuthProviderProps {
   userManager: UserManager;
   children?: React.ReactNode;
 }
 
-export const AuthProvider = (props: AuthProviderProps) => { 
-  const dispatch = useDispatch();
-  dispatch(loadUserManager({userManager: props.userManager}));
+const { Provider, Consumer } = React.createContext({} as UserManager);
 
+const AuthProvider = (props: AuthProviderProps) => { 
+  const dispatch = useDispatch();
+  const [ userManager ] = useState(props.userManager);
   useEffect(() => {
     props.userManager.events.addUserLoaded(onUserLoaded);
     props.userManager.events.addSilentRenewError(onSilentRenewError);
@@ -62,6 +63,11 @@ export const AuthProvider = (props: AuthProviderProps) => {
     dispatch(userSignedOut());
   }
 
-  return <>{props.children}</>
+  return (
+    <Provider value={userManager}>
+      {props.children}
+    </Provider>
+  )
 }
 
+export { AuthProvider, Consumer as AuthConsumer };

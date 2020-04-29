@@ -1,9 +1,9 @@
 import React from 'react';
 import { cleanup, render, wait, getByText } from '@testing-library/react';
 import { StaticRouter } from 'react-router';
-import { SideBarItem } from "./sidebar-item";
+import { SidebarItem } from "./sidebar-item";
 
-describe("SideBarItem", () => {
+describe("SidebarItem", () => {
 
   afterEach(() => {
     cleanup();
@@ -19,7 +19,7 @@ describe("SideBarItem", () => {
 
   it('should render successfully', async () => {
     const { baseElement } = wrappedRender(
-      <SideBarItem 
+      <SidebarItem 
         title="Test Item Title"
         to="/test-link"
       />

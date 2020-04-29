@@ -40,9 +40,6 @@ export const authStoreSlice = createSlice({
   name: AUTH_STORE_FEATURE_KEY,
   initialState: initialauthStoreState as IAuthStoreState,
   reducers: {
-    loadUserManager: (state, action: PayloadAction<LoadUserManagerAction>) => {
-      state.userManager = action.payload.userManager;
-    },
     userLoading: state => {
       state.userLoading = true;
     },
@@ -93,7 +90,6 @@ export const authStoreReducer = authStoreSlice.reducer;
  * See: https://react-redux.js.org/next/api/hooks#usedispatch
  */
 export const {
-  loadUserManager,
   userLoading,
   userExpired,
   userFound,
@@ -130,14 +126,6 @@ export const getAuthStoreState = (rootState: any): IAuthStoreState =>
 export const selectUserLoading = createSelector(
   getAuthStoreState,
   s => s.userLoading
-);
-
-/**
- * Selector for userManager state
- */
-export const selectUserManager = createSelector(
-  getAuthStoreState,
-  s => s.userManager
 );
 
 /**

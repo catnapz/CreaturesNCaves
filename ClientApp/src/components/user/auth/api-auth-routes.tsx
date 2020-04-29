@@ -4,22 +4,22 @@ import { ApplicationPaths } from "./api-auth-constants";
 import { LoginCallback } from "../login/login-callback";
 import { LogoutCallback } from "../logout/logout-callback";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectUserManager } from "./auth-store.slice";
+import { AuthConsumer } from "./auth-provider";
 
 export const ApiAuthorizationRoutes = () => {
   const histroy = useHistory();
-  const userManager = useSelector(selectUserManager);
 
   return (
-    <>
+    <AuthConsumer>
+      {(userManager) => (
+        <>
       <Route
         exact
         path={ApplicationPaths.LoginCallback}
         render={routerProps => (
           <LoginCallback
             {...routerProps}
-            userManager={userManager!}
+            userManager={userManager}
             successCallback={user => histroy.replace("/")}
             errorCallback={error => {
               histroy.push("/");
@@ -35,7 +35,7 @@ export const ApiAuthorizationRoutes = () => {
         render={routerProps => (
           <LogoutCallback
             {...routerProps}
-            userManager={userManager!}
+            userManager={userManager}
             successCallback={() => histroy.push("/")}
             errorCallback={error => {
               histroy.push("/");
@@ -43,7 +43,8 @@ export const ApiAuthorizationRoutes = () => {
             }}
           />
         )}
-      />
-    </>
+      /> 
+    </>)}
+    </AuthConsumer>
   );
 };

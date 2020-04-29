@@ -76,7 +76,8 @@
       "node_modules",
       "<rootDir>/src/index.tsx",
       "<rootDir>/src/react-app-env.d.ts",
-      "<rootDir>/src/store/ReduxStore.ts"
+      "<rootDir>/src/store/ReduxStore.ts",
+      "<rootDir>/src/testUtils"
     ],
     "coverageThreshold": {
       "global": {

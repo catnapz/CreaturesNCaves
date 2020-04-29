@@ -8,6 +8,10 @@ import * as authStore from "../../user/auth/auth-store.slice";
 import { NavMenu } from "./nav-menu";
 import { Profile } from "oidc-client";
 
+jest.mock('../../user/logout/logout-dialog', () => ({
+  LogoutDialog: 'mocked-logout-dialog'
+}));
+
 const handleMenuButtonClickMock = jest.fn();
 const selectAuthenticatedSpy = jest.spyOn(authStore, "selectAuthenticated");
 const selectUserProfileSpy = jest.spyOn(authStore, "selectUserProfile");

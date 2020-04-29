@@ -13,7 +13,6 @@ import { CampaignCard } from "./campaign-card";
 import { EmptyCampaigns } from "./empty-campaings";
 import "./campaigns.scss";
 import { createNotification } from "../layout/notifications/notifications";
-import Button from "@material-ui/core/Button";
 
 export const Campaigns = () => {
   const dispatch = useDispatch();

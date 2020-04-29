@@ -4,14 +4,14 @@ import * as ReactRedux from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import * as authStore from "../../user/auth/auth-store.slice";
 
-import { SideBar } from "./sidebar";
+import { Sidebar } from "./sidebar";
 
-jest.mock('./side-bar-item', () => ({
-  SideBarItem: 'mocked-side-bar-item'
+jest.mock('./sidebar-item', () => ({
+  SidebarItem: 'mocked-sidebar-item'
 }));
 
-jest.mock('./side-bar-category', () => ({
-  SideBarCategory: 'mocked-side-bar-category'
+jest.mock('./sidebar-category', () => ({
+  SidebarCategory: 'mocked-sidebar-category'
 }));
 
 const handleDrawerCloseMock = jest.fn();
@@ -32,7 +32,7 @@ function wrappedRender(componentToRender: React.ReactNode) {
   )
 }
 
-describe('SideBar', () => {
+describe('Sidebar', () => {
 
   afterEach(() => {
     cleanup();
@@ -42,7 +42,7 @@ describe('SideBar', () => {
 
   it('renders successfully', async () => {
     const { baseElement } = wrappedRender(
-      <SideBar 
+      <Sidebar 
         handleDrawerClose={handleDrawerCloseMock}
         isDrawerOpen={true}
       />
@@ -56,7 +56,7 @@ describe('SideBar', () => {
     selectAuthenticatedSpy.mockReturnValue(true);
 
     const { baseElement } = wrappedRender(
-      <SideBar 
+      <Sidebar 
         handleDrawerClose={handleDrawerCloseMock}
         isDrawerOpen={true}
       />

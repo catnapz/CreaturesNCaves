@@ -4,7 +4,7 @@ import useTheme from "@material-ui/core/styles/useTheme";
 import { useStyles } from "./shared-styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { NavMenu } from './nav-menu/nav-menu';
-import { SideBar } from "./sidebar/sidebar";
+import { Sidebar } from "./sidebar/sidebar";
 import { Notifications } from './notifications/notifications';
 
 export const Layout = (props: { children?: React.ReactNode }) => {
@@ -32,7 +32,7 @@ export const Layout = (props: { children?: React.ReactNode }) => {
       <div className={classes.root}>
         <CssBaseline />
         <NavMenu handleMenuButtonClick={handleDrawerOpen} isDrawerOpen={isDrawerOpen} />
-        <SideBar handleDrawerClose={handleDrawerClose} isDrawerOpen={isDrawerOpen} />
+        <Sidebar handleDrawerClose={handleDrawerClose} isDrawerOpen={isDrawerOpen} />
         <main className={classes.content}>
           <div className={classes.toolbar} />
           {props.children}

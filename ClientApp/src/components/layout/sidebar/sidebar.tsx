@@ -7,8 +7,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import useTheme from "@material-ui/core/styles/useTheme";
 import { useStyles } from "../shared-styles";
-import { SideBarItem } from "./sidebar-item";
-import { SideBarCategory } from "./sidebar-category";
+import { SidebarItem } from "./sidebar-item";
+import { SidebarCategory } from "./sidebar-category";
 import "./sidebar.scss";
 import { useSelector } from "react-redux";
 import { selectAuthenticated } from "../../user/auth/auth-store.slice";
@@ -18,7 +18,7 @@ interface SidebarProps {
   isDrawerOpen: boolean;
 }
 
-export const SideBar = (props: SidebarProps) => {
+export const Sidebar = (props: SidebarProps) => {
   const theme = useTheme();
   const classes = useStyles(theme);
   const authenticated = useSelector(selectAuthenticated);
@@ -45,23 +45,23 @@ export const SideBar = (props: SidebarProps) => {
       </div>
 
       {authenticated &&
-        <SideBarCategory open={props.isDrawerOpen} title={"Game Master"}>
+        <SidebarCategory open={props.isDrawerOpen} title={"Game Master"}>
           <List>
-            <SideBarItem to="/counter" title={"Counter"} subtitle={"Dev Test"} open={props.isDrawerOpen} />
-            <SideBarItem to="/campaigns" title={"Campaigns"} />
-            <SideBarItem to="/characters" title={"Characters"} />
+            <SidebarItem to="/counter" title={"Counter"} subtitle={"Dev Test"} open={props.isDrawerOpen} />
+            <SidebarItem to="/campaigns" title={"Campaigns"} />
+            <SidebarItem to="/characters" title={"Characters"} />
 
           </List>
-        </SideBarCategory>
+        </SidebarCategory>
       }
 
-      <SideBarCategory open={props.isDrawerOpen} title={"Quick Tools"}>
+      <SidebarCategory open={props.isDrawerOpen} title={"Quick Tools"}>
         <List>
-          <SideBarItem to="/roll-initiative" title={"Combat"} />
-          <SideBarItem to="/boblin" title={"Random Character"} />
-          <SideBarItem to="/loot" title={"Random Loot"} />
+          <SidebarItem to="/roll-initiative" title={"Combat"} />
+          <SidebarItem to="/boblin" title={"Random Character"} />
+          <SidebarItem to="/loot" title={"Random Loot"} />
         </List>
-      </SideBarCategory>
+      </SidebarCategory>
     </Drawer>
   );
 }

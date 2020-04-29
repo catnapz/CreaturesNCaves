@@ -1,9 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useApolloClient } from "@apollo/react-hooks";
-import { useSelector } from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
-import { selectUserManager } from "../auth/auth-store.slice";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -19,7 +17,6 @@ interface LogoutDialogProps {
 export const LogoutDialog = (props: LogoutDialogProps) => {
   const apolloClient = useApolloClient();
   const history = useHistory();
-  const userManager = useSelector(selectUserManager);
 
   const handleLogout = () => {
     apolloClient.resetStore();
@@ -46,11 +43,11 @@ export const LogoutDialog = (props: LogoutDialogProps) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} variant="contained">
+        <Button className="logout-cancel-button" onClick={handleClose} variant="contained">
           Cancel
         </Button>
 
-        <Button onClick={handleLogout} variant="contained">
+        <Button className="logout-button" onClick={handleLogout} variant="contained">
           Logout
         </Button>
       </DialogActions>

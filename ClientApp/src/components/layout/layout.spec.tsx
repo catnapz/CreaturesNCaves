@@ -2,12 +2,16 @@ import React from "react";
 import { render, wait, getByText, cleanup } from "@testing-library/react";
 import { Layout } from "./layout";
 
-jest.mock('./nav-menu', () => ({
+jest.mock('./nav-menu/nav-menu', () => ({
   NavMenu: 'mocked-nav-menu'
 }));
 
-jest.mock('./side-bar', () => ({
-  SideBar: 'mocked-side-bar'
+jest.mock('./sidebar/sidebar', () => ({
+  Sidebar: 'mocked-sidebar'
+}));
+
+jest.mock('./notifications/notifications', () => ({
+  Notifications: 'mocked-notifications'
 }));
 
 describe('Layout', () => {

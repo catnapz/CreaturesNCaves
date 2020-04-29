@@ -17,8 +17,8 @@ import {
   selectUserProfile
 } from "../../user/auth/auth-store.slice";
 import {useStyles} from "../shared-styles";
-import "./nav-menu.scss";
 import { LogoutDialog } from "../../user/logout/logout-dialog";
+import "./nav-menu.scss";
 
 interface NavMenuProps {
   handleMenuButtonClick: () => void;

@@ -14,6 +14,16 @@ export const LogoutCallback = (props: LogoutCallbackProps) => {
   
   const dispatch = useDispatch();
 
+  const onRedirectSuccess = (resp: void | SignoutResponse) => {
+    props.successCallback(resp);
+    createNotification(dispatch, "Logged out successfully", "success");
+  };
+
+  const onRedirectError = (error: Error) => {
+    createNotification(dispatch, "Logged out failed", "error");
+    props.errorCallback(error);
+  }
+
   useEffect(() => {
     props.userManager.signoutRedirect()
       .then((resp: void | SignoutResponse) => {
@@ -24,15 +34,5 @@ export const LogoutCallback = (props: LogoutCallbackProps) => {
       });
   }, []);
   
-  const onRedirectSuccess = (resp: void | SignoutResponse) => {
-    createNotification(dispatch, "Logged out successfully", "success");
-    props.successCallback(resp);
-  };
-
-  const onRedirectError = (error: Error) => {
-    createNotification(dispatch, "Logged out failed", "error");
-    props.errorCallback(error);
-  }
-
   return <>{props.children}</>;
 };
