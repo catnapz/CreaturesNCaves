@@ -13,8 +13,8 @@ export const Layout = (props: { children?: React.ReactNode }) => {
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main: "#212121",
-        dark: "#000000",
+        main: "#333333",
+        dark: "#212121",
         light: "#484848",
         contrastText: "#ffffff"
       },

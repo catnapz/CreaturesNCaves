@@ -44,7 +44,6 @@ export const App = (props: AppProps) => {
           <Route path="/boblin" component={InProgress}/>
           <Route path="/loot" component={InProgress}/>
           
-
           <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes}/>
         </Layout>
       </>

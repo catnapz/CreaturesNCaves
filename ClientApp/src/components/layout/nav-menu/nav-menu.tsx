@@ -98,7 +98,7 @@ const AuthenticatedView = () => {
       <Avatar
         onClick={openMenu}
         src="/broken-image.jpg"
-        className={"profile_icon"} />
+        className={"profile-icon"} />
       <Menu
         id="navbar-account-menu"
         anchorEl={anchorEl}
