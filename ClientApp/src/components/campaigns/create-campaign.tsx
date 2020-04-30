@@ -46,7 +46,7 @@ export const CreateCampaign = (props: CreateCampaignProps) => {
     setDescription('');
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
 
     setName(name.trim());
     if (name) {
@@ -55,8 +55,11 @@ export const CreateCampaign = (props: CreateCampaignProps) => {
         description: description
       };
 
-      props.mutationFn({ variables: { campaignInput: campaignInput } })
-        .catch((error) => console.error(error));
+      try {
+        await props.mutationFn({ variables: { campaignInput: campaignInput } });
+      } catch (error) {
+        console.error(error);
+      }
       handleClose();
 
     } else {

@@ -5,6 +5,7 @@ import {
   getByText,
   cleanup,
   fireEvent,
+  act
 } from "@testing-library/react";
 import { CreateCampaign } from "./create-campaign";
 
@@ -37,6 +38,95 @@ describe("CreateCampaign", () => {
       },
     };
     mutationFnMock.mockResolvedValue(true);
+      const { baseElement } = render(<CreateCampaign {...props} />);
+      fireEvent.click(getByText(baseElement, (content, element) => {
+        return element.tagName.toLowerCase() === 'button' && element.getAttribute('title') === 'Add Campaign';
+    }));
+
+    fireEvent.change(
+      getByText(baseElement, (content, element) => {
+        return element.id === "create-campaign-name";
+      }),
+      { target: { value: "name" } }
+    );
+
+    fireEvent.change(
+      getByText(baseElement, (content, element) => {
+        return element.id === "create-campaign-description";
+      }),
+      { target: { value: "description" } }
+    );
+
+    fireEvent.click(getByText(baseElement, (content, element) => {
+      return element.tagName.toLowerCase() === 'span' && content === 'Add';
+    }));
+
+
+    expect(mutationFnMock).toHaveBeenCalledWith(expectedData);
+  });
+
+  it("should not call mutation function when no name is specified", async () => {
+    mutationFnMock.mockResolvedValue(true);
+    const { baseElement } = render(<CreateCampaign {...props} />);
+    fireEvent.click(getByText(baseElement, (content, element) => {
+      return element.tagName.toLowerCase() === 'button' && element.getAttribute('title') === 'Add Campaign';
+    }));
+
+    fireEvent.change(
+      getByText(baseElement, (content, element) => {
+        return element.id === "create-campaign-name";
+      }),
+      { target: { value: "" } }
+    );
+
+    fireEvent.change(
+      getByText(baseElement, (content, element) => {
+        return element.id === "create-campaign-description";
+      }),
+      { target: { value: "description" } }
+    );
+
+    fireEvent.click(getByText(baseElement, (content, element) => {
+      return element.tagName.toLowerCase() === 'span' && content === 'Add';
+    }));
+
+    expect(mutationFnMock).not.toHaveBeenCalled();
+  });
+
+  it("should display an error when no name is specified", async () => {
+    mutationFnMock.mockResolvedValue(true);
+    const { baseElement } = render(<CreateCampaign {...props} />);
+    fireEvent.click(getByText(baseElement, (content, element) => {
+      return element.tagName.toLowerCase() === 'button' && element.getAttribute('title') === 'Add Campaign';
+    }));
+
+    fireEvent.change(
+      getByText(baseElement, (content, element) => {
+        return element.id === "create-campaign-name";
+      }),
+      { target: { value: "" } }
+    );
+
+    fireEvent.change(
+      getByText(baseElement, (content, element) => {
+        return element.id === "create-campaign-description";
+      }),
+      { target: { value: "description" } }
+    );
+
+    fireEvent.click(getByText(baseElement, (content, element) => {
+      return element.tagName.toLowerCase() === 'span' && content === 'Add';
+    }));
+
+
+    await getByText(baseElement, (content, element) => {
+      return element.id === "password-field-helper-text" && content === "Please enter name";
+    });
+  });
+
+  it("should catch mutation error", async () => {
+    const mockError = new Error("mock error, ignore me uwu");
+    mutationFnMock.mockImplementation(() => { throw mockError})
     const { baseElement } = render(<CreateCampaign {...props} />);
     fireEvent.click(getByText(baseElement, (content, element) => {
       return element.tagName.toLowerCase() === 'button' && element.getAttribute('title') === 'Add Campaign';
@@ -60,8 +150,7 @@ describe("CreateCampaign", () => {
       return element.tagName.toLowerCase() === 'span' && content === 'Add';
     }));
 
-
-    expect(mutationFnMock).toHaveBeenCalledWith(expectedData);
+    await expect(mutationFnMock).toHaveBeenCalled();    
   });
 
   afterAll(() => {
