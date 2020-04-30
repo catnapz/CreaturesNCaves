@@ -33,7 +33,7 @@ describe("CreateCampaign", () => {
     );
   });
 
-  it.only("should call mutation function on add campaign button click", async () => {
+  it("should call mutation function on add campaign button click", async () => {
     const expectedData = {
       variables: {
         campaignInput: {
@@ -89,34 +89,42 @@ describe("CreateCampaign", () => {
   it("should not call mutation function when no name is specified", async () => {
     mutationFnMock.mockResolvedValue(true);
     const { baseElement } = render(<CreateCampaign {...props} />);
-    fireEvent.click(
-      getByText(baseElement, (content, element) => {
-        return (
-          element.tagName.toLowerCase() === "button" &&
-          element.getAttribute("title") === "Add Campaign"
-        );
-      })
-    );
+    await wait(() => {
+      fireEvent.click(
+        getByText(baseElement, (content, element) => {
+          return (
+            element.tagName.toLowerCase() === "button" &&
+            element.getAttribute("title") === "Add Campaign"
+          );
+        })
+      );
+    });
 
-    fireEvent.change(
-      getByText(baseElement, (content, element) => {
-        return element.id === "create-campaign-name";
-      }),
-      { target: { value: "" } }
-    );
+    await wait(() => {
+      fireEvent.change(
+        getByText(baseElement, (content, element) => {
+          return element.id === "create-campaign-name";
+        }),
+        { target: { value: "" } }
+      );
+    });
 
-    fireEvent.change(
-      getByText(baseElement, (content, element) => {
-        return element.id === "create-campaign-description";
-      }),
-      { target: { value: "description" } }
-    );
+    await wait(() => {
+      fireEvent.change(
+        getByText(baseElement, (content, element) => {
+          return element.id === "create-campaign-description";
+        }),
+        { target: { value: "description" } }
+      );
+    });
 
-    fireEvent.click(
-      getByText(baseElement, (content, element) => {
-        return element.tagName.toLowerCase() === "span" && content === "Add";
-      })
-    );
+    await wait(() => {
+      fireEvent.click(
+        getByText(baseElement, (content, element) => {
+          return element.tagName.toLowerCase() === "span" && content === "Add";
+        })
+      );
+    });
 
     expect(mutationFnMock).not.toHaveBeenCalled();
   });
@@ -124,34 +132,42 @@ describe("CreateCampaign", () => {
   it("should display an error when no name is specified", async () => {
     mutationFnMock.mockResolvedValue(true);
     const { baseElement } = render(<CreateCampaign {...props} />);
-    fireEvent.click(
-      getByText(baseElement, (content, element) => {
-        return (
-          element.tagName.toLowerCase() === "button" &&
-          element.getAttribute("title") === "Add Campaign"
-        );
-      })
-    );
+    await wait(() => {
+      fireEvent.click(
+        getByText(baseElement, (content, element) => {
+          return (
+            element.tagName.toLowerCase() === "button" &&
+            element.getAttribute("title") === "Add Campaign"
+          );
+        })
+      );
+    });
 
-    fireEvent.change(
-      getByText(baseElement, (content, element) => {
-        return element.id === "create-campaign-name";
-      }),
-      { target: { value: "" } }
-    );
+    await wait(() => {
+      fireEvent.change(
+        getByText(baseElement, (content, element) => {
+          return element.id === "create-campaign-name";
+        }),
+        { target: { value: "" } }
+      );
+    });
 
-    fireEvent.change(
-      getByText(baseElement, (content, element) => {
-        return element.id === "create-campaign-description";
-      }),
-      { target: { value: "description" } }
-    );
+    await wait(() => {
+      fireEvent.change(
+        getByText(baseElement, (content, element) => {
+          return element.id === "create-campaign-description";
+        }),
+        { target: { value: "description" } }
+      );
+    });
 
-    fireEvent.click(
-      getByText(baseElement, (content, element) => {
-        return element.tagName.toLowerCase() === "span" && content === "Add";
-      })
-    );
+    await wait(() => {
+      fireEvent.click(
+        getByText(baseElement, (content, element) => {
+          return element.tagName.toLowerCase() === "span" && content === "Add";
+        })
+      );
+    });
 
     await getByText(baseElement, (content, element) => {
       return (
@@ -167,34 +183,33 @@ describe("CreateCampaign", () => {
       throw mockError;
     });
     const { baseElement } = render(<CreateCampaign {...props} />);
-    fireEvent.click(
-      getByText(baseElement, (content, element) => {
-        return (
-          element.tagName.toLowerCase() === "button" &&
-          element.getAttribute("title") === "Add Campaign"
-        );
-      })
-    );
+    await wait(() => {
+      fireEvent.click(
+        getByText(baseElement, (content, element) => {
+          return (
+            element.tagName.toLowerCase() === "button" &&
+            element.getAttribute("title") === "Add Campaign"
+          );
+        })
+      );
+    });
 
-    fireEvent.change(
-      getByText(baseElement, (content, element) => {
-        return element.id === "create-campaign-name";
-      }),
-      { target: { value: "name" } }
-    );
+    await wait(() => {
+      fireEvent.change(
+        getByText(baseElement, (content, element) => {
+          return element.id === "create-campaign-name";
+        }),
+        { target: { value: "name" } }
+      );
+    });
 
-    fireEvent.change(
-      getByText(baseElement, (content, element) => {
-        return element.id === "create-campaign-description";
-      }),
-      { target: { value: "description" } }
-    );
-
-    fireEvent.click(
-      getByText(baseElement, (content, element) => {
-        return element.tagName.toLowerCase() === "span" && content === "Add";
-      })
-    );
+    await wait(() => {
+      fireEvent.click(
+        getByText(baseElement, (content, element) => {
+          return element.tagName.toLowerCase() === "span" && content === "Add";
+        })
+      );
+    });
 
     await expect(mutationFnMock).toHaveBeenCalled();
   });
