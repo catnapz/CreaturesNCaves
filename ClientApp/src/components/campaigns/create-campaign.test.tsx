@@ -178,7 +178,7 @@ describe("CreateCampaign", () => {
   });
 
   it("should catch mutation error", async () => {
-    const mockError = new Error("mock error, ignore me uwu");
+    const mockError = new Error("mock error, ignore me.");
     mutationFnMock.mockImplementation(() => {
       throw mockError;
     });
