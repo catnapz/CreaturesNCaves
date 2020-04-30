@@ -71,7 +71,7 @@ export const CreateCampaign = (props: CreateCampaignProps) => {
   return (
     <>
       <Tooltip title="Add Campaign" arrow>
-        <Fab onClick={handleOpen}>
+        <Fab color="secondary" onClick={handleOpen}>
           <AddIcon className='add-campaign-icon'/>
         </Fab>
       </Tooltip>
@@ -134,7 +134,7 @@ export const CreateCampaign = (props: CreateCampaignProps) => {
             Cancel
           </Button>
 
-          <Button onClick={handleSubmit} variant='contained'>
+          <Button color="secondary" onClick={handleSubmit} variant='contained'>
             Add
           </Button>
         </DialogActions>

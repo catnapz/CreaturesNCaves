@@ -11,6 +11,7 @@ export const Incrementer = () => {
     <>
       <Button 
         variant="contained"
+        color="primary"
         onClick={() => { dispatch(counterStoreSlice.actions.increment()) }}
       >
         Increment
