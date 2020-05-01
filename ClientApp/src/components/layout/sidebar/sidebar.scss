@@ -1,4 +1,6 @@
-﻿#side-bar {
+﻿@import '../../../colours';
+
+#side-bar {
 
   .sidebar-category-text {
     display: none;
@@ -10,7 +12,7 @@
   }
   .sidebar-nav-link {
     text-decoration: none;
-    color: #333333;
+    color: colour(primary, main);
     
     .sidebar-nav-list-item {
       transition: background-color, color, 0.4s;
@@ -22,14 +24,14 @@
   
     &.active {
       .sidebar-nav-list-item {
-        background-color: #333333;
+        background-color: colour(secondary, main);
         
         .sidebar-nav-list-item-text, p {
-          color: whitesmoke;
+          color: colour(secondary, text);
         }
       }
       .sidebar-nav-list-item-icon {
-        color: whitesmoke;
+        color: colour(secondary, text);
       }
     }
   }

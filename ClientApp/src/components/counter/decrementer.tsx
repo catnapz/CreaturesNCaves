@@ -11,6 +11,7 @@ export const Decrementer = () => {
     <>
       <Button
         variant="contained"
+        color="secondary"
         onClick={() => { dispatch(counterStoreSlice.actions.decrement()) }}
       >
         Decrement

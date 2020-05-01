@@ -3,7 +3,6 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import {createStyles, Theme} from "@material-ui/core";
 
 const drawerWidth = 240;
-const numMenuItems = 7;
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
