@@ -11,6 +11,30 @@ import { Notifications } from './notifications/notifications';
 export const Layout = (props: { children?: React.ReactNode }) => {
   const [isDrawerOpen, setDrawerOpen] = React.useState(false);
   const theme = createMuiTheme({
+    typography: {
+      h1: {
+        fontFamily: "Nodesto Caps Condensed"
+      },
+      h4: {
+        fontFamily: "Mr Eaves"
+      },
+      h5: {
+        fontFamily: "Nodesto Caps Condensed"
+      },
+      body1: {
+        fontFamily: "Scaly Sans"
+      },
+      body2: {
+        fontFamily: "Scaly Sans Caps"
+      }, 
+      button: {
+        fontFamily: "Scaly Sans",
+        fontWeight: "bold"
+      },
+      overline: {
+        fontFamily: "Scaly Sans Caps"
+      }
+    },
     palette: {
       primary: {
         main: "#333333",

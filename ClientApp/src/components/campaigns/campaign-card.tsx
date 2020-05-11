@@ -33,7 +33,7 @@ export const CampaignCard = (props: CampaignCardProps) => (
         {props.campaign.name}
       </Typography>
       <Typography
-        variant="body2"
+        variant="body1"
         color="textSecondary"
         component="p"
         className="campaigns-card-description-text"
@@ -43,7 +43,7 @@ export const CampaignCard = (props: CampaignCardProps) => (
     </CardContent>
 
     <CardActions>
-      <Button size="small">Button1</Button>
+      <Button size="small">Button 1</Button>
     </CardActions>
   </Card>
 );
