@@ -53,29 +53,7 @@ namespace CreaturesNCaves.Server
 
                 return Task.CompletedTask;
             });
-
-            // services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-            services.AddIdentity<User, IdentityRole>(options =>
-                {
-                    // disable password strength, done on client side => then hashed.
-                    options.Password.RequireDigit = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequiredUniqueChars = 0;
-                    options.Password.RequiredLength = 1;
-                })
-                .AddEntityFrameworkStores<DatabaseContext>();
-
-            services.AddIdentityServer()
-                .AddApiAuthorization<User, DatabaseContext>()
-                .AddInMemoryIdentityResources(Config.Ids)
-                .AddInMemoryApiResources(Config.Apis)
-                .AddInMemoryClients(Config.Clients);
-
-            services.AddAuthentication("Bearer")
-                .AddIdentityServerJwt();
-
+            
             services.AddControllers();
 
             services.ConfigureApplicationCookie(configure => 

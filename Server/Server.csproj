@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="EFCore.NamingConventions" Version="1.1.0" />
+    <PackageReference Include="FirebaseAdmin" Version="1.16.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="10.4.1" />
     <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="10.4.1" />
     <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.4.1" />
@@ -31,8 +32,25 @@
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
+    <Content Include="..\README.md">
+      <Link>README.md</Link>
+    </Content>
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    <Content Update="appsettings.Development.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <None Include="..\ClientApp\src\components\user\auth\firebase.ts">
+      <Link>src\components\user\auth\firebase.ts</Link>
+    </None>
+    <None Include="..\ClientApp\src\components\user\login\firebase-login.tsx">
+      <Link>src\components\user\login\firebase-login.tsx</Link>
+    </None>
+    <None Include="..\ClientApp\src\firebase.ts">
+      <Link>src\firebase.ts</Link>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
