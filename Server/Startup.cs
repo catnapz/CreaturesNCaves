@@ -8,12 +8,13 @@ using HotChocolate.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CreaturesNCaves.Server
 {
@@ -29,6 +30,24 @@ namespace CreaturesNCaves.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    var projectId = Configuration.GetSection("Firebase")["ProjectId"];
+                    var domain = $"https://securetoken.google.com/{projectId}";
+                    
+                    options.Authority = domain;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = domain,
+                        ValidateAudience = true,
+                        ValidAudience = projectId,
+                        ValidateLifetime = true
+                    };
+                });
+            
             services.AddDbContext<DatabaseContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DBConnectionString"));
@@ -47,6 +66,7 @@ namespace CreaturesNCaves.Server
             {;
                 if (!httpContext.User.Identity.IsAuthenticated) return Task.CompletedTask;
                 
+                // TODO: request Firebase User Id via API
                 var userIdClaim = httpContext.User.Claims.Single(claim => claim.Type == "sub");
                 var userId = userIdClaim.Value;
                 queryBuilder.AddProperty("currentUserId", userId);
@@ -55,13 +75,7 @@ namespace CreaturesNCaves.Server
             });
             
             services.AddControllers();
-
-            services.ConfigureApplicationCookie(configure => 
-            {
-               configure.SlidingExpiration = true;
-               configure.ExpireTimeSpan = TimeSpan.FromHours(3); 
-            });
-
+            
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -88,8 +102,7 @@ namespace CreaturesNCaves.Server
             app.UseSpaStaticFiles();
 
             app.UseRouting();
-
-            app.UseIdentityServer();
+            
             app.UseAuthentication();
             app.UseAuthorization();
 

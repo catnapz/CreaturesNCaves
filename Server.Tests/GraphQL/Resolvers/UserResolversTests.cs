@@ -15,7 +15,7 @@ namespace CreaturesNCaves.Server.Tests.GraphQL.Resolvers
             // Arrange
             var user = new User
             {
-                Id = "U1",
+                UserId = "U1",
                 Campaigns = new List<Campaign>()
                 {
                     new Campaign { CampaignId = 1 },
@@ -37,7 +37,7 @@ namespace CreaturesNCaves.Server.Tests.GraphQL.Resolvers
             // Arrange
             var user = new User
             {
-                Id = "U1",
+                UserId = "U1",
                 Campaigns = new List<Campaign>()
                 {
                     new Campaign { CampaignId = 1, Name = "Campaign 1" },

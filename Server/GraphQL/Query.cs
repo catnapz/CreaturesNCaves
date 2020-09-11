@@ -23,7 +23,7 @@ namespace CreaturesNCaves.Server.GraphQL
         .Users
         .AsNoTracking()
         .Include(user => user.Campaigns)
-        .SingleAsync(user => user.Id == currentUserId);
+        .SingleAsync(user => user.UserId == currentUserId);
 
     /// <summary>
     /// Return a list of all users
@@ -45,7 +45,7 @@ namespace CreaturesNCaves.Server.GraphQL
       await dbContext
         .Users
         .AsNoTracking()
-        .Where(user => user.Id == userId)
+        .Where(user => user.UserId == userId)
         .Include(user => user.Campaigns)
         .SingleAsync();
     

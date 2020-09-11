@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <PackageReference Include="EFCore.NamingConventions" Version="1.1.0" />
-    <PackageReference Include="FirebaseAdmin" Version="1.16.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="10.4.1" />
     <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="10.4.1" />
     <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.4.1" />

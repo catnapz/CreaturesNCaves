@@ -15,8 +15,8 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
         {
             _tb = new TestBase("cnc_query_tests");
             using var context = _tb.DatabaseContext;
-            context.Users.Add(new User { Id = "U1", Description = "UD1", Name = "UN1" });
-            context.Users.Add(new User { Id = "U2", Description = "UD2", Name = "UN2" });
+            context.Users.Add(new User { UserId = "U1", Description = "UD1", Name = "UN1" });
+            context.Users.Add(new User { UserId = "U2", Description = "UD2", Name = "UN2" });
             context.Campaigns.Add(new Campaign {CampaignId = 1, Description = "CD1", Name = "CN1", UserId = "U1"});
             context.Campaigns.Add(new Campaign {CampaignId = 2, Description = "CD2", Name = "CN2", UserId = "U2"});
             context.Campaigns.Add(new Campaign {CampaignId = 3, Description = "CD3", Name = "CN3", UserId = "U1"});
@@ -32,10 +32,10 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
 
             // Act
             var me = await query.GetMe(context, "U1");
-            var expectedUser = new User { Id = "U1", Description = "UD1", Name = "UN1" };
+            var expectedUser = new User { UserId = "U1", Description = "UD1", Name = "UN1" };
 
             // Assert
-            Assert.Equal(expectedUser.Id, me.Id);
+            Assert.Equal(expectedUser.UserId, me.UserId);
             Assert.Equal(expectedUser.Description, me.Description);
             Assert.Equal(expectedUser.Name, me.Name);
             Assert.Equal(2, me.Campaigns.Count());
@@ -50,10 +50,10 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
 
             // Act
             var actualUser = await query.GetUser(context, "U1");
-            var expectedUser = new User { Id = "U1", Description = "UD1", Name = "UN1" };
+            var expectedUser = new User { UserId = "U1", Description = "UD1", Name = "UN1" };
 
             // Assert // Don't know best way to do object equality yet
-            Assert.Equal(expectedUser.Id, actualUser.Id);
+            Assert.Equal(expectedUser.UserId, actualUser.UserId);
             Assert.Equal(expectedUser.Description, actualUser.Description);
             Assert.Equal(expectedUser.Name, actualUser.Name);
         }
@@ -80,10 +80,10 @@ namespace CreaturesNCaves.Server.Tests.GraphQL
 
             // Act
             var actualUser = users.First();
-            var expectedUser = new User { Id = "U1", Description = "UD1", Name = "UN1" };
+            var expectedUser = new User { UserId = "U1", Description = "UD1", Name = "UN1" };
             
             // Assert 
-            Assert.Equal(expectedUser.Id, actualUser.Id);
+            Assert.Equal(expectedUser.UserId, actualUser.UserId);
             Assert.Equal(expectedUser.Description, actualUser.Description);
             Assert.Equal(expectedUser.Name, actualUser.Name);
         }
