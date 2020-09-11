@@ -14,7 +14,7 @@ A tool for DMs
 
 ## PRE-REQS
 * Install dotnet aspnet runtime, dotnet runtime, and dotnet sdk (currently version 3.1) - [Download](https://dotnet.microsoft.com/download)
-* Node lts (currently 12.16.0) - [Download](https://nodejs.org/en/download/)
+* Node lts (currently 12.18.3) - [Download](https://nodejs.org/en/download/)
 
 ## APPSETTINGS
 Create a file named `appsettings.Development.json` in the same directory as `appsettings.json` with the following:
@@ -29,11 +29,6 @@ Create a file named `appsettings.Development.json` in the same directory as `app
     },
     "ConnectionStrings": {
         "DBConnectionString": "Host=localhost;Port=<PORT>;Username=cnc_admin;Password=<PASSWORD>;Database=cnc;"
-    },
-    "IdentityServer": {
-        "Key": {
-            "Type": "Development"
-        }
     }
 }
 ```
