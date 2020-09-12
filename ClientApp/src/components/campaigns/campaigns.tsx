@@ -13,6 +13,9 @@ import { CampaignCard } from "./campaign-card";
 import { EmptyCampaigns } from "./empty-campaings";
 import "./campaigns.scss";
 import { createNotification } from "../layout/notifications/notifications";
+import { authenticateApolloClient } from "../../auth/auth-service";
+
+const apolloClient = authenticateApolloClient();
 
 export const Campaigns = () => {
   const dispatch = useDispatch();
@@ -21,11 +24,12 @@ export const Campaigns = () => {
     loading: queryLoading,
     error: queryError,
     data: queryData,
-  } = useQuery(GET_CAMPAIGNS);
+  } = useQuery(GET_CAMPAIGNS, {client: apolloClient});
 
   const [createCampaign, { loading: mutationLoading }] = useMutation(
     CREATE_CAMPAIGN,
     {
+      client: apolloClient,
       update(cache, { data: { createCampaign } }) {
         const cachedData: CampaignsQueryResult = cache.readQuery({
           query: GET_CAMPAIGNS,

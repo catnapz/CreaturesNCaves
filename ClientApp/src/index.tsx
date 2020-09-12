@@ -7,7 +7,7 @@ import { setContext } from '@apollo/client/link/context';
 import { ReduxStore, history } from "./store/ReduxStore";
 import { App } from "./app";
 import * as serviceWorker from "./serviceWorker";
-import { authService, getToken } from "./auth/auth-service";
+import {authenticateApolloClient, authService, getToken} from "./auth/auth-service";
 import { userLoading, userSignedIn, userSignedOut } from "./components/user/auth/auth-store.slice";
 
 import "./index.scss";
@@ -32,33 +32,22 @@ apolloClient.resetStore()
 authService.onAuthStateChanged((user) => {
   ReduxStore.dispatch(userLoading())
   if(user) {
-    const httpLink = createHttpLink({
-      uri: 'https://localhost:5001/api',
-    });
-    const authLink = setContext((_, { headers }) => {
-      // get the authentication token 
-      const token = getToken();
-      // return the headers to the context so httpLink can read them
-      return {
-        headers: {
-          ...headers,
-          authorization: token ? `Bearer ${token}` : "",
-        }
-      }
-    });
-    apolloClient = new ApolloClient({
-      link: authLink.concat(httpLink),
-      cache: new InMemoryCache()
-    });
-    const USER_LOGIN =  gql`
-      mutation AddTodo($type: String!) {
-        addTodo(type: $type) {
-          id
-          type
+      apolloClient = authenticateApolloClient();
+      const USER_LOGIN = gql`
+      mutation createUserMutation($userInput: UserInput!) {
+        createUser(userInput: $userInput) {
+          userId
+          name
         }
       }
     `;
-    apolloClient.mutate({mutation: USER_LOGIN}).then(result => console.log(result));
+    apolloClient.mutate({mutation: USER_LOGIN, variables: {
+        "userInput": {
+          "userId": user.uid,
+          "name": user.displayName ? user.displayName : user.email
+        }
+      }
+    }).then(result => console.log(result));
     ReduxStore.dispatch(userSignedIn({ user }));
   } else {
     apolloClient.resetStore();

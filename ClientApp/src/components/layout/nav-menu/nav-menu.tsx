@@ -90,6 +90,7 @@ const AuthenticatedView = () => {
     setLogoutDialogOpen(false);
   }
 
+  const displayName = user!.displayName ?? user!.email;
   return (
     <>
       <Avatar
@@ -103,7 +104,7 @@ const AuthenticatedView = () => {
         open={menuOpen}
         onClose = {closeMenu}
       >
-        <Typography id="navbar-account-menu-header" variant="overline"> {"Hello " + user?.displayName} </Typography>
+        <Typography id="navbar-account-menu-header" variant="overline"> {"Hello " + displayName} </Typography>
         <Divider variant="middle"/>
         <Link to="/profile"><MenuItem onClick={closeMenu}><Typography>Profile</Typography></MenuItem></Link>
         <MenuItem onClick={handleLogoutDialogOpen}><Typography>Logout</Typography></MenuItem>

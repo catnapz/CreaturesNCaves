@@ -1,5 +1,7 @@
 import firebase from "firebase";
 import { auth } from "firebaseui"
+import {ApolloClient, createHttpLink, InMemoryCache} from "@apollo/client";
+import {setContext} from "@apollo/client/link/context";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBNCZ59HJ51Fa4EF5AfN1M0Klg0dp0jXyM",
@@ -50,4 +52,25 @@ export const authFetch = async (url: string, method = "GET"): Promise<Response |
   };
 
   return fetch(url, options);
+}
+
+export const authenticateApolloClient = () => {
+  const httpLink = createHttpLink({
+    uri: 'https://localhost:5001/api',
+  });
+  const authLink = setContext(async (_, { headers }) => {
+    // get the authentication token 
+    const token = await getToken();
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : "",
+      }
+    }
+  });
+  return new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache()
+  });
 }
