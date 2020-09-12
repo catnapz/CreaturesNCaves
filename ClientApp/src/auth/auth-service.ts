@@ -27,6 +27,27 @@ export const uiConfig: auth.Config = {
   ]
 }
 
-export const firebaseAuth = firebase.auth();
+export const authService = firebase.auth();
 
-export const signOut = () => firebaseAuth.signOut();
+export const signOut = () => authService.signOut();
+
+export const getToken = async (): Promise<string | undefined> => {
+  return authService.currentUser?.getIdToken();
+}
+
+export const authFetch = async (url: string, method = "GET"): Promise<Response | undefined> => {
+  const token = await getToken();
+  
+  if(!token) return;
+  
+  const headers = new Headers();
+  headers.append("Accept", "application/json");
+  headers.append("Authorization", `Bearer ${token}`);
+
+  const options = { 
+    method,
+    headers
+  };
+
+  return fetch(url, options);
+}

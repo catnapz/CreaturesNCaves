@@ -1,9 +1,9 @@
 import React from "react";
-import { firebaseAuth, uiConfig } from "../auth/firebase";
+import { authService, uiConfig } from "../../../auth/auth-service";
 import { StyledFirebaseAuth } from "react-firebaseui";
 
 export const LoginMenu = () => {
   return (
-    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
+    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={authService} />
   )
 }

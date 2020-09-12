@@ -7,6 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
+import {authService} from "../../../auth/auth-service";
 
 interface LogoutDialogProps {
   open: boolean;
@@ -19,6 +20,7 @@ export const LogoutDialog = (props: LogoutDialogProps) => {
 
   const handleLogout = () => {
     apolloClient.resetStore();
+    authService.signOut();
     history.push('/');
   }
 

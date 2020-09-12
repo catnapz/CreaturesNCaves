@@ -11,9 +11,9 @@ import { SignUpMenu } from "./components/user/sign-up/sign-up-menu";
 import { selectUserLoading } from "./components/user/auth/auth-store.slice";
 import { Profile } from "./components/user/profile/profile";
 import { InProgress } from "./components/in-progress";
+import { Campaigns } from "./components/campaigns/campaigns";
 
 import "./app.scss";
-import {Campaigns} from "./components/campaigns/campaigns";
 
 export interface AppProps {
   loading: () => void;

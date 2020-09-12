@@ -65,9 +65,7 @@ namespace CreaturesNCaves.Server
             services.AddQueryRequestInterceptor((httpContext, queryBuilder, cancellationToken) =>
             {;
                 if (!httpContext.User.Identity.IsAuthenticated) return Task.CompletedTask;
-                
-                // TODO: request Firebase User Id via API
-                var userIdClaim = httpContext.User.Claims.Single(claim => claim.Type == "sub");
+                var userIdClaim = httpContext.User.Claims.Single(claim => claim.Type == "user_id");
                 var userId = userIdClaim.Value;
                 queryBuilder.AddProperty("currentUserId", userId);
 

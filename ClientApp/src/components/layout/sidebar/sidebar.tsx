@@ -11,7 +11,7 @@ import { SidebarItem } from "./sidebar-item";
 import { SidebarCategory } from "./sidebar-category";
 import "./sidebar.scss";
 import { useSelector } from "react-redux";
-import { selectAuthenticated } from "../../user/auth/auth-store.slice";
+import { selectUser } from "../../user/auth/auth-store.slice";
 
 interface SidebarProps {
   handleDrawerClose: () => void;
@@ -21,7 +21,7 @@ interface SidebarProps {
 export const Sidebar = (props: SidebarProps) => {
   const theme = useTheme();
   const classes = useStyles(theme);
-  const authenticated = useSelector(selectAuthenticated);
+  const authenticated = useSelector(selectUser);
 
   return (
     <Drawer

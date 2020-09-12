@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace CreaturesNCaves.Server.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("health")]
     public class HealthCheckController : ControllerBase
     {

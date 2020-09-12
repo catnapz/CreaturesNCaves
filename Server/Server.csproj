@@ -41,14 +41,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <None Include="..\ClientApp\src\components\user\auth\firebase.ts">
-      <Link>src\components\user\auth\firebase.ts</Link>
-    </None>
-    <None Include="..\ClientApp\src\components\user\login\firebase-login.tsx">
-      <Link>src\components\user\login\firebase-login.tsx</Link>
-    </None>
-    <None Include="..\ClientApp\src\firebase.ts">
-      <Link>src\firebase.ts</Link>
+    <None Include="..\ClientApp\src\auth\firebase.ts">
+      <Link>src\auth\firebase.ts</Link>
     </None>
   </ItemGroup>
 
