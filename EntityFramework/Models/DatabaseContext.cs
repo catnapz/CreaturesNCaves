@@ -10,7 +10,6 @@ namespace CreaturesNCaves.EntityFramework.Models
         public DatabaseContext(DbContextOptions options) : base(options) { }
 
         public virtual DbSet<Campaign> Campaigns { get; set; }
-        
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,8 +19,7 @@ namespace CreaturesNCaves.EntityFramework.Models
             modelBuilder.Entity<Campaign>(entity =>
             {
                 entity.HasKey(e => new {e.CampaignId, e.UserId})
-                    .HasName("id")
-                    .HasName("user_id");
+                    .HasName("campaigns_pkey");
 
                 entity.ToTable("campaigns");
 
@@ -46,6 +44,8 @@ namespace CreaturesNCaves.EntityFramework.Models
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.ToTable("users");
+                
                 entity.HasKey(e => e.UserId).HasName("id");;
                 
                 entity.Property(e => e.UserId)
