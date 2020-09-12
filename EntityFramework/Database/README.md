@@ -15,3 +15,4 @@ Do either of the following:
 
 ### Setup database
 Run the [init_db.sh](Scripts/init_db.sh) in the [init_db.sh](Scripts/) directory.
+> The script will set the default password to 'xxxx' for the cnc cnc_admin user
