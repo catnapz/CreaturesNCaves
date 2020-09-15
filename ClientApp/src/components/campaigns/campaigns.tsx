@@ -13,9 +13,9 @@ import { CampaignCard } from "./campaign-card";
 import { EmptyCampaigns } from "./empty-campaings";
 import "./campaigns.scss";
 import { createNotification } from "../layout/notifications/notifications";
-import { authenticateApolloClient } from "../../auth/auth-service";
+import { AuthService } from "../../auth/auth-service";
 
-const apolloClient = authenticateApolloClient();
+const apolloClient = new AuthService().authenticateApolloClient();
 
 export const Campaigns = () => {
   const dispatch = useDispatch();

@@ -2,15 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
-import { ApolloClient, InMemoryCache, gql, ApolloProvider, createHttpLink } from "@apollo/client";
-import { setContext } from '@apollo/client/link/context';
+import { ApolloClient, InMemoryCache, gql, ApolloProvider } from "@apollo/client";
 import { ReduxStore, history } from "./store/ReduxStore";
 import { App } from "./app";
 import * as serviceWorker from "./serviceWorker";
-import {authenticateApolloClient, authService, getToken} from "./auth/auth-service";
+import { AuthService } from "./auth/auth-service";
 import { userLoading, userSignedIn, userSignedOut } from "./components/user/auth/auth-store.slice";
 
 import "./index.scss";
+import {User} from "firebase";
 
 // root load animation
 const loader: HTMLElement | null = document.getElementById("loader");
@@ -29,10 +29,11 @@ apolloClient.resetStore()
   });
 
 // Register Auth State Change observer
-authService.onAuthStateChanged((user) => {
+const authService = new AuthService();
+authService.onAuthStateChanged((user: User | null) => {
   ReduxStore.dispatch(userLoading())
   if(user) {
-      apolloClient = authenticateApolloClient();
+      apolloClient = authService.authenticateApolloClient();
       const USER_LOGIN = gql`
       mutation createUserMutation($userInput: UserInput!) {
         createUser(userInput: $userInput) {

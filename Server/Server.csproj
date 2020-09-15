@@ -41,8 +41,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <None Include="..\ClientApp\src\auth\firebase.ts">
-      <Link>src\auth\firebase.ts</Link>
+    <None Include="..\ClientApp\src\auth\auth-service.test.ts">
+      <Link>src\auth\auth-service.test.ts</Link>
     </None>
   </ItemGroup>
 

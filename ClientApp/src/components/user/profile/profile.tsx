@@ -2,7 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../auth/auth-store.slice';
 import Button from '@material-ui/core/Button';
-import {authService} from "../../../auth/auth-service";
+import { AuthService } from "../../../auth/auth-service";
+
+const authService = new AuthService();
 
 export const Profile = () => {
   const user = useSelector(selectUser);
@@ -16,6 +18,7 @@ export const Profile = () => {
         },
         body: JSON.stringify({"userId": user?.uid})
       });
+      // TODO: Delete User Data and send delete request to firebaseAPI 
       if (resp.ok) await authService.signOut();
     }
   }
@@ -24,7 +27,6 @@ export const Profile = () => {
     <>
       <h1>Hello {user?.displayName}</h1>
       <Button variant='contained' onClick={() => deleteConfirmation()}>Delete Account</Button>
-      
     </>
   );
 }
