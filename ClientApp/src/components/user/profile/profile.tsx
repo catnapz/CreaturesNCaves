@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectUserProfile } from '../auth/auth-store.slice';
-import { UserManager } from "oidc-client";
+import { selectUser } from '../auth/auth-store.slice';
 import Button from '@material-ui/core/Button';
+import { AuthService } from "../../../auth/auth-service";
 
-export const Profile = (props: { userManager: UserManager }) => {
-  const profile = useSelector(selectUserProfile);
+const authService = new AuthService();
+
+export const Profile = () => {
+  const user = useSelector(selectUser);
 
   async function deleteConfirmation(){
     if(window.confirm("Are you sure you want to delete your account?")) {
@@ -14,17 +16,17 @@ export const Profile = (props: { userManager: UserManager }) => {
         headers: {
           'content-type': 'application/json'
         },
-        body: JSON.stringify({"userId": profile?.sub})
+        body: JSON.stringify({"userId": user?.uid})
       });
-      if (resp.ok) await props.userManager.signoutRedirect();
+      // TODO: Delete User Data and send delete request to firebaseAPI 
+      if (resp.ok) await authService.signOut();
     }
   }
 
   return (
     <>
-      <h1>Hello {profile?.preferred_username}</h1>
+      <h1>Hello {user?.displayName}</h1>
       <Button variant='contained' onClick={() => deleteConfirmation()}>Delete Account</Button>
-      
     </>
   );
 }

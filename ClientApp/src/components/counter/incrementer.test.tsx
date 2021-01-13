@@ -1,5 +1,5 @@
 import React from "react";
-import { cleanup, render, wait, getByText, fireEvent } from "@testing-library/react";
+import { cleanup, render, waitFor, getByText, fireEvent } from "@testing-library/react";
 import * as ReactRedux from "react-redux";
 import { Incrementer } from "./incrementer";
 import { configureStore } from '@reduxjs/toolkit';
@@ -23,8 +23,8 @@ describe("Incrementer", () => {
 
   it("should render successfully", async () => {
     const { baseElement } = wrappedRender(<Incrementer />);
-    await wait(() => getByText(baseElement, (content, element) => {
-      return element.tagName.toLowerCase() === 'span' && content === 'Increment';
+    await waitFor(() => getByText(baseElement as HTMLElement, (content, element) => {
+      return element!.tagName.toLowerCase() === 'span' && content === 'Increment';
     }));
   });
 
@@ -32,8 +32,8 @@ describe("Incrementer", () => {
     const { baseElement } = wrappedRender(<Incrementer />);
     expect(store.getState()[COUNTER_STORE_FEATURE_KEY].count).toBe(0);    
 
-    fireEvent.click(getByText(baseElement, (content, element) => {
-      return element.tagName.toLowerCase() === 'span' && content === 'Increment';
+    fireEvent.click(getByText(baseElement as HTMLElement, (content, element) => {
+      return element!.tagName.toLowerCase() === 'span' && content === 'Increment';
     }));
 
     expect(store.getState()[COUNTER_STORE_FEATURE_KEY].count).toBe(1);    

@@ -10,9 +10,8 @@ namespace CreaturesNCaves.Server.Tests
 {
     public class TestBase : IDisposable
     {
-        private IOptions<OperationalStoreOptions> OperationalStoreOptions { get; set; }
         private DbContextOptions<DatabaseContext> ContextOptions { get; set; }
-        public DatabaseContext DatabaseContext => new DatabaseContext(ContextOptions, OperationalStoreOptions);
+        public DatabaseContext DatabaseContext => new DatabaseContext(ContextOptions);
         
         public TestBase(string databaseName = null)
         {
@@ -21,25 +20,8 @@ namespace CreaturesNCaves.Server.Tests
             .EnableSensitiveDataLogging()
             .EnableDetailedErrors()
             .Options;
-
-            OperationalStoreOptions = Mock.Of<IOptions<OperationalStoreOptions>>();
-            Mock.Get(OperationalStoreOptions).Setup(x => x.Value).Returns(new OperationalStoreOptions
-            {
-                DeviceFlowCodes =
-                {
-                    Name = "DeviceCodes"
-                },
-                PersistedGrants =
-                {
-                    Name = "PersistedGrants"
-                },
-                TokenCleanupBatchSize = 100,
-                TokenCleanupInterval = 3600
-            });
-
             DatabaseContext.Database.EnsureCreated();
         }
-
 
         #region IDisposable Support
         private bool _disposedValue = false;
@@ -52,7 +34,6 @@ namespace CreaturesNCaves.Server.Tests
             {
                 DatabaseContext.Database.EnsureDeleted();
                 ContextOptions = null;
-                OperationalStoreOptions = null;
             }
 
             _disposedValue = true;

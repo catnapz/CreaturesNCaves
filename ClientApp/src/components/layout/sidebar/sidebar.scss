@@ -12,7 +12,7 @@
   }
   .sidebar-nav-link {
     text-decoration: none;
-    color: colour(primary, main);
+    color: primary-colour(main);
     
     .sidebar-nav-list-item {
       transition: background-color, color, 0.4s;
@@ -24,14 +24,14 @@
   
     &.active {
       .sidebar-nav-list-item {
-        background-color: colour(secondary, main);
+        background-color: secondary-colour(main);
         
         .sidebar-nav-list-item-text, p {
-          color: colour(secondary, text);
+          color: secondary-colour(text);
         }
       }
       .sidebar-nav-list-item-icon {
-        color: colour(secondary, text);
+        color: secondary-colour(text);
       }
     }
   }

@@ -8,8 +8,8 @@ CREATE TABLE public.campaigns
     name text COLLATE pg_catalog."default",
     user_id text COLLATE pg_catalog."default" NOT NULL,
     description text COLLATE pg_catalog."default",
-    CONSTRAINT "campaigns_AspNetRoles_user_id_fkey" FOREIGN KEY (user_id)
-        REFERENCES public."AspNetUsers" ("Id") MATCH SIMPLE
+    CONSTRAINT "campaigns_users_user_id_fkey" FOREIGN KEY (user_id)
+        REFERENCES public.users (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT campaigns_pkey PRIMARY KEY (id, user_id)

@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, wait, getByText } from '@testing-library/react';
+import { cleanup, render, waitFor, getByText } from '@testing-library/react';
 import { StaticRouter } from 'react-router';
 import { SidebarItem } from "./sidebar-item";
 
@@ -25,7 +25,7 @@ describe("SidebarItem", () => {
       />
     );
 
-    await wait(() => getByText(baseElement, "Test Item Title"));
+    await waitFor(() => getByText(baseElement as HTMLElement, "Test Item Title"));
     
   });
   

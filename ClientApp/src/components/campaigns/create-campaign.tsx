@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MutationFunctionOptions, ExecutionResult } from '@apollo/react-common';
+import { FetchResult, MutationFunctionOptions } from "@apollo/client";
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -18,7 +18,7 @@ import { CampaignMutationInput } from './campaigns-gql';
 import './create-campaign.scss';
 
 interface CreateCampaignProps {
-  mutationFn: (options?: MutationFunctionOptions<any, Record<string, any>> | undefined) => Promise<ExecutionResult<any>>
+  mutationFn: (options?: MutationFunctionOptions<any, Record<string, any>> | undefined) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>
 }
 
 export const CreateCampaign = (props: CreateCampaignProps) => {

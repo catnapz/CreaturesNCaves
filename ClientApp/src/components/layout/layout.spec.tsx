@@ -1,5 +1,5 @@
 import React from "react";
-import { render, wait, getByText, cleanup } from "@testing-library/react";
+import { render, waitFor, getByText, cleanup } from "@testing-library/react";
 import { Layout } from "./layout";
 
 jest.mock('./nav-menu/nav-menu', () => ({
@@ -22,7 +22,7 @@ describe('Layout', () => {
   
   it('renders successfully', async () => {
     const { baseElement } = render(<Layout children={<p>unit test</p>}/>);
-    await wait(() => getByText(baseElement, "unit test"));
+    await waitFor(() => getByText(baseElement as HTMLElement, "unit test"));
   });
 
 });

@@ -1,5 +1,5 @@
 import React from "react";
-import { cleanup, render, wait, getByText, fireEvent } from "@testing-library/react";
+import { cleanup, render, waitFor, getByText, fireEvent } from "@testing-library/react";
 import * as ReactRedux from "react-redux";
 import { Decrementer } from "./decrementer";
 import { configureStore } from '@reduxjs/toolkit';
@@ -23,8 +23,8 @@ describe("Decrementer", () => {
 
   it("should render successfully", async () => {
     const { baseElement } = wrappedRender(<Decrementer />);
-    await wait(() => getByText(baseElement, (content, element) => {
-      return element.tagName.toLowerCase() === 'span' && content === 'Decrement';
+    await waitFor(() => getByText(baseElement as HTMLElement, (content, element) => {
+      return element!.tagName.toLowerCase() === 'span' && content === 'Decrement';
     }));
   });
 
@@ -33,8 +33,8 @@ describe("Decrementer", () => {
 
     expect(store.getState()[COUNTER_STORE_FEATURE_KEY].count).toBe(0);    
 
-    fireEvent.click(getByText(baseElement, (content, element) => {
-      return element.tagName.toLowerCase() === 'span' && content === 'Decrement';
+    fireEvent.click(getByText(baseElement as HTMLElement, (content, element) => {
+      return element!.tagName.toLowerCase() === 'span' && content === 'Decrement';
     }));
 
     expect(store.getState()[COUNTER_STORE_FEATURE_KEY].count).toBe(-1);    

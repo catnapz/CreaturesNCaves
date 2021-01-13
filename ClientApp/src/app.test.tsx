@@ -1,15 +1,11 @@
 import React from 'react';
-import { cleanup, getByText, render, wait } from '@testing-library/react';
+import { cleanup, getByText, render, waitFor } from '@testing-library/react';
 import * as ReactRedux from "react-redux";
 import { StaticRouter } from 'react-router'
 import { configureStore } from '@reduxjs/toolkit';
 import * as authStore from './components/user/auth/auth-store.slice';
 import * as notifStore from './components/layout/notifications/notification-store.slice';
 import { App, AppProps } from './app';
-
-jest.mock('oidc-client', () => ({
-  UserManager: jest.fn(() => ({}))
-}));
 
 const loadedMock = jest.fn();
 const loadingMock = jest.fn();
@@ -52,7 +48,7 @@ describe('App', () => {
 
   it('renders successfully', async () => {
     const { baseElement } = wrappedRender(<App {...appProps}/>);
-    await wait(() => getByText(baseElement, "Creatures & Caves"));
+    await waitFor(() => getByText(baseElement as HTMLElement, "Creatures & Caves"));
   });
 
   it('renders nothing when loading', async () => {

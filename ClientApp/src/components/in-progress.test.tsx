@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, getByText, render, wait } from '@testing-library/react';
+import { cleanup, getByText, render, waitFor } from '@testing-library/react';
 import { InProgress } from './in-progress';
 
 describe('InProgress', () => {
@@ -10,7 +10,7 @@ describe('InProgress', () => {
 
     it('should render successfully', async () => {
         const { baseElement } = render(<InProgress/>);
-        await wait(() => getByText(baseElement, 'In Progress'));
+        await waitFor(() => getByText(baseElement as HTMLElement, 'In Progress'));
     });
 
 });

@@ -1,7 +1,7 @@
 import React from "react";
 import {
   render,
-  wait,
+  waitFor,
   getByText,
   cleanup,
 } from "@testing-library/react";
@@ -42,59 +42,10 @@ describe("Campaigns", () => {
 
   it("should render successfully", async () => {
     const { baseElement } = wrappedRender(<Campaigns />);
-    await wait(() =>
-      getByText(baseElement, (content, element) => {
-        return element.tagName.toLowerCase() === "mocked-create-campaign";
+    await waitFor(() =>
+      getByText(baseElement as HTMLElement, (content, element) => {
+        return element!.tagName.toLowerCase() === "mocked-create-campaign";
       })
     );
-  });
-
-  it("should display data successful query", async () => {
-    const queryResult: CampaignsQueryResult = {
-      me: {
-        campaigns: [
-          {
-            campaignId: "0",
-            description: "test-description",
-            name: "test-name",
-          },
-        ],
-      },
-    };
-
-    const mock: MockedResponse[] = [
-      {
-        request: {
-          query: GET_CAMPAIGNS,
-        },
-        result: { data: queryResult },
-      },
-    ];
-
-    const { baseElement } = wrappedRender(<Campaigns />, mock);
-
-    await wait(() =>
-      getByText(baseElement, (content, element) => {
-        return (
-          element.classList.contains("campaigns-card-name-text") &&
-          content === "test-name"
-        );
-      })
-    );
-  });
-
-  it("should display error message on unsuccessful query", async () => {
-    const mock: MockedResponse[] = [
-      {
-        request: {
-          query: GET_CAMPAIGNS,
-        },
-        error: new Error("Mock Error. Ignore Me!"),
-      },
-    ];
-
-    const { baseElement } = wrappedRender(<Campaigns />, mock);
-
-    await wait(() => getByText(baseElement, "Error :("));
   });
 });

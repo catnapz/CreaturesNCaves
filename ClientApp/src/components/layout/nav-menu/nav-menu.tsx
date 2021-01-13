@@ -12,11 +12,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import useTheme from "@material-ui/core/styles/useTheme";
-import {
-  selectAuthenticated,
-  selectUserProfile
-} from "../../user/auth/auth-store.slice";
-import {useStyles} from "../shared-styles";
+import { selectUser } from "../../user/auth/auth-store.slice";
+import { useStyles } from "../shared-styles";
 import { LogoutDialog } from "../../user/logout/logout-dialog";
 import "./nav-menu.scss";
 
@@ -26,7 +23,7 @@ interface NavMenuProps {
 }
 
 export const NavMenu = (props: NavMenuProps) => {
-  const authenticated = useSelector(selectAuthenticated);
+  const authenticated = useSelector(selectUser);
   const theme = useTheme();
   const classes = useStyles(theme);
 
@@ -71,7 +68,7 @@ const UnauthenticatedView = () => (
 
 const AuthenticatedView = () => {
 
-  const userProfile = useSelector(selectUserProfile);
+  const user = useSelector(selectUser);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
@@ -93,6 +90,7 @@ const AuthenticatedView = () => {
     setLogoutDialogOpen(false);
   }
 
+  const displayName = user!.displayName ?? user!.email;
   return (
     <>
       <Avatar
@@ -106,7 +104,7 @@ const AuthenticatedView = () => {
         open={menuOpen}
         onClose = {closeMenu}
       >
-        <Typography id="navbar-account-menu-header" variant="overline"> {"Hello " + userProfile?.name} </Typography>
+        <Typography id="navbar-account-menu-header" variant="overline"> {"Hello " + displayName} </Typography>
         <Divider variant="middle"/>
         <Link to="/profile"><MenuItem onClick={closeMenu}><Typography>Profile</Typography></MenuItem></Link>
         <MenuItem onClick={handleLogoutDialogOpen}><Typography>Logout</Typography></MenuItem>

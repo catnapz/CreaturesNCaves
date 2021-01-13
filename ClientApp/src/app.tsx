@@ -5,17 +5,15 @@ import { useSelector } from "react-redux";
 import { Layout } from "./components/layout/layout";
 import { Home } from "./components/home";
 import { Counter } from "./components/counter/counter";
-import { ApplicationPaths } from "./components/user/auth/api-auth-constants";
 import { ProtectedRoute } from "./components/user/auth/protected-route";
-import { LoginMenu } from "./components/user/login/login-menu";
+import { LoginMenu } from "./components/user/login/firebase-login";
 import { SignUpMenu } from "./components/user/sign-up/sign-up-menu";
 import { selectUserLoading } from "./components/user/auth/auth-store.slice";
-import { ApiAuthorizationRoutes } from "./components/user/auth/api-auth-routes";
 import { Profile } from "./components/user/profile/profile";
 import { InProgress } from "./components/in-progress";
+import { Campaigns } from "./components/campaigns/campaigns";
 
 import "./app.scss";
-import {Campaigns} from "./components/campaigns/campaigns";
 
 export interface AppProps {
   loading: () => void;
@@ -44,7 +42,6 @@ export const App = (props: AppProps) => {
           <Route path="/boblin" component={InProgress}/>
           <Route path="/loot" component={InProgress}/>
           
-          <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes}/>
         </Layout>
       </>
     );

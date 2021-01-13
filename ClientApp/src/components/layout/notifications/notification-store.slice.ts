@@ -36,8 +36,9 @@ export const notificationStoreSlice = createSlice({
   initialState: initialNotificationStoreState as INotificationStoreState,
   reducers: {
     enqueueNotification: (state, action: PayloadAction<EnqueueNotificationAction>) => {
+      //@ts-ignore
       state.notifications.push(action.payload.notification);
-    },
+    } ,
 
     dismissNotification: (state, action: PayloadAction<NotificationAction>) => {
       state.notifications = state.notifications.map(notification => (

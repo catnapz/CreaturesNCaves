@@ -15,36 +15,36 @@
   a {
     float: left;
     padding: 14px 16px;
-    color: colour(primary, text);
+    color: primary-colour(text);
     text-align: center;
     text-decoration: none;
     transition: background-color, color, 0.4s;
     min-width: 100px;
 
     &:hover {
-      background-color: colour(primary, light);
+      background-color: primary-colour(light);
       cursor: pointer;
       transition: background-color, color, 0.2s;
     }
 
     &.active {
-      border-bottom: solid 2px colour(secondary, main);
+      border-bottom: solid 2px secondary-colour(main);
     }
   }
   
   #menu-button {
-    color: colour(primary, text);
+    color: primary-colour(text);
     &:hover {
-      background-color: colour(primary, light);
+      background-color: primary-colour(light);
       cursor: pointer;
       transition: background-color, color, 0.2s;
     }
   }
 
   .profile-icon {
-    border: 2px solid colour(primary, light);
+    border: 2px solid primary-colour(light);
     &:hover {
-      border: 1px solid colour(secondary, main);
+      border: 1px solid secondary-colour(main);
       cursor: pointer;
       transition: border, color, 0.2s;
     }
@@ -69,7 +69,7 @@
   
   a {
     text-decoration: none;
-    color: colour(primary, main)
+    color: primary-colour(main)
   }
 
   #navbar-account-menu-header {

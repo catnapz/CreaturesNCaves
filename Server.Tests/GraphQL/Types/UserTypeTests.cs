@@ -25,10 +25,6 @@ namespace CreaturesNCaves.Server.Tests.GraphQL.Types
             _expectedFields = new List<string>()
             {
                 "name", "description", "campaigns", "campaign",
-                "email", "emailConfirmed", "normalizedEmail", 
-                "lockoutEnabled", "lockoutEnd", "concurrencyStamp", 
-                "accessFailedCount", "phoneNumber", "phoneNumberConfirmed", 
-                "twoFactorEnabled"
             };
             
             _expectedIgnoredFields = new List<string>()

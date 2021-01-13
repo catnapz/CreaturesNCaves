@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Route, Redirect, RouteProps } from "react-router-dom";
-import { selectAuthenticated } from "./auth-store.slice";
+import { selectUser } from "./auth-store.slice";
 
 export interface ProtectedRouteProps extends RouteProps {
   component: any;
@@ -9,7 +9,7 @@ export interface ProtectedRouteProps extends RouteProps {
 
 export const ProtectedRoute = (props: ProtectedRouteProps) => {
   const { component: Component, ...rest } = props;
-  const authenticated = useSelector(selectAuthenticated);
+  const authenticated = useSelector(selectUser);
 
   if (!!Component && authenticated) {
     return (
