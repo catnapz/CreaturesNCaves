@@ -19,7 +19,7 @@ export interface IAuthStoreState {
   error?: AuthStoreError;
 }
 
-export const initialauthStoreState: IAuthStoreState = {
+export const initialAuthStoreState: IAuthStoreState = {
   user: null,
   userLoading: false
 };
@@ -32,7 +32,7 @@ export interface UserSignedInAction { user: firebase.User; }
 
 export const authStoreSlice = createSlice({
   name: AUTH_STORE_FEATURE_KEY,
-  initialState: initialauthStoreState as IAuthStoreState,
+  initialState: initialAuthStoreState as IAuthStoreState,
   reducers: {
     userLoading: state => {
       state.userLoading = true;
@@ -79,7 +79,7 @@ export const {
 /**
  * Returns the state for the i18n slice
  * @param rootState - The Redux Store
- * @returns {authStoreState} The i18n store slice
+ * @returns {IAuthStoreState} The auth store slice
  */
 export const getAuthStoreState = (rootState: any): IAuthStoreState =>
   rootState[AUTH_STORE_FEATURE_KEY];

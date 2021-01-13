@@ -13,8 +13,8 @@ A tool for DMs
 * Coffee
 
 ## PRE-REQS
-* Install dotnet aspnet runtime, dotnet runtime, and dotnet sdk (currently version 3.1) - [Download](https://dotnet.microsoft.com/download)
-* Node lts (currently 12.18.3) - [Download](https://nodejs.org/en/download/)
+* Install the dotnet sdk (currently version 5.0) - [Download](https://dotnet.microsoft.com/download)
+* Node lts - [Download](https://nodejs.org/en/download/)
 
 ## APPSETTINGS
 Create a file named `appsettings.Development.json` in the same directory as `appsettings.json` with the following:

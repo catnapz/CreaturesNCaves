@@ -1,5 +1,5 @@
 import React from "react";
-import { render, wait, getByText, cleanup } from "@testing-library/react";
+import { render, waitFor, getByText, cleanup } from "@testing-library/react";
 import * as ReactRedux from "react-redux";
 import { Counter } from "./counter";
 import { configureStore } from '@reduxjs/toolkit';
@@ -31,6 +31,6 @@ describe("Counter", () => {
 
   it("should render successfully", async () => {
     const { baseElement } = wrappedRender(<Counter />);    
-    await wait(() => getByText(baseElement, "count", {exact: false}));
+    await waitFor(() => getByText(baseElement as HTMLElement, "count", {exact: false}));
   });
 });

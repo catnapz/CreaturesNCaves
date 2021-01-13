@@ -10,7 +10,6 @@ This directory has scripts to setup database locally.
 Do either of the following:
 * Use pgAdmin4
 * Read the [docs](https://www.postgresql.org/docs/current/tutorial.html)
-* Follow [these tutorials](https://www.postgresqltutorial.com/install-postgresql/)
 * Google
 
 ### Setup database
