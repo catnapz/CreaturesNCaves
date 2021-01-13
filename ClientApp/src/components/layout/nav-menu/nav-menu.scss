@@ -4,6 +4,12 @@
   
   #nav-bar-title {
     flex-grow: 1;
+    p {
+      font-family: "Nodesto Caps Condensed";
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      font-size: 1.5em;
+    }
   }
   
   a {

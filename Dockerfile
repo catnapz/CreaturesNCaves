@@ -1,10 +1,10 @@
 # == Base ==
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS base
 WORKDIR /app
 
 
 # == ClientApp Tests ==
-FROM node:lts-alpine AS node-test-env
+FROM node:lts AS node-test-env
 WORKDIR /ClientApp
 # Install dependencies
 COPY ["./ClientApp/package.json", "./ClientApp/package-lock.json*", "./"]
@@ -17,12 +17,12 @@ RUN npm test
 
 
 # == Server.Tests ==
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS dotnet-test-env
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS dotnet-test-env
 
 # Install nodejs
 ENV NVM_DIR /usr/local/nvm
 # TODO: figure out how to get lts version
-ENV NODE_VERSION 12.16.0
+ENV NODE_VERSION 14.15.4
 
 WORKDIR $NVM_DIR
 
