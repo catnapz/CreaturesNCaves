@@ -45,7 +45,7 @@ namespace CreaturesNCaves.Server
             
             services.AddQueryRequestInterceptor((httpContext, queryBuilder, cancellationToken) =>
             {;
-                if (!httpContext.User.Identity.IsAuthenticated) return Task.CompletedTask;
+                if (!httpContext.User.Identity!.IsAuthenticated) return Task.CompletedTask;
                 
                 var userIdClaim = httpContext.User.Claims.Single(claim => claim.Type == "sub");
                 var userId = userIdClaim.Value;
