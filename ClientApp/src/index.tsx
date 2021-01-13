@@ -8,10 +8,9 @@ import { App } from "./app";
 import * as serviceWorker from "./serviceWorker";
 import { AuthService } from "./auth/auth-service";
 import { userLoading, userSignedIn, userSignedOut } from "./components/user/auth/auth-store.slice";
+import firebase from "firebase";
 
 import "./index.scss";
-import {User} from "firebase";
-
 // root load animation
 const loader: HTMLElement | null = document.getElementById("loader");
 const loading = () => (loader!.style.display = "block");
@@ -30,7 +29,7 @@ apolloClient.resetStore()
 
 // Register Auth State Change observer
 const authService = new AuthService();
-authService.onAuthStateChanged((user: User | null) => {
+authService.onAuthStateChanged((user: firebase.User | null) => {
   ReduxStore.dispatch(userLoading())
   if(user) {
       apolloClient = authService.authenticateApolloClient();

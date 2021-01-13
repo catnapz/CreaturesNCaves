@@ -71,7 +71,7 @@ export class AuthService {
     const httpLink = createHttpLink({
       uri: 'https://localhost:5001/api',
     });
-    const authLink = setContext(async (_, { headers }) => {
+    const authLink = setContext(async (_: any, {headers}: any) => {
       // get the authentication token 
       const token = await this.getToken();
       // return the headers to the context so httpLink can read them

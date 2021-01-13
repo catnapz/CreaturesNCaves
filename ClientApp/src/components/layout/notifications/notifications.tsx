@@ -43,7 +43,6 @@ export const Notifications = () => {
         },
 
         onExited: (elem, key) => {
-          //ts-ignore
           let actionPayload: NotificationAction = {key};
           dispatch(removeNotification(actionPayload));
           removeDisplayedId(key);

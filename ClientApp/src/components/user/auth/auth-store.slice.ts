@@ -3,7 +3,8 @@ import {
   createSelector,
   PayloadAction
 } from "@reduxjs/toolkit";
-import { User } from "firebase";
+
+import firebase from "firebase";
 
 export const AUTH_STORE_FEATURE_KEY = "authStore";
 
@@ -13,7 +14,7 @@ export type AuthStoreError = {
 };
 
 export interface IAuthStoreState {
-  user: User | null;
+  user: firebase.User | null;
   userLoading: boolean;
   error?: AuthStoreError;
 }
@@ -27,7 +28,7 @@ export interface AuthErrorAction {
   error: AuthStoreError;
 }
 
-export interface UserSignedInAction { user: User; }
+export interface UserSignedInAction { user: firebase.User; }
 
 export const authStoreSlice = createSlice({
   name: AUTH_STORE_FEATURE_KEY,
