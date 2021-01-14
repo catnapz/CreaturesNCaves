@@ -36,8 +36,8 @@ export const App = (props: AppProps) => {
           <Route path="/signup" component={SignUpMenu} />
           <Route path="/profile" component={Profile}/>
 
-          <Route path="/campaigns" component={Campaigns} />
-          <Route path="/characters" component={InProgress}/>
+          <ProtectedRoute path="/campaigns" component={Campaigns} />
+          <ProtectedRoute path="/characters" component={InProgress}/>
           <Route path="/roll-initiative" component={InProgress}/>
           <Route path="/boblin" component={InProgress}/>
           <Route path="/loot" component={InProgress}/>

@@ -71,7 +71,13 @@ namespace CreaturesNCaves.Server
 
                 return Task.CompletedTask;
             });
-            
+
+            services.AddCors(options => options.AddPolicy("DevPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
             services.AddControllers();
             
             // In production, the React files will be served from this directory
@@ -87,6 +93,7 @@ namespace CreaturesNCaves.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors("DevPolicy");
             }
             else
             {
