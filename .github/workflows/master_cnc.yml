@@ -4,6 +4,7 @@
 name: Build and deploy ASP.Net Core app to Azure Web App - cnc
 
 on:
+  workflow_dispatch: 
   push:
     branches:
       - master
@@ -19,6 +20,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '5.0.x'
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v2.1.4
 
     - name: Build with dotnet
       run: dotnet build --configuration Release
@@ -31,5 +35,5 @@ jobs:
       with:
         app-name: 'cnc'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_8e86b0f5edc44c4da9786eadef6131ff }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{env.DOTNET_ROOT}}/myapp 
