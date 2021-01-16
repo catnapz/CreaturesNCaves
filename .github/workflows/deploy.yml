@@ -33,7 +33,7 @@ jobs:
     - name: Setup Connection String
       uses: microsoft/variable-substitution@v1
       with:
-        files: '${{env.DOTNET_ROOT}}/myapp/appsettings.json'
+        files: '${{env.DOTNET_ROOT}}/cnc/appsettings.json'
       env:
         ConnectionStrings.Default: ${{ secrets.DATABASE_CONNECTION_STRING }}
         App.ServerRootAddress: ${{ env.SERVER_ROOT_ADDRESS }}
