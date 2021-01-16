@@ -25,6 +25,30 @@ namespace CreaturesNCaves.Server.GraphQL
             await dbContext.SaveChangesAsync();
             return campaignEntry.Entity;
         }
+        
+        public async Task<Boolean> DeleteCampaign(
+            [Service] DatabaseContext dbContext,
+            [GlobalState] string currentUserId,
+            int campaignId
+        )
+        {
+            try
+            {
+                dbContext.Campaigns.Remove(new Campaign()
+                {
+                    UserId = currentUserId,
+                    CampaignId = campaignId
+                });
+            
+                await dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
 
         public async Task<User> CreateUser(
             [Service] DatabaseContext dbContext,

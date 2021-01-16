@@ -1,4 +1,4 @@
-﻿// MaterialUI Styles
+// MaterialUI Styles
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {createStyles, Theme} from "@material-ui/core";
 

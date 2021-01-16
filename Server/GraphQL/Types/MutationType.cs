@@ -10,6 +10,11 @@ namespace CreaturesNCaves.Server.GraphQL.Types
                 .Type<NonNullType<CampaignType>>()
                 .Argument("campaignInput", a => a.Type<NonNullType<CampaignInputType>>())
                 .Authorize();
+
+            descriptor.Field(f => f.DeleteCampaign(default, default, default))
+                .Type<NonNullType<BooleanType>>()
+                .Argument("campaignId", a => a.Type<NonNullType<IntType>>())
+                .Authorize();
             
             descriptor.Field(f => f.CreateUser(default, default, default))
                 .Type<NonNullType<UserType>>()
