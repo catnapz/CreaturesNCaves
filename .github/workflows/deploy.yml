@@ -35,8 +35,7 @@ jobs:
       with:
         files: '${{env.DOTNET_ROOT}}/cnc/appsettings.json'
       env:
-        ConnectionStrings.Default: ${{ secrets.DATABASE_CONNECTION_STRING }}
-        App.ServerRootAddress: ${{ env.SERVER_ROOT_ADDRESS }}
+        ConnectionStrings.DBConnectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
