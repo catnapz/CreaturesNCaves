@@ -1,6 +1,5 @@
 import React from 'react';
 import { SnackbarProvider } from 'notistack';
-import useTheme from "@material-ui/core/styles/useTheme";
 import { useStyles } from "./shared-styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';

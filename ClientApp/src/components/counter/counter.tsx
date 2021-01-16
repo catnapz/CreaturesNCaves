@@ -5,7 +5,6 @@ import { Incrementer } from './incrementer';
 import { Decrementer } from './decrementer';
 import './counter.scss';
 import Typography from "@material-ui/core/Typography";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 export const Counter = () => {
   const count = useSelector(selectCount);

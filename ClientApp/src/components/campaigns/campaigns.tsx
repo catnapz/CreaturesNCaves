@@ -51,7 +51,7 @@ export const Campaigns = () => {
     }
   );
 
-  if (queryLoading) {
+  if (queryLoading || mutationLoading) {
     return (
       <>
         <p>Loading...</p>

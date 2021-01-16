@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import Drawer from "@material-ui/core/Drawer";
 import List from '@material-ui/core/List';
