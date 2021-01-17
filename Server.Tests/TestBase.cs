@@ -1,10 +1,6 @@
 using System;
-using System.Threading;
 using CreaturesNCaves.EntityFramework.Models;
-using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Moq;
 
 namespace CreaturesNCaves.Server.Tests
 {

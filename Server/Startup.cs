@@ -3,9 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using CreaturesNCaves.EntityFramework.Models;
 using CreaturesNCaves.Server.GraphQL.Types;
-using HotChocolate;
-using HotChocolate.AspNetCore;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -25,7 +22,7 @@ namespace CreaturesNCaves.Server
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -53,24 +50,25 @@ namespace CreaturesNCaves.Server
                 options.UseNpgsql(Configuration.GetConnectionString("DBConnectionString"));
             });
 
-            services.AddGraphQL(
-                SchemaBuilder.New()
+            services.AddGraphQLServer()
                 .AddQueryType<QueryType>()
                 .AddMutationType<MutationType>()
                 .AddType<UserType>()
                 .AddType<CampaignType>()
-                .AddAuthorizeDirectiveType()
-                .Create());
-            
-            services.AddQueryRequestInterceptor((httpContext, queryBuilder, cancellationToken) =>
-            {;
-                if (!httpContext.User.Identity!.IsAuthenticated) return Task.CompletedTask;
-                var userIdClaim = httpContext.User.Claims.Single(claim => claim.Type == "user_id");
-                var userId = userIdClaim.Value;
-                queryBuilder.AddProperty("currentUserId", userId);
+                .AddAuthorization()
+                .AddHttpRequestInterceptor((httpContext, executor, queryBuilder, cancellationToken) =>
+                {
+                    if (!httpContext.User.Identity!.IsAuthenticated)
+                    {
+                        Console.WriteLine("Unauthenticated");
+                        return ValueTask.FromException(new Exception("Unauthenticated"));
+                    }
+                    var userIdClaim = httpContext.User.Claims.Single(claim => claim.Type == "user_id");
+                    var userId = userIdClaim.Value;
+                    queryBuilder.AddProperty("currentUserId", userId);
 
-                return Task.CompletedTask;
-            });
+                    return ValueTask.CompletedTask;
+                });
 
             services.AddCors(options => options.AddPolicy("DevPolicy", builder =>
             {
@@ -110,16 +108,11 @@ namespace CreaturesNCaves.Server
             
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseGraphQL("/api");
-
-            if (env.IsDevelopment())
-            {
-                app.UsePlayground("/api");
-            }
-
+            
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGraphQL("/api");
+                
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
