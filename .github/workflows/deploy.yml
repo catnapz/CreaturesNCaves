@@ -28,7 +28,7 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: dotnet publish
-      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/cnc
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/cnc/Server
       
     - name: Setup Connection String
       uses: microsoft/variable-substitution@v1
@@ -41,6 +41,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'cnc'
-        slot-name: 'production'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{env.DOTNET_ROOT}}/cnc 
