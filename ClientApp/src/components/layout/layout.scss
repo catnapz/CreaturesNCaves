@@ -1,0 +1,20 @@
+@import "layout-constants";
+
+.root {
+  display: flex;
+}
+.content {
+  margin-top: $top-bar-height;
+  flex-grow: 1;
+  padding: 3rem;
+  transition: margin 100ms ;
+}
+
+.content-drawer-open {
+  margin-left: $side-bar-open-width;
+}
+
+.content-drawer-closed {
+  margin-left: $side-bar-closed-width;
+}
+

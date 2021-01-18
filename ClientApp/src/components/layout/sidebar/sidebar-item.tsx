@@ -7,11 +7,11 @@ import BrokenImageIcon from '@material-ui/icons/BrokenImage';
 
 interface SideBarItemProps {
   to: string;
-  exact?: boolean;
   title: string;
+  open: boolean;
+  exact?: boolean;
   icon?: React.ReactElement;
   subtitle?: string;
-  open?: boolean;
 }
 
 export const SidebarItem = (props: SideBarItemProps) => {
@@ -21,11 +21,12 @@ export const SidebarItem = (props: SideBarItemProps) => {
         <ListItemIcon className="sidebar-nav-list-item-icon">
           {props.icon ?? <BrokenImageIcon/>}
         </ListItemIcon>
+        {props.open &&
         <ListItemText 
           className="sidebar-nav-list-item-text" 
           primary={props.title} 
           secondary={props.open ? props.subtitle : ""}
-        />
+        />}
       </ListItem>
     </NavLink>
   );

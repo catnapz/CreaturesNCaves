@@ -22,6 +22,7 @@ describe("SidebarItem", () => {
       <SidebarItem 
         title="Test Item Title"
         to="/test-link"
+        open
       />
     );
 

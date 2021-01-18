@@ -5,9 +5,6 @@ import {createStyles, Theme} from "@material-ui/core";
 const drawerWidth = 240;
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      display: 'flex',
-    },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
       transition: theme.transitions.create(['width', 'margin'], {
@@ -51,17 +48,6 @@ export const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(7) + 1,
       },
-    },
-    toolbar: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      padding: theme.spacing(0, 1),
-      ...theme.mixins.toolbar,
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
     },
   }),
 );

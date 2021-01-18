@@ -1,5 +1,5 @@
 # == Base ==
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 
 
@@ -18,34 +18,13 @@ RUN npm test
 
 # == Server.Tests ==
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS dotnet-test-env
-
-# Install nodejs
-ENV NVM_DIR /usr/local/nvm
-# TODO: figure out how to get lts version
-ENV NODE_VERSION 14.15.4
-
-WORKDIR $NVM_DIR
-
-RUN curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash \
-    && . $NVM_DIR/nvm.sh \
-    && nvm install $NODE_VERSION \
-    && nvm alias default $NODE_VERSION \
-    && nvm use default
-
-ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
-ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-
-WORKDIR /ClientApp
-COPY --from=node-test-env /ClientApp ./
-
 WORKDIR /
-RUN mkdir EntityFramework EntityFramework.Tests Server Server.Tests
 COPY ./EntityFramework ./EntityFramework
 COPY ./EntityFramework.Tests ./EntityFramework.Tests
 COPY ./Server ./Server
 COPY ./Server.Tests ./Server.Tests
 COPY ./CreaturesNCaves.sln .
-RUN rm -rf ./EntityFramework/Database
+RUN rm -r ./EntityFramework/Database
 RUN dotnet test "/p:CollectCoverage=true" "/p:CoverletOutput=TestResults/" "/p:CoverletOutputFormat=\"opencover\"" "/p:Threshold=0"
 
 
@@ -60,23 +39,24 @@ RUN dotnet build -c Release -o ./Build
 
 # == Server Production Publish ==
 FROM dotnet-build-env as dotnet-publish-env
-
-WORKDIR /ClientApp
-ENV NODE_ENV production
-RUN npm install --production
-RUN npm rebuild node-sass
-
 WORKDIR /
 # Publish Release
-RUN dotnet publish -c Release -o ./Publish
+RUN dotnet publish -c Release -o ./dist/Server
+
+
+# == Client Production Build
+FROM node-test-env as node-build-env
+ENV NODE_ENV=production
+WORKDIR /ClientApp
+RUN npm build
 
 
 # == Creatures & Caves ==
 FROM base AS final
-EXPOSE 80
+EXPOSE 5001
 WORKDIR /app/ClientApp
-COPY --from=dotnet-publish-env /ClientApp/build ./
+COPY --from=node-build-env ClientApp/build ./build
 WORKDIR /app/Server
-COPY --from=dotnet-publish-env /Publish ./
+COPY --from=dotnet-publish-env /dist/Server ./
 HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost/health || exit 1
 ENTRYPOINT [ "dotnet", "Server.dll" ]
