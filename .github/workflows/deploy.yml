@@ -27,8 +27,10 @@ jobs:
     - name: dotnet publish
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/cnc/Server
       
-    - name: Build frontend
+    - name: Setup Node
       uses: actions/setup-node@v2.1.4
+      
+    - name: Build frontend
       run: cd ClientApp && npm run build && mkdir ${{env.DOTNET_ROOT}}/cnc/ClientApp && mv ./build/ ${{env.DOTNET_ROOT}}/cnc/ClientApp
       
     - name: Setup Connection String
