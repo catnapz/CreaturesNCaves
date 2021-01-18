@@ -1,9 +1,7 @@
 import React from 'react';
 import Drawer from "@material-ui/core/Drawer";
-import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { SidebarItem } from "./sidebar-item";
 import { SidebarCategory } from "./sidebar-category";
 import { useSelector } from "react-redux";
