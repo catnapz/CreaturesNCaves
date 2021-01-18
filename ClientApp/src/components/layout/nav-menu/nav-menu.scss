@@ -1,11 +1,14 @@
-﻿@import '../../../colours';
+﻿@import '../layout-constants';
+@import '../../../colours';
 
 #app-bar {
-  
+  height: $top-bar-height;
+  background: primary-colour(main);
+  transition: $side-bar-transitions;
   #nav-bar-title {
     flex-grow: 1;
     p {
-      font-family: "Nodesto Caps Condensed";
+      font-family: "Nodesto Caps Condensed", serif;
       text-transform: uppercase;
       letter-spacing: 5px;
       font-size: 1.5em;

@@ -28,6 +28,12 @@
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
+    <Content Include="..\ClientApp\src\components\layout\layout.scss">
+      <Link>src\components\layout\layout.scss</Link>
+    </Content>
+    <Content Include="..\ClientApp\src\components\layout\_layout-constants.scss">
+      <Link>src\components\layout\_layout-constants.scss</Link>
+    </Content>
     <Content Include="..\README.md">
       <Link>README.md</Link>
     </Content>
