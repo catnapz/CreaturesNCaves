@@ -20,15 +20,16 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '5.0.x'
-        
-    - name: Setup Node.js
-      uses: actions/setup-node@v2.1.4
-    
+            
     - name: Build with dotnet
       run: dotnet build --configuration Release
 
     - name: dotnet publish
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/cnc/Server
+      
+    - name: Build frontend
+      uses: actions/setup-node@v2.1.4
+      run: cd ClientApp && npm run build && mkdir ${{env.DOTNET_ROOT}}/cnc/ClientApp && mv ./build/ ${{env.DOTNET_ROOT}}/cnc/ClientApp
       
     - name: Setup Connection String
       uses: microsoft/variable-substitution@v1
