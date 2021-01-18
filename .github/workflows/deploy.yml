@@ -31,7 +31,7 @@ jobs:
       uses: actions/setup-node@v2.1.4
       
     - name: Build frontend
-      run: cd ClientApp && npm run build && mkdir ${{env.DOTNET_ROOT}}/cnc/ClientApp && mv ./build/ ${{env.DOTNET_ROOT}}/cnc/ClientApp
+      run: cd ClientApp && npm install && npm run build && mkdir ${{env.DOTNET_ROOT}}/cnc/ClientApp && mv ./build/ ${{env.DOTNET_ROOT}}/cnc/ClientApp
       
     - name: Setup Connection String
       uses: microsoft/variable-substitution@v1
