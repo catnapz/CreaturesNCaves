@@ -2,10 +2,10 @@ version: '3'
 
 services:
   creaturesncaves:
-    build: .
+    image: cnc:latest
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       NODE_ENV: production
-      REACT_APP_SERVER_ADDRESS: http://localhost:5000
+      REACT_APP_SERVER_ADDRESS: http://localhost:80
     ports:
       - "8080:80"

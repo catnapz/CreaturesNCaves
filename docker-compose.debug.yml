@@ -3,6 +3,7 @@ version: '3'
 services:
   creaturesncaves:
     build: .
+    image: cnc:latest
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       NODE_ENV: development

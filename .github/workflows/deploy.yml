@@ -1,10 +1,7 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Deploy to Azure
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -14,35 +11,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@master
+      - uses: actions/checkout@master
 
-    - name: Set up .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '5.0.x'
-            
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+      - name: Setup Connection String
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: Server/appsettings.json
+        env:
+          ConnectionStrings.DBConnectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
 
-    - name: dotnet publish
-      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/cnc/Server
-      
-    - name: Setup Node
-      uses: actions/setup-node@v2.1.4
-      
-    - name: Build frontend
-      run: cd ClientApp && npm install && npm run build && mkdir ${{env.DOTNET_ROOT}}/cnc/ClientApp && mv ./build/ ${{env.DOTNET_ROOT}}/cnc/ClientApp
-      
-    - name: Setup Connection String
-      uses: microsoft/variable-substitution@v1
-      with:
-        files: '${{env.DOTNET_ROOT}}/cnc/Server/appsettings.json'
-      env:
-        ConnectionStrings.DBConnectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
+      - name: Build docker image
+        run: docker build -t cnc:latest .
 
-    - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'cnc'
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: ${{env.DOTNET_ROOT}}/cnc 
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'cnc'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: cnc:latest
+          configuration-file: docker-compose.yml
+  
