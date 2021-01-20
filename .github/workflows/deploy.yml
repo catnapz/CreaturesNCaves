@@ -26,8 +26,6 @@ jobs:
 
       - name: Build and push image to ACR
         id: build-image
-        env:
-          REACT_APP_SERVER_ADDRESS: https://cnc.azurewebsites.net
         run: |
           docker build "$GITHUB_WORKSPACE/" -f  "Dockerfile" -t creaturesncaves.azurecr.io/cnc-img:${{ github.sha }}
           docker push creaturesncaves.azurecr.io/cnc-img:${{ github.sha }}

@@ -70,10 +70,7 @@ export class AuthService {
   public authenticateApolloClient = () => {
     console.log(process.env.REACT_APP_SERVER_ADDRESS);
     const httpLink = createHttpLink({
-      uri: `${process.env.REACT_APP_SERVER_ADDRESS || ''}/api`,
-      fetchOptions: {
-        mode: 'no-cors',
-      },
+      uri: "/api",
     });
     const authLink = setContext(async (_: any, {headers}: any) => {
       // get the authentication token 
