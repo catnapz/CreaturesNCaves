@@ -20,14 +20,48 @@ jobs:
         env:
           ConnectionStrings.DBConnectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
 
-      - name: Build docker image
-        run: docker build -t cnc:latest .
-
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
         with:
-          app-name: 'cnc'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: cnc:latest
-          configuration-file: docker-compose.yml
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: azure/docker-login@v1
+        with:
+          login-server: creaturesncaves.azurecr.io
+          username: ${{ secrets.acr_creaturesncaves_username }}
+          password: ${{ secrets.acr_creaturesncaves_password }}
+
+      - name: Build and push image to ACR
+        id: build-image
+        run: |
+          docker build "$GITHUB_WORKSPACE/" -f  "Dockerfile" -t creaturesncaves.azurecr.io/cnc-img:${{ github.sha }}
+          docker push creaturesncaves.azurecr.io/cnc-img:${{ github.sha }}
+
+      - name: Set Web App ACR authentication
+        uses: Azure/appservice-settings@v1
+        with:
+          app-name: cnc
+          app-settings-json: |
+            [
+              {
+                "name": "DOCKER_REGISTRY_SERVER_URL",
+                "value": "creaturesncaves.azurecr.io",
+                "slotSetting": false
+              },
+              {
+                "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+                "value": "${{ secrets.acr_creaturesncaves_username }}",
+                "slotSetting": false
+              },
+              {
+                "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+                "value": "${{ secrets.acr_creaturesncaves_password }}",
+                "slotSetting": false
+              }            
+            ]
+
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: cnc
+          images: creaturesncaves.azurecr.io/cnc-img:${{ github.sha }}
   
