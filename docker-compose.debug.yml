@@ -6,5 +6,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       NODE_ENV: development
+      REACT_APP_SERVER_ADDRESS: http://localhost:80
+      ConnectionStrings__DBConnectionString: "Host=172.18.0.1;Port=5432;Username=cnc_admin;Password=xxxx;Database=cnc;"
     ports:
       - "8080:80"

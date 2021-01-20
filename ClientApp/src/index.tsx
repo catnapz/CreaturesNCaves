@@ -18,7 +18,7 @@ const loaded = () => (loader!.style.display = "none");
 
 // Init Apollo
 let apolloClient = new ApolloClient({
-  uri: 'https://localhost:5001/api',
+  uri: `${process.env.REACT_APP_SERVER_ADDRESS || ''}/api`,
   cache: new InMemoryCache()
 });
 

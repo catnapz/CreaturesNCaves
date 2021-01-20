@@ -48,12 +48,11 @@ RUN dotnet publish -c Release -o ./dist/Server
 FROM node-test-env as node-build-env
 ENV NODE_ENV=production
 WORKDIR /ClientApp
-RUN npm build
+RUN npm run build
 
 
 # == Creatures & Caves ==
 FROM base AS final
-EXPOSE 5001
 WORKDIR /app/ClientApp
 COPY --from=node-build-env ClientApp/build ./build
 WORKDIR /app/Server

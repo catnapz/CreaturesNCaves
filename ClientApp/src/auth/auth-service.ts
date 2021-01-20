@@ -69,7 +69,7 @@ export class AuthService {
 
   public authenticateApolloClient = () => {
     const httpLink = createHttpLink({
-      uri: 'https://localhost:5001/api',
+      uri: `${process.env.REACT_APP_SERVER_ADDRESS || ''}/api`,
     });
     const authLink = setContext(async (_: any, {headers}: any) => {
       // get the authentication token 

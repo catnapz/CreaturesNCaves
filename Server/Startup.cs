@@ -83,6 +83,11 @@ namespace CreaturesNCaves.Server
             {
                 configuration.RootPath = "../ClientApp/build";
             });
+            
+            services.AddHttpsRedirection(options =>
+            {   
+                options.HttpsPort = 443;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -97,10 +102,10 @@ namespace CreaturesNCaves.Server
             {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                // app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
