@@ -1,15 +1,15 @@
-name: Build Pipeline
+name: Test Pipeline
 
 on:
   pull_request:
     branches: 
-      - master
+      - main
 
 jobs:
   
-  test:
+  test-frontend:
     if: "!contains(github.event.head_commit.message, '[skip-ci]')"
-    name: Unit Tests
+    name: Frontend Unit Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -26,8 +26,38 @@ jobs:
         docker rm -v $CID
         cd TestResults
         tar -xvf frontend-test-report.tar
-        mv coverage-final.json frontend.json
+        mv coverage-final.json frontend.json 
         
+    - name: Upload Test Results Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        # Artifact name
+        name: Frontend_TestResults
+        # Directory containing files to upload
+        path: TestResults
+              
+    - name: Upload ClientApp TestResults to Codecov
+      uses: codecov/codecov-action@v1.0.5
+      with:
+        # User defined upload name. Visible in Codecov UI
+        name: ClientApp
+        # Repository upload token - get it from codecov.io
+        token: ${{ secrets.CODECOV_TOKEN }}
+        # Path to coverage file to upload
+        file: TestResults/frontend.json
+        # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
+        flags: unittests
+        # Specify whether or not CI build should fail if Codecov runs into an error during upload
+        fail_ci_if_error: true
+        
+  test-backend:
+    if: "!contains(github.event.head_commit.message, '[skip-ci]')"
+    name: Backend Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+              
     - name: Run Backend unit tests
       run: docker build -t cnc/backendtests:latest --target dotnet-test-env .  
     
@@ -48,24 +78,10 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         # Artifact name
-        name: TestResults
+        name: Backend_TestResults
         # Directory containing files to upload
         path: TestResults
-              
-    - name: Upload ClientApp TestResults to Codecov
-      uses: codecov/codecov-action@v1.0.5
-      with:
-        # User defined upload name. Visible in Codecov UI
-        name: ClientApp
-        # Repository upload token - get it from codecov.io
-        token: ${{ secrets.CODECOV_TOKEN }}
-        # Path to coverage file to upload
-        file: TestResults/frontend.json
-        # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
-        flags: unittests
-        # Specify whether or not CI build should fail if Codecov runs into an error during upload
-        fail_ci_if_error: true
-        
+                      
     - name: Upload Server TestResults to Codecov
       uses: codecov/codecov-action@v1.0.5
       with:
