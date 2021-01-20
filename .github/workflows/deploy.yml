@@ -13,13 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Setup Connection String
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: Server/appsettings.json
-        env:
-          ConnectionStrings.DBConnectionString: ${{ secrets.DATABASE_CONNECTION_STRING }}
-
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
         with:
