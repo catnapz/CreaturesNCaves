@@ -68,7 +68,6 @@ export class AuthService {
   }
 
   public authenticateApolloClient = () => {
-    console.log(process.env.REACT_APP_SERVER_ADDRESS);
     const httpLink = createHttpLink({
       uri: "/api",
     });
