@@ -18,7 +18,6 @@ const loaded = () => (loader!.style.display = "none");
 
 // Init Apollo
 let apolloClient = new ApolloClient({
-  uri: `${process.env.REACT_APP_SERVER_ADDRESS || ''}/api`,
   cache: new InMemoryCache()
 });
 
