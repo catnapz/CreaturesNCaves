@@ -5,7 +5,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { SidebarItem } from "./sidebar-item";
 import { SidebarCategory } from "./sidebar-category";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../user/auth/auth-store.slice";
+import { selectUser } from "../../pages/user/auth/auth-store.slice";
 import "./sidebar.scss";
 
 interface SidebarProps {

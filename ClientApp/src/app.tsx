@@ -3,15 +3,15 @@ import { Route } from "react-router";
 import { useSelector } from "react-redux";
 
 import { Layout } from "./components/layout/layout";
-import { Home } from "./components/home";
-import { Counter } from "./components/counter/counter";
-import { ProtectedRoute } from "./components/user/auth/protected-route";
-import { LoginMenu } from "./components/user/login/firebase-login";
-import { SignUpMenu } from "./components/user/sign-up/sign-up-menu";
-import { selectUserLoading } from "./components/user/auth/auth-store.slice";
-import { Profile } from "./components/user/profile/profile";
-import { InProgress } from "./components/in-progress";
-import { Campaigns } from "./components/campaigns/campaigns";
+import { Home } from "./components/pages/home/home";
+import { Counter } from "./components/pages/counter/counter";
+import { ProtectedRoute } from "./components/pages/user/auth/protected-route";
+import { LoginMenu } from "./components/pages/user/login/firebase-login";
+import { SignUpMenu } from "./components/pages/user/sign-up/sign-up-menu";
+import { selectUserLoading } from "./components/pages/user/auth/auth-store.slice";
+import { Profile } from "./components/pages/user/profile/profile";
+import { InProgress } from "./components/in-progress/in-progress";
+import { Campaigns } from "./components/pages/campaigns/campaigns";
 
 import "./app.scss";
 

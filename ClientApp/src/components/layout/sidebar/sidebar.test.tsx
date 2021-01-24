@@ -2,7 +2,7 @@ import { cleanup, render, waitFor, getByText } from "@testing-library/react";
 import React from "react";
 import * as ReactRedux from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import * as authStore from "../../user/auth/auth-store.slice";
+import * as authStore from "../../pages/user/auth/auth-store.slice";
 
 import { Sidebar } from "./sidebar";
 

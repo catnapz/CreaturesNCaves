@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 import {selectUser} from '../auth/auth-store.slice';
 import Button from '@material-ui/core/Button';
-import {AuthService} from "../../../auth/auth-service";
+import {AuthService} from "../../../../auth/auth-service";
 import {FormGroup, FormLabel, TextField} from "@material-ui/core";
 
 const authService = new AuthService();
@@ -35,9 +35,9 @@ export const Profile = () => {
 
   const editStateButtons = () =>
     <div>
-      <Button variant='contained' className={'save-button'} color={"primary"}>Save</Button>
-      <Button variant='contained' onClick={cancelChanges}>Cancel</Button>
-      <Button variant='contained' onClick={() => deleteConfirmation()}>Delete Account</Button>
+      <Button>Save</Button>
+      <Button onClick={cancelChanges}>Cancel</Button>
+      <Button onClick={() => deleteConfirmation()}>Delete Account</Button>
     </div>
 
   return (
@@ -65,7 +65,7 @@ export const Profile = () => {
           />
         </FormGroup>
       </form>
-      {editState ? editStateButtons() : <Button variant='contained' onClick={() => setEditState(true)}>Edit</Button>}
+      {editState ? editStateButtons() : <Button onClick={() => setEditState(true)}>Edit</Button>}
     </>
   );
 }

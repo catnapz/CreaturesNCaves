@@ -13,7 +13,7 @@ import {
   GET_CAMPAIGNS,
   CampaignsQueryResult
 } from "./campaigns-gql";
-import * as notifStore from '../layout/notifications/notification-store.slice';
+import * as notifStore from '../../layout/notifications/notification-store.slice';
 
 const store = configureStore({
   reducer: {

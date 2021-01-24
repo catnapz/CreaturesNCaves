@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthService } from "../../../auth/auth-service";
+import { AuthService } from "../../../../auth/auth-service";
 import { StyledFirebaseAuth } from "react-firebaseui";
 
 const authService = new AuthService();
