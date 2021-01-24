@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 import {selectUser} from '../auth/auth-store.slice';
-import Button from '@material-ui/core/Button';
+import {Button} from '../../../button/button';
 import {AuthService} from "../../../../auth/auth-service";
 import {FormGroup, FormLabel, TextField} from "@material-ui/core";
 
@@ -36,8 +36,8 @@ export const Profile = () => {
   const editStateButtons = () =>
     <div>
       <Button>Save</Button>
-      <Button onClick={cancelChanges}>Cancel</Button>
-      <Button onClick={() => deleteConfirmation()}>Delete Account</Button>
+      <Button variant={"secondary"} onClick={cancelChanges}>Cancel</Button>
+      <Button variant={"danger"} onClick={() => deleteConfirmation()}>Delete Account</Button>
     </div>
 
   return (

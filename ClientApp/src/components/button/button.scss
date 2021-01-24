@@ -1,0 +1,31 @@
+@import "../../colours";
+
+$darken-amount: 10;
+
+.button {
+  color: primary-colour(text);
+  transition: background-color 250ms ease-in-out;
+}
+
+.primary-button {
+  background: primary-colour(light);
+  &:hover {
+    background: darken(primary-colour(light), $darken-amount);
+  }
+}
+
+.secondary-button {
+  background: secondary-colour(main);
+  &:hover {
+    background: darken(secondary-colour(main), $darken-amount);
+  }
+}
+
+.danger-button {
+  background: $danger;
+  &:hover {
+    background: darken($danger, $darken-amount);
+  }
+}
+
+

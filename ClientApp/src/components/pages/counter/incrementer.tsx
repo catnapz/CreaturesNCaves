@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { counterStoreSlice } from './counter-store.slice';
 import { createNotification } from '../../layout/notifications/notifications';
 import './incrementer.scss';
-import Button from "@material-ui/core/Button";
+import { Button } from "../../button/button"
 
 export const Incrementer = () => {
   const dispatch = useDispatch();
@@ -14,14 +14,8 @@ export const Incrementer = () => {
   }
 
   return (
-    <>
-      <Button 
-        variant="contained"
-        color="primary"
-        onClick={increment}
-      >
-        Increment
-      </Button>
-    </>
+    <Button onClick={increment} variant="secondary">
+      Increment
+    </Button>
   )
 };

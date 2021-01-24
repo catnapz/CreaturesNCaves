@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { decrement } from './counter-store.slice';
 import './decrementer.scss';
-import Button from "@material-ui/core/Button";
+import { Button } from "../../button/button"
 import {createNotification} from "../../layout/notifications/notifications";
 
 export const Decrementer = () => {
@@ -12,14 +12,10 @@ export const Decrementer = () => {
     createNotification(dispatch, "Decremented!", "default");
   }
   return (
-    <>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={dispatchDecrement}
-      >
-        Decrement
-      </Button>
-    </>
+    <Button
+      onClick={dispatchDecrement}
+    >
+      Decrement
+    </Button>
   )
 };
