@@ -3,11 +3,11 @@ import React from "react";
 import * as ReactRedux from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { StaticRouter } from 'react-router';
-import * as authStore from "../../user/auth/auth-store.slice";
+import * as authStore from "../../pages/user/auth/auth-store.slice";
 
 import { NavMenu } from "./nav-menu";
 
-jest.mock('../../user/logout/logout-dialog', () => ({
+jest.mock('../../pages/user/logout/logout-dialog', () => ({
   LogoutDialog: 'mocked-logout-dialog'
 }));
 

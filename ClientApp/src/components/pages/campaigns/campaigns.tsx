@@ -12,8 +12,8 @@ import { CreateCampaign } from "./create-campaign";
 import { CampaignCard } from "./campaign-card";
 import { EmptyCampaigns } from "./empty-campaings";
 import "./campaigns.scss";
-import { createNotification } from "../layout/notifications/notifications";
-import { AuthService } from "../../auth/auth-service";
+import { createNotification } from "../../layout/notifications/notifications";
+import { AuthService } from "../../../auth/auth-service";
 
 const apolloClient = new AuthService().authenticateApolloClient();
 

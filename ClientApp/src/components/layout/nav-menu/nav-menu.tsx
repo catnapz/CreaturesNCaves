@@ -12,9 +12,9 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import useTheme from "@material-ui/core/styles/useTheme";
-import { selectUser } from "../../user/auth/auth-store.slice";
+import { selectUser } from "../../pages/user/auth/auth-store.slice";
 import { useStyles } from "../shared-styles";
-import { LogoutDialog } from "../../user/logout/logout-dialog";
+import { LogoutDialog } from "../../pages/user/logout/logout-dialog";
 import "./nav-menu.scss";
 
 interface NavMenuProps {
@@ -62,7 +62,6 @@ export const NavMenu = (props: NavMenuProps) => {
 const UnauthenticatedView = () => (
   <>
     <NavLink to="/login">Login</NavLink>
-    <NavLink to="/signup">Sign Up</NavLink>
   </>
 );
 

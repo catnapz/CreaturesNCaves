@@ -7,7 +7,7 @@ import { ReduxStore, history } from "./store/ReduxStore";
 import { App } from "./app";
 import * as serviceWorker from "./serviceWorker";
 import { AuthService } from "./auth/auth-service";
-import { userLoading, userSignedIn, userSignedOut } from "./components/user/auth/auth-store.slice";
+import { userLoading, userSignedIn, userSignedOut } from "./components/pages/user/auth/auth-store.slice";
 import firebase from "firebase";
 
 import "./index.scss";

@@ -12,6 +12,8 @@ $secondary: (
   text: #ffffff,
 );
 
+$danger: #ff1744;
+
 @function primary-colour($variant) {
   $colour: map-get($primary, $variant);
   @return $colour;

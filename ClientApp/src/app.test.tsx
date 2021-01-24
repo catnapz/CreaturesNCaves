@@ -3,7 +3,7 @@ import { cleanup, getByText, render, waitFor } from '@testing-library/react';
 import * as ReactRedux from "react-redux";
 import { StaticRouter } from 'react-router'
 import { configureStore } from '@reduxjs/toolkit';
-import * as authStore from './components/user/auth/auth-store.slice';
+import * as authStore from './components/pages/user/auth/auth-store.slice';
 import * as notifStore from './components/layout/notifications/notification-store.slice';
 import { App, AppProps } from './app';
 

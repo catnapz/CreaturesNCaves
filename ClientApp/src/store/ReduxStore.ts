@@ -4,8 +4,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { createBrowserHistory } from 'history';
 import thunk from 'redux-thunk';
 import { getFromLocalState, saveToLocalState } from './persistStore';
-import { COUNTER_STORE_FEATURE_KEY, counterStoreReducer, initialCounterStoreState, getCounterStorePersistableState } from '../components/counter/counter-store.slice';
-import { AUTH_STORE_FEATURE_KEY, authStoreReducer } from '../components/user/auth/auth-store.slice';
+import { COUNTER_STORE_FEATURE_KEY, counterStoreReducer, initialCounterStoreState, getCounterStorePersistableState } from '../components/pages/counter/counter-store.slice';
+import { AUTH_STORE_FEATURE_KEY, authStoreReducer } from '../components/pages/user/auth/auth-store.slice';
 import { NOTIFICATION_STORE_FEATURE_KEY, notificationStoreReducer } from '../components/layout/notifications/notification-store.slice';
 
 // Create browser history to use in the Redux store
