@@ -1,7 +1,7 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CreaturesNCaves.EntityFramework.Models;
+using CreaturesNCaves.Server.GraphQL;
 using CreaturesNCaves.Server.GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,26 +49,24 @@ namespace CreaturesNCaves.Server
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DBConnectionString"));
             });
-
             services.AddGraphQLServer()
                 .AddQueryType<QueryType>()
                 .AddMutationType<MutationType>()
                 .AddType<UserType>()
                 .AddType<CampaignType>()
                 .AddAuthorization()
-                .AddHttpRequestInterceptor((httpContext, executor, queryBuilder, cancellationToken) =>
+                .AddErrorFilter<ErrorFilter>()
+                .AddHttpRequestInterceptor((httpContext, _, queryBuilder, cancellationToken) =>
                 {
-                    if (!httpContext.User.Identity!.IsAuthenticated)
-                    {
-                        Console.WriteLine("Unauthenticated");
-                        return ValueTask.FromException(new Exception("Unauthenticated"));
-                    }
+                    if (cancellationToken.IsCancellationRequested) return ValueTask.FromCanceled(cancellationToken);
+                    queryBuilder.AddProperty("currentUserId", "unauthorized");
+                    if (!httpContext.User.Identity!.IsAuthenticated) return ValueTask.CompletedTask;
                     var userIdClaim = httpContext.User.Claims.Single(claim => claim.Type == "user_id");
                     var userId = userIdClaim.Value;
-                    queryBuilder.AddProperty("currentUserId", userId);
-
+                    queryBuilder.SetProperty("currentUserId", userId);
                     return ValueTask.CompletedTask;
                 });
+
 
             services.AddControllers();
             
