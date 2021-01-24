@@ -3,28 +3,27 @@
 $darken-amount: 10;
 
 .button {
-  color: primary-colour(text);
-  transition: background-color 250ms ease-in-out;
+  color: primary-colour(text) !important;
 }
 
 .primary-button {
-  background: primary-colour(light);
+  background: primary-colour(light) !important;;
   &:hover {
-    background: darken(primary-colour(light), $darken-amount);
+    background: darken(primary-colour(light), $darken-amount) !important;;
   }
 }
 
 .secondary-button {
-  background: secondary-colour(main);
+  background: secondary-colour(main) !important;;
   &:hover {
-    background: darken(secondary-colour(main), $darken-amount);
+    background: darken(secondary-colour(main), $darken-amount) !important;;
   }
 }
 
 .danger-button {
-  background: $danger;
+  background: $danger !important;;
   &:hover {
-    background: darken($danger, $darken-amount);
+    background: darken($danger, $darken-amount) !important;;
   }
 }
 
