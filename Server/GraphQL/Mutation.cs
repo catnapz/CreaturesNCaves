@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using HotChocolate;
 using CreaturesNCaves.EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Npgsql;
 
 namespace CreaturesNCaves.Server.GraphQL
@@ -32,22 +31,14 @@ namespace CreaturesNCaves.Server.GraphQL
             int campaignId
         )
         {
-            try
+            dbContext.Campaigns.Remove(new Campaign()
             {
-                dbContext.Campaigns.Remove(new Campaign()
-                {
-                    UserId = currentUserId,
-                    CampaignId = campaignId
-                });
+                UserId = currentUserId,
+                CampaignId = campaignId
+            });
             
-                await dbContext.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return false;
-            }
+            await dbContext.SaveChangesAsync();
+            return true;
         }
 
         public async Task<User> CreateUser(
@@ -68,17 +59,13 @@ namespace CreaturesNCaves.Server.GraphQL
             catch (DbUpdateException e)
             {
                 var sqlException = (PostgresException) e.InnerException;
-                if (sqlException!.SqlState.Equals("23505"))
+                if (sqlException?.SqlState.Equals(PostgresErrorCodes.UniqueViolation) != null)
                 {
                     // User already exists
                     return userInput;
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+
             return await Task.FromResult<User>(null);
         }
     }
