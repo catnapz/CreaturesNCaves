@@ -62,7 +62,6 @@ export const NavMenu = (props: NavMenuProps) => {
 const UnauthenticatedView = () => (
   <>
     <NavLink to="/login">Login</NavLink>
-    <NavLink to="/signup">Sign Up</NavLink>
   </>
 );
 
