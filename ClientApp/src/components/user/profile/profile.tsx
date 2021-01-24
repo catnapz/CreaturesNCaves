@@ -1,16 +1,20 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../auth/auth-store.slice';
+import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
+import {selectUser} from '../auth/auth-store.slice';
 import Button from '@material-ui/core/Button';
-import { AuthService } from "../../../auth/auth-service";
+import {AuthService} from "../../../auth/auth-service";
+import {FormGroup, FormLabel, TextField} from "@material-ui/core";
 
 const authService = new AuthService();
 
 export const Profile = () => {
   const user = useSelector(selectUser);
+  const [userDisplayName, setUserDisplayName] = useState(user?.displayName);
+  const [userEmail, setUserEmail] = useState(user?.email);
+  const [editState, setEditState] = useState(false);
 
-  async function deleteConfirmation(){
-    if(window.confirm("Are you sure you want to delete your account?")) {
+  async function deleteConfirmation() {
+    if (window.confirm("Are you sure you want to delete your account?")) {
       const resp = await fetch('/Account/Delete', {
         method: 'post',
         headers: {
@@ -23,10 +27,45 @@ export const Profile = () => {
     }
   }
 
+  const cancelChanges = () => {
+    setEditState(false);
+    setUserDisplayName(user?.displayName);
+    setUserEmail(user?.email);
+  }
+
+  const editStateButtons = () =>
+    <div>
+      <Button variant='contained' className={'save-button'} color={"primary"}>Save</Button>
+      <Button variant='contained' onClick={cancelChanges}>Cancel</Button>
+      <Button variant='contained' onClick={() => deleteConfirmation()}>Delete Account</Button>
+    </div>
+
   return (
     <>
-      <h1>Hello {user?.displayName}</h1>
-      <Button variant='contained' onClick={() => deleteConfirmation()}>Delete Account</Button>
+      <h1>{`Hello${userDisplayName ? " " + userDisplayName : ''}!`}</h1>
+      <form>
+        <FormLabel>Your Profile</FormLabel>
+        <FormGroup>
+          <TextField
+            id='display-name-field'
+            label="Display Name"
+            variant={editState ? "outlined" : "standard"}
+            value={userDisplayName}
+            onChange={(e) => setUserDisplayName(e.target.value)}
+            disabled={!editState}
+          />
+          <TextField
+            id='email-field'
+            label="Email"
+            type={"email"}
+            variant={editState ? "outlined" : "standard"}
+            value={userEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
+            disabled={!editState}
+          />
+        </FormGroup>
+      </form>
+      {editState ? editStateButtons() : <Button variant='contained' onClick={() => setEditState(true)}>Edit</Button>}
     </>
   );
 }
