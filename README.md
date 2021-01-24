@@ -1,5 +1,5 @@
-![Tests](https://github.com/catnapz/CreaturesNCaves/workflows/Tests/badge.svg)
-![Deployment](https://github.com/catnapz/CreaturesNCaves/workflows/Deployment/badge.svg)
+[![Tests](https://github.com/catnapz/CreaturesNCaves/workflows/Tests/badge.svg)](https://github.com/catnapz/CreaturesNCaves/actions?query=workflow%3ATests)
+[![Deployment](https://github.com/catnapz/CreaturesNCaves/workflows/Deployment/badge.svg)](https://github.com/catnapz/CreaturesNCaves/actions?query=workflow%3ADeployment)
 [![codecov](https://codecov.io/gh/catnapz/CreaturesNCaves/branch/main/graph/badge.svg?token=mGrw1QsyH5)](https://codecov.io/gh/catnapz/CreaturesNCaves)
 # Creatures & Caves
 A tool for DMs
