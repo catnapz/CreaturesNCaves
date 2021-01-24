@@ -95,7 +95,7 @@ const AuthenticatedView = () => {
     <>
       <Avatar
         onClick={openMenu}
-        src="/broken-image.jpg"
+        src={user?.photoURL || undefined}
         className={"profile-icon"} />
       <Menu
         id="navbar-account-menu"
@@ -112,5 +112,4 @@ const AuthenticatedView = () => {
       <LogoutDialog open={logoutDialogOpen} onClose={handleLogoutDialogClose} />
     </>
   );
-};
-
+}
