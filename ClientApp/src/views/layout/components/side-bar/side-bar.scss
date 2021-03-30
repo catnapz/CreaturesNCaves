@@ -1,0 +1,83 @@
+@import "../../../../partials/layout";
+@import "../../../../partials/colours";
+@import "../../../../partials/effects";
+@import "./side-bar-vars";
+
+.cnc-side-bar {
+  width: $side-bar-width;
+  height: 100%;
+  transition: width #{$snappy-transition-opts};
+  color: whitesmoke;
+  background: primary-colour(main);
+  overflow: hidden;
+}
+
+.cnc-side-bar--toggle-button {
+  border-radius: 100%;
+  padding: 0;
+  height: $icon-width + 1.5rem;
+  width: $icon-width + 1.5rem;
+
+  &:hover {
+    .cnc-side-bar--toggle-icon {
+      transform: translateX(-3px);
+    }
+  }
+
+  .cnc-side-bar--toggle-icon {
+    fill: white;
+    height: $icon-width;
+    width: $icon-width;
+    transition: transform $snappy-transition-opts;
+  }
+}
+
+.cnc-side-bar--header {
+  height: $top-bar-height;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: $extra-small;
+}
+
+.cnc-side-bar-collapsed {
+  width: $icon-width + 2 * $small;
+
+  .cnc-side-bar--header {
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+
+  .cnc-side-bar--toggle-button {
+    &:hover {
+      .cnc-side-bar--toggle-icon {
+        transform: scaleX(-1) translateX(-3px);
+      }
+    }
+
+    .cnc-side-bar--toggle-icon {
+      transform: scaleX(-1);
+    }
+  }
+}
+
+.cnc-side-bar--content {
+  height: calc(100% - 2 * #{$top-bar-height});
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.cnc-side-bar--footer {
+  margin-top: auto;
+}
+
+@include media-breakpoint-down(xs) {
+  .cnc-side-bar {
+    width: 100vw;
+  }
+
+  .cnc-side-bar-collapsed {
+    width: $icon-width + 2 * $small;
+  }
+}

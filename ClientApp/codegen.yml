@@ -1,0 +1,9 @@
+schema: http://24.68.25.84:8080/api
+generates:
+  ./src/api/types.d.ts:
+    documents:
+      - './src/api/gql/**/*.ts'
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo

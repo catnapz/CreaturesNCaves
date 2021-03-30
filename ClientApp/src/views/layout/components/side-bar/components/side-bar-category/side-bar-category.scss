@@ -1,0 +1,30 @@
+@import "../../../../../../partials/effects";
+
+.cnc-side-bar--category {
+  .cnc-side-bar--category-text,
+  .cnc-side-bar--item-text {
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+    font-size: 0;
+    opacity: 0;
+    transition: opacity #{$snappy-transition-opts};
+
+    &.visible {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  .cnc-side-bar--category-text {
+    &.visible {
+      height: 2rem;
+      line-height: 2rem;
+      font-size: 0.75rem;
+      text-align: center;
+      font-weight: bold;
+      letter-spacing: 1px;
+      font-variant: small-caps;
+    }
+  }
+}

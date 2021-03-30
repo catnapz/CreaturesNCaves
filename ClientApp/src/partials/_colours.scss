@@ -1,0 +1,29 @@
+$cnc-primary: (
+  main: #1c1c1c,
+  dark: #000000,
+  light: #434343,
+);
+
+$cnc-secondary: (
+  main: #cc1e1d,
+  dark: #9d291c,
+  light: #cc3737,
+);
+
+$background: whitesmoke;
+$background-alt: lightgrey;
+
+$success: #28a745;
+$danger: #dc3545;
+$warning: #ffc107;
+$info: #17a2bb;
+
+@function primary-colour($variant) {
+  $colour: map-get($cnc-primary, $variant);
+  @return $colour;
+}
+
+@function secondary-colour($variant) {
+  $colour: map-get($cnc-secondary, $variant);
+  @return $colour;
+}

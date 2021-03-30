@@ -1,0 +1,49 @@
+@import "../../partials/layout";
+@import "../../partials/colours";
+@import "../../partials/effects";
+
+.cnc-sign-up--container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: $extra-small;
+}
+
+.cnc-sign-up--login-link {
+  color: secondary-colour(main);
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline secondary-colour(main);
+  }
+}
+
+.cnc-sign-up--button {
+  min-width: 250px;
+  padding: $extra-small;
+  border: 0;
+  width: 100%;
+  justify-self: center;
+}
+
+.cnc-sign-up--divider {
+  padding: $extra-small;
+  width: 69%;
+}
+
+.cnc-sign-up--form {
+  display: grid;
+  width: 100%;
+
+  .cnc-form--input:not(:last-child) {
+    margin-bottom: $extra-small;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .cnc-sign-up--container {
+    max-width: 40vw;
+    padding: $small;
+  }
+}

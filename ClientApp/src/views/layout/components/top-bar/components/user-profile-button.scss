@@ -1,0 +1,79 @@
+@import "../../../../../partials/layout";
+@import "../../../../../partials/colours";
+@import "../../../../../partials/effects";
+
+$avatar-size: 2.5rem;
+
+.cnc-user-profile-dropdown {
+  border-radius: 100%;
+  background: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: $avatar-size;
+  height: $avatar-size;
+
+  // bootstrap class
+  .dropdown-toggle {
+    padding: 0;
+    border-radius: 100%;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  // bootstrap class
+  .dropdown-menu {
+    box-shadow: $shadow;
+    width: 12rem;
+
+    .dropdown-header {
+      overflow: auto;
+      font-family: "Scaly Sans Caps", sans-serif;
+      color: black;
+      text-align: center;
+    }
+  }
+
+  .cnc-user-profile-dropdown-item {
+    color: black;
+    display: flex;
+    padding: $extra-small $extra-small;
+
+    &:hover {
+      cursor: pointer;
+      background: lighten(primary-colour(light), 65);
+      text-decoration: underline;
+    }
+
+    &:active {
+      background: primary-colour(dark);
+      color: whitesmoke;
+    }
+  }
+
+  .cnc-user-profile-dropdown-item-link {
+    &.active {
+      background: primary-colour(main);
+      color: whitesmoke;
+      text-decoration: underline secondary-colour(main);
+    }
+  }
+}
+
+.cnc-user-profile-dropdown-img {
+  width: $avatar-size;
+  height: $avatar-size;
+  border-radius: 100%;
+  border: 1px solid darkgrey;
+  &:hover {
+    border-color: white;
+  }
+}
+
+.cnc-user-profile-dropdown-img-placeholder {
+  fill: primary-colour(light);
+  width: $avatar-size - 0.5rem;
+  height: $avatar-size - 0.5rem;
+}

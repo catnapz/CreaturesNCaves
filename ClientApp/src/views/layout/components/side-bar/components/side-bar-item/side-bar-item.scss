@@ -1,0 +1,49 @@
+@import "../../../../../../partials/layout";
+@import "../../../../../../partials/colours";
+@import "../../../../../../partials/effects";
+@import "../../side-bar-vars";
+
+$item-height: 3.1rem;
+
+.cnc-side-bar--item {
+  display: flex;
+  align-items: center;
+  padding: $extra-small $small;
+  height: $item-height;
+  transition: height $smooth-transition-opts;
+  text-decoration: none;
+
+  &.active {
+    background: secondary-colour(main);
+    height: $item-height + 0.5rem;
+  }
+
+  &:hover:not(.active) {
+    text-decoration: underline;
+    text-decoration-color: secondary-colour(main);
+    background: primary-colour(dark);
+    .cnc-side-bar--item-icon {
+      fill: white;
+    }
+  }
+}
+
+.cnc-side-bar--item-icon-container {
+  width: $icon-width;
+  margin-right: 1.25rem;
+}
+
+.cnc-side-bar--item-icon {
+  width: $icon-width;
+  height: $icon-width;
+  fill: white;
+}
+
+.cnc-side-bar--item-text {
+  color: white;
+  display: flex;
+  align-items: center;
+  &.visible {
+    font-size: 1rem;
+  }
+}
