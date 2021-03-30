@@ -1,0 +1,30 @@
+@import "../../../../partials/layout";
+@import "../../../../partials/colours";
+@import "../../../../partials/effects";
+
+.cnc-top-bar {
+  background: primary-colour(main);
+  color: whitesmoke;
+}
+
+.cnc-top-bar--brand {
+  font-family: "Nodesto Caps Condensed", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 1.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 $small;
+
+  &:hover {
+    cursor: pointer;
+    background: primary-colour(dark);
+  }
+}
+
+.cnc-top-bar--link {
+  &.active {
+    border-bottom: 1px solid secondary-colour(main);
+  }
+}

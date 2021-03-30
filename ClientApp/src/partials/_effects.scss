@@ -1,0 +1,13 @@
+// Border Box
+$shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+$darker-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+  0 12px 40px 0 rgba(0, 0, 0, 0.2);
+
+// Transitions
+$snappy-transition-opts: 300ms cubic-bezier(0.19, 1, 0.22, 1);
+$smooth-transition-opts: 150ms ease-in-out;
+
+* {
+  transition: background-color $snappy-transition-opts,
+    fill $snappy-transition-opts;
+}

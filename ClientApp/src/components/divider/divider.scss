@@ -1,0 +1,16 @@
+@import "../../partials/colours";
+
+.cnc-divider--container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.cnc-divider--border {
+  border-bottom: 1px solid primary-colour(light);
+  width: 100%;
+}
+
+.cnc-divider--content {
+  padding: 0 1rem;
+}

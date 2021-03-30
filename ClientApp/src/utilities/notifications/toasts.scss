@@ -1,0 +1,52 @@
+@import "../../partials/colours";
+@import "../../partials/effects";
+
+$icon-size: 1.25rem;
+
+.cnc-toast--icon-container {
+  width: max-content;
+  .cnc-toast--icon {
+    font-size: $icon-size;
+    width: $icon-size;
+    height: $icon-size;
+    fill: whitesmoke;
+  }
+}
+
+// Toasts styling docs: https://fkhadra.github.io/react-toastify/how-to-style
+.Toastify__toast {
+  box-shadow: $shadow;
+  word-break: break-word;
+}
+
+.Toastify__toast--success {
+  background: $success;
+}
+
+.Toastify__toast--error {
+  background: $danger;
+}
+
+.Toastify__toast--info {
+  background: $info;
+}
+
+.Toastify__toast--warning {
+  background: $warning;
+  color: primary-colour(dark);
+
+  .cnc-toast--icon {
+    fill: primary-colour(dark);
+  }
+
+  .Toastify__close-button > svg {
+    color: primary-colour(dark);
+  }
+  .Toastify__progress-bar {
+    background: primary-colour(dark);
+  }
+}
+
+.Toastify__toast--error {
+  background: $danger;
+}

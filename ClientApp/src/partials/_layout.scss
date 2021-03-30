@@ -1,0 +1,31 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+/* https://getbootstrap.com/docs/4.0/layout/overview/
+// options: xs, sm, md, lg, xl
+@include media-breakpoint-up(option)
+@include media-breakpoint-only(option) 
+@include media-breakpoint-between(option1, option2)
+
+// Example usage:
+@include media-breakpoint-up(sm) {
+  .some-class {
+    display: block;
+  }
+}
+*/
+
+// Globals
+// Padding / Margins
+$extra-large: 8rem;
+$large: 5rem;
+$medium: 2rem;
+$small: 1.25rem;
+$extra-small: 0.75rem;
+
+// Top Bar
+$top-bar-height: 4rem;
+
+// Side Bar
+$side-bar-width: 15rem;
