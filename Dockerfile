@@ -1,5 +1,5 @@
 # == Base ==
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 
 
@@ -17,7 +17,7 @@ RUN npm test
 
 
 # == Server.Tests ==
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS dotnet-test-env
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS dotnet-test-env
 WORKDIR /
 COPY ./EntityFramework ./EntityFramework
 COPY ./EntityFramework.Tests ./EntityFramework.Tests
