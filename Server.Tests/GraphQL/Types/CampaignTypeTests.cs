@@ -13,12 +13,12 @@ namespace CreaturesNCaves.Server.Tests.GraphQL.Types
         
         public CampaignTypeTests()
         {
-            Schema schema = Schema.Create(c =>
-            {
-                c.RegisterAuthorizeDirectiveType();
-                c.RegisterType<CampaignType>();
-                c.Options.StrictValidation = false;
-            });
+            var schema = SchemaBuilder.New()
+                .AddAuthorizeDirectiveType()
+                .AddType<CampaignType>()
+                .ModifyOptions(o => o.StrictValidation = false)
+                .Create();
+            
             _campaignType = schema.GetType<CampaignType>("Campaign");
 
             _expectedFields = new List<string>()

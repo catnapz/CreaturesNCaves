@@ -13,12 +13,12 @@ namespace CreaturesNCaves.Server.Tests.GraphQL.Types
         
         public QueryTypeTests()
         {
-            Schema schema = Schema.Create(c =>
-            {
-                c.RegisterAuthorizeDirectiveType();
-                c.RegisterQueryType<QueryType>();
-                c.Options.StrictValidation = false;
-            });
+            var schema = SchemaBuilder.New()
+                .AddAuthorizeDirectiveType()
+                .AddType<QueryType>()
+                .ModifyOptions(o => o.StrictValidation = false)
+                .Create();
+            
             _queryType = schema.GetType<QueryType>("Query");
 
             _expectedFields = new List<string>()

@@ -14,11 +14,11 @@ namespace CreaturesNCaves.Server.Tests.GraphQL.Types
         
         public CampaignInputTypeTests()
         {
-            Schema schema = Schema.Create(c =>
-            {
-                c.RegisterType<CampaignInputType>();
-                c.Options.StrictValidation = false;
-            });
+            var schema = SchemaBuilder.New()
+                .AddType<CampaignInputType>()
+                .ModifyOptions(o => o.StrictValidation = false)
+                .Create();
+
             CampaignInputType = schema.GetType<CampaignInputType>("CampaignInput");
             
             _expectedFields = new List<string>()

@@ -14,12 +14,12 @@ namespace CreaturesNCaves.Server.Tests.GraphQL.Types
         
         public UserTypeTests()
         {
-            Schema schema = Schema.Create(c =>
-            {
-                c.RegisterAuthorizeDirectiveType();
-                c.RegisterType<UserType>();
-                c.Options.StrictValidation = false;
-            });
+            var schema = SchemaBuilder.New()
+                .AddAuthorizeDirectiveType()
+                .AddType<UserType>()
+                .ModifyOptions(o => o.StrictValidation = false)
+                .Create();
+
             _userType = schema.GetType<UserType>("User");
 
             _expectedFields = new List<string>()

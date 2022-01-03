@@ -13,12 +13,13 @@ namespace CreaturesNCaves.Server.Tests.GraphQL.Types
         
         public MutationTypeTests()
         {
-            Schema schema = Schema.Create(c =>
-            {
-                c.RegisterAuthorizeDirectiveType();
-                c.RegisterMutationType<MutationType>();
-                c.Options.StrictValidation = false;
-            });
+            
+            var schema = SchemaBuilder.New()
+                .AddAuthorizeDirectiveType()
+                .AddType<MutationType>()
+                .ModifyOptions(o => o.StrictValidation = false)
+                .Create();
+
             _mutationType = schema.GetType<MutationType>("Mutation");
 
             _expectedFields = new List<string>()
