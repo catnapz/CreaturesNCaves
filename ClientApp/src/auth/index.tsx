@@ -6,7 +6,8 @@ import React, {
   useState,
 } from "react";
 
-import AuthService, { User } from "./auth.service";
+import AuthService from "./auth.service";
+import { User } from "firebase/auth";
 export { FirebaseAuthErrorCodes } from "./error-codes";
 
 interface IAuthContext {

@@ -8,13 +8,12 @@ interface SideBarItemProps {
   to: string;
   title: string;
   isExpanded: boolean;
-  exact?: boolean;
   icon: Icon;
 }
 
 export const SideBarItem = (props: SideBarItemProps) => {
   return (
-    <NavLink className="cnc-side-bar--item" exact={props.exact} to={props.to}>
+    <NavLink className="cnc-side-bar--item" to={props.to}>
       <div className="cnc-side-bar--item-icon-container">
         <props.icon className="cnc-side-bar--item-icon" />
       </div>

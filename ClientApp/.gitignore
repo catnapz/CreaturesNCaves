@@ -27,4 +27,3 @@ yarn-error.log*
 /.idea
 
 # Generated Files
-/src/api/types.d.ts

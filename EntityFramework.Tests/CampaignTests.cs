@@ -17,17 +17,14 @@ namespace EntityFramework.Tests
         [Fact]
         public void Campaigns()
         {
-            using ( var context = _base.DatabaseContext )
-            {
-                
-                // Arrange
-                var campaigns = context.Campaigns.Count<Campaign>();
+            using var context = _base.DatabaseContext;
+            // Arrange
+            var campaigns = context.Campaigns.Count<Campaign>();
 
-                // Act
+            // Act
 
-                // Assert
-                Assert.Equal(2, campaigns);
-            }
+            // Assert
+            Assert.Equal(2, campaigns);
         }
     }
 }

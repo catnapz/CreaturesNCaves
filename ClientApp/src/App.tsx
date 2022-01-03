@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { initFontAwesome } from "./components/icons/font-awesome";
 import AuthenticatedRoute from "./components/authenticated-route/authenticated-route";
@@ -12,25 +12,35 @@ initFontAwesome();
 function App() {
   return (
     <Layout>
-      <Switch>
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/sign-up" component={SignUp} />
-        <Route exact path="/test" component={TestPage} />
-        <Route path="/roll-initiative" render={() => <p>In Progress</p>} />
-        <Route path="/boblin" render={() => <p>In Progress</p>} />
-        <Route path="/loot" render={() => <p>In Progress</p>} />
+      <Routes>
+        <Route path="/"> <LandingPage /> </Route>
+        <Route path="/login"> <Login /> </Route>
+        <Route path="/sign-up"> <SignUp /> </Route>
+        <Route path="/test"> <TestPage /> </Route>
+        <Route path="/roll-initiative">
+          <p>In Progress</p>
+        </Route>
+        <Route path="/boblin">
+          <p>In Progress</p>
+        </Route>
+        <Route path="/loot">
+          <p>In Progress</p>
+        </Route>
 
-        <AuthenticatedRoute path="/profile" render={() => <p>In Progress</p>} />
+        <AuthenticatedRoute path="/profile">
+          <p>In Progress</p>
+        </AuthenticatedRoute>
         <AuthenticatedRoute
           path="/campaigns"
-          render={() => <p>In Progress</p>}
-        />
+        >
+          <p>In Progress</p>
+        </AuthenticatedRoute>
         <AuthenticatedRoute
           path="/characters"
-          render={() => <p>In Progress</p>}
-        />
-      </Switch>
+        >
+          <p>In Progress</p>
+        </AuthenticatedRoute>
+      </Routes>
     </Layout>
   );
 }

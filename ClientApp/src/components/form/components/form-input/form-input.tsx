@@ -2,17 +2,17 @@ import React from "react";
 import { FormControl, FormControlProps, FormLabel } from "react-bootstrap";
 import cn from "clsx";
 
-export interface IFormInput extends FormControlProps {
+export interface IFormInputProps extends FormControlProps {
   name: string;
   label: string;
   className?: string;
   feedBackType?: "invalid" | "valid";
   feedback?: string;
   placeHolder?: HTMLInputElement["placeholder"];
-  onBlur?: HTMLInputElement["onblur"];
+  onBlur?: React.FocusEventHandler<HTMLInputElement> | undefined
 }
 
-const FormInput = (props: IFormInput) => (
+const FormInput = (props: IFormInputProps) => (
   <div
     className={cn("cnc-form--input", {
       [props.className as string]: !!props.className,

@@ -26,7 +26,7 @@ const UserProfileButton = () => {
 
   return (
     <NavDropdown
-      alignRight
+      align="end"
       title={displayPic}
       id="user-profile-dropdown"
       className="cnc-user-profile-dropdown"

@@ -20,7 +20,7 @@ const Layout = (props: ILayoutProps) => {
 
   return (
     <Container fluid className="cnc-layout-container">
-      <Row noGutters>
+      <Row>
         <Col className="cnc-side-bar-container">
           <SideBar
             isExpanded={sideBarExpanded}
@@ -28,10 +28,10 @@ const Layout = (props: ILayoutProps) => {
           />
         </Col>
         <Col className="cnc-main-container">
-          <Row xs={1} noGutters className="cnc-top-bar-container">
+          <Row xs={1} className="cnc-top-bar-container">
             <TopBar />
           </Row>
-          <Row xs={1} noGutters className="cnc-content-container">
+          <Row xs={1} className="cnc-content-container">
             {props.children}
           </Row>
         </Col>
