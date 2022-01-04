@@ -13,10 +13,10 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={LandingPage} />
-        <Route path="/login" element={Login} />
-        <Route path="/sign-up" element={SignUp} />
-        <Route path="/test" element={TestPage} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/test" element={<TestPage />} />
         <Route path="/roll-initiative" element={<p>In Progress</p>} />
         <Route path="/boblin" element={<p>In Progress</p>} />
         <Route path="/loot" element={<p>In Progress</p>} />
