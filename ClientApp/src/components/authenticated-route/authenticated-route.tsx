@@ -1,16 +1,19 @@
-import React from "react";
-import { Route, RouteProps } from "react-router-dom";
+import React, { ReactNode } from "react";
 
 import { useIsAuthenticated } from "../../auth";
 import { useHistory } from "react-router";
 
-const AuthenticatedRoute = (props: RouteProps) => {
+export type ProtectedProps = {
+  children?: ReactNode
+}
+
+export const Protected = (props: ProtectedProps) => {
   const isAuthenticated = useIsAuthenticated();
   const history = useHistory();
 
   if (!isAuthenticated) history.replace("/login");
 
-  return <Route {...props} />;
+  return <>{props.children}</>;
 };
 
-export default AuthenticatedRoute;
+export default Protected;

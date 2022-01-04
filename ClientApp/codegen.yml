@@ -1,4 +1,4 @@
-schema: http://24.68.25.84:8080/api
+schema: http://localhost:5000/api
 generates:
   ./src/api/types.d.ts:
     documents:

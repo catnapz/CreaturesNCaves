@@ -12,6 +12,7 @@ import client from "./api";
 import AuthProvider from "./auth";
 import "./index.scss";
 import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,7 +21,9 @@ ReactDOM.render(
       <ConnectedRouter history={history}>
         <ApolloProvider client={client}>
           <AuthProvider>
-            <App />
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
           </AuthProvider>
         </ApolloProvider>
       </ConnectedRouter>
