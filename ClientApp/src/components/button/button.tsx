@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 import BsButton from "react-bootstrap/Button";
 
 export interface IButtonProps {
@@ -11,7 +12,10 @@ export interface IButtonProps {
 
 const Button = (props: IButtonProps) => (
   <BsButton
-    className={`cnc-button ${props.className ? props.className : ""}`}
+    className={clsx("cnc-button", {
+      [props.className as string]: !!props.className
+    })}
+    // className={`cnc-button ${props.className ? props.className : ""}`}
     onClick={props.onClick}
     data-testid={props.qaHook}
     type={props.type}
