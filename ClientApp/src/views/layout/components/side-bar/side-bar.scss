@@ -72,7 +72,7 @@
   margin-top: auto;
 }
 
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
   .cnc-side-bar {
     width: 100vw;
   }
