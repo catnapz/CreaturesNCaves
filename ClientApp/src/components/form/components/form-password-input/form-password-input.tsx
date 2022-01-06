@@ -25,8 +25,7 @@ const FormPasswordInput = (props: IFormPasswordInputProps) => {
       <FormLabel className="cnc-form--input-label">{props.label}</FormLabel>
       <InputGroup hasValidation className="cnc-form--input-group">
         <FormControl
-          onBlur={props.onBlur}
-          placeholder={props.placeHolder}
+          {...props}
           type={showPassword ? "text" : "password"}
           aria-label={props.label}
           className="cnc-form--input-control"
