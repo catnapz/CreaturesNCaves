@@ -1,30 +1,30 @@
-import React, { useEffect } from "react";
-import { Container } from "react-bootstrap";
-import { useQuery } from "@apollo/client";
-import { useHistory } from "react-router";
+import React, {useEffect} from "react";
+import {Container} from "react-bootstrap";
+import {useQuery} from "@apollo/client";
+import {useNavigate} from "react-router-dom";
 
-import { useIsAuthenticated } from "../../auth";
-import { TEST_REMOVE_BEFORE_GIT } from "../../api/gql/user";
-import { Divider } from "../../components";
+import {useIsAuthenticated} from "../../auth";
+import {TEST_REMOVE_BEFORE_GIT} from "../../api/gql/user";
+import {Divider} from "../../components";
 
-import { GoogleButton, LoginForm } from "./components";
+import {GoogleButton, LoginForm} from "./components";
 import "./login.scss";
 
 const Login = () => {
-  const { data } = useQuery(TEST_REMOVE_BEFORE_GIT);
+  const {data} = useQuery(TEST_REMOVE_BEFORE_GIT);
 
   const isAuthenticated = useIsAuthenticated();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) history.push("/");
-  }, [isAuthenticated, history]);
+    if (isAuthenticated) navigate("/");
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     console.log(data);
   }, [data]);
 
-  const goToSignUpView = () => history.push("/sign-up");
+  const goToSignUpView = () => navigate("/sign-up");
 
   return (
     <Container className="cnc-login--container">
@@ -35,9 +35,9 @@ const Login = () => {
         </strong>
         !
       </div>
-      <LoginForm />
+      <LoginForm/>
       <Divider className="cnc-login--divider"> Or </Divider>
-      <GoogleButton />
+      <GoogleButton/>
     </Container>
   );
 };

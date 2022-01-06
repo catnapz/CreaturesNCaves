@@ -1,6 +1,5 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { createBrowserHistory } from "history";
-import { connectRouter, routerMiddleware } from "connected-react-router";
+import {configureStore} from "@reduxjs/toolkit";
+import {createBrowserHistory} from "history";
 
 import counterReducer, {
   COUNTER_STORE_SLICE_KEY,
@@ -9,17 +8,13 @@ import counterReducer, {
 // Create browser history to use in the Redux store
 export const history = createBrowserHistory();
 
-// Configure the middleware
-const middleware = [...getDefaultMiddleware(), routerMiddleware(history)];
-
 const reducers = {
-  router: connectRouter(history),
   [COUNTER_STORE_SLICE_KEY]: counterReducer,
 };
 
 const reduxStore = configureStore({
   reducer: reducers,
-  middleware: middleware,
+  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware()],
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

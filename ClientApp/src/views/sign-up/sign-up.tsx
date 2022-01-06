@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import { useIsAuthenticated } from "../../auth";
 import { Divider } from "../../components";
@@ -10,13 +10,13 @@ import "./sign-up.scss";
 
 const SignUp = () => {
   const isAuthenticated = useIsAuthenticated();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) history.push("/");
-  }, [isAuthenticated, history]);
+    if (isAuthenticated) navigate("/");
+  }, [isAuthenticated, navigate]);
 
-  const goToLoginView = () => history.push("/login");
+  const goToLoginView = () => navigate("/login");
 
   return (
     <Container className="cnc-sign-up--container">

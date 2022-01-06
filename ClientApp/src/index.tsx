@@ -1,32 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider as ReduxProvider } from "react-redux";
-import { ConnectedRouter } from "connected-react-router";
-import { ApolloProvider } from "@apollo/client";
-import { ToastContainer } from "react-toastify";
+import {Provider as ReduxProvider} from "react-redux";
+import {ApolloProvider} from "@apollo/client";
+import {ToastContainer} from "react-toastify";
+import {BrowserRouter} from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 import reportWebVitals from "./reportWebVitals";
-import reduxStore, { history } from "./store";
+import reduxStore from "./store";
 import client from "./api";
 import AuthProvider from "./auth";
 import "./index.scss";
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ToastContainer />
+    <ToastContainer/>
     <ReduxProvider store={reduxStore}>
-      <ConnectedRouter history={history}>
-        <ApolloProvider client={client}>
-          <AuthProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </AuthProvider>
-        </ApolloProvider>
-      </ConnectedRouter>
+      <ApolloProvider client={client}>
+        <AuthProvider>
+          <BrowserRouter>
+            <App/>
+          </BrowserRouter>
+        </AuthProvider>
+      </ApolloProvider>
     </ReduxProvider>
   </React.StrictMode>,
   document.getElementById("root")

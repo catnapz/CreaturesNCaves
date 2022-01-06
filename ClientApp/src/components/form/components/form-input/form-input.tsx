@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, FormControlProps, FormLabel } from "react-bootstrap";
+import {FormControl, FormControlProps, FormLabel} from "react-bootstrap";
 import cn from "clsx";
 
 export interface IFormInputProps extends FormControlProps {
@@ -19,7 +19,11 @@ const FormInput = (props: IFormInputProps) => (
     })}
   >
     <FormLabel className="cnc-form--input-label">{props.label}</FormLabel>
-    <FormControl {...props} className="cnc-form--input-control" />
+    <FormControl
+      onBlur={props.onBlur}
+      placeholder={props.placeHolder}
+      className="cnc-form--input-control"
+    />
     <FormControl.Feedback
       className="cnc-form--input-feedback"
       type={props.feedBackType}
