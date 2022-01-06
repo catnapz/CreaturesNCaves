@@ -5,6 +5,10 @@
 .cnc-top-bar {
   background: primary-colour(main);
   color: whitesmoke;
+
+  padding-right: 10px;
+  &:last-child {
+  }
 }
 
 .cnc-top-bar--brand {

@@ -1,11 +1,11 @@
 import React from "react";
-import { useMediaQuery } from "react-responsive";
+import {useMediaQuery} from "react-responsive";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { NavLink, useNavigate } from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 
-import { useUser } from "../../../../auth";
-import { minWidth } from "../../../../utilities/media-queries";
+import {useUser} from "../../../../auth";
+import {minWidth} from "../../../../utilities/media-queries";
 
 import UserProfileButton from "./components/user-profile-button";
 import "./top-bar.scss";
@@ -13,7 +13,7 @@ import "./top-bar.scss";
 const TopBar = () => {
   const navigate = useNavigate();
   const user = useUser();
-  const isSmallOrLarger = useMediaQuery({ query: minWidth.SM });
+  const isSmallOrLarger = useMediaQuery({query: minWidth.SM});
   const isAuthenticated = !!user;
 
   return (
@@ -24,15 +24,17 @@ const TopBar = () => {
       >
         {isSmallOrLarger ? "Creatures & Caves" : "C&C"}
       </Navbar.Brand>
-      <Nav className="ml-auto">
-        {isAuthenticated ? (
-          <UserProfileButton />
-        ) : (
-          <Nav.Link as={NavLink} className="cnc-top-bar--link" to="/login">
-            Login
-          </Nav.Link>
-        )}
-      </Nav>
+      <Navbar.Collapse className="justify-content-end">
+        <Nav>
+          {isAuthenticated ? (
+            <UserProfileButton/>
+          ) : (
+            <Nav.Link as={NavLink} className="cnc-top-bar--link" to="/login">
+              Login
+            </Nav.Link>
+          )}
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 };
