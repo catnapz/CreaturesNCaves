@@ -35,6 +35,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:dev": "REACT_APP_API_URI=http://localhost:5000/api react-scripts start",
     "build": "react-scripts build",
     "test": "CI=true react-scripts test --coverage --color",
     "test:watch": "react-scripts test",

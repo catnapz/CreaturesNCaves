@@ -6,7 +6,7 @@ import authService from "../auth/auth.service";
 import { mutations, MutationCreateUserArgs, User } from "./gql/user";
 
 const httpLink = createHttpLink({
-  uri: "/api",
+  uri: process.env.REACT_APP_API_URI ?? "/api",
 });
 
 const authLink = setContext(async (_, { headers }) => {
