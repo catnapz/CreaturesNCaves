@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
+var  CorsDevPolicy = "_corsDevPolicy";
+
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
@@ -63,13 +65,13 @@ builder.Services.AddSpaStaticFiles(configuration => { configuration.RootPath = "
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "CorsPolicy",
+    options.AddPolicy(CorsDevPolicy,
         policyBuilder =>
         {
-            policyBuilder.AllowAnyOrigin();
-            policyBuilder.AllowAnyHeader();
-            policyBuilder.AllowAnyMethod();
-            // policyBuilder.WithOrigins("http://example.com", "other.com"
+            policyBuilder.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
         });
 });
 
@@ -79,6 +81,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseCors(CorsDevPolicy);
     app.UseDeveloperExceptionPage();
 }
 else
@@ -92,7 +95,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseCors("CorsPolicy");
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {

@@ -27,7 +27,7 @@ const client = new ApolloClient({
 authService.subscribeToAuthChanges(async (user) => {
   await client.resetStore();
   if (user) {
-    client.mutate<User, MutationCreateUserArgs>({
+    await client.mutate<User, MutationCreateUserArgs>({
       mutation: mutations.CREATE_USER_MUTATION,
       variables: {
         userInput: {

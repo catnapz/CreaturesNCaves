@@ -10,13 +10,5 @@ const CREATE_USER_MUTATION = gql`
   }
 `;
 
-export const TEST_REMOVE_BEFORE_GIT = gql`
-  query GetUsersNames {
-    users {
-      name
-    }
-  }
-`;
-
 // export const queries = {}
 export const mutations = { CREATE_USER_MUTATION };
