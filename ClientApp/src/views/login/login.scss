@@ -19,9 +19,12 @@
   }
 }
 
+.cnc-login--email-button{
+  margin-top: $medium;
+}
+
 .cnc-login--button {
   min-width: 250px;
-  margin-top: $medium;
   padding: $extra-small;
   border: 0;
   width: 100%;

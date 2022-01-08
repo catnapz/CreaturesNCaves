@@ -7,7 +7,7 @@ import "./google-button.scss";
 
 const GoogleButton = () => (
   <Button
-    className="cnc-login--button cnc-login--google-button"
+    className="cnc-sign-up--button cnc-sign-up--google-button"
     onClick={AuthService.signInViaGoogle}
   >
     <FAIcon icon={["fab", "google"]} /> Sign up via Google
